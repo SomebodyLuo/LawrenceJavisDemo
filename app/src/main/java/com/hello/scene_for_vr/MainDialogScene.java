@@ -25,13 +25,13 @@ public class MainDialogScene extends DialogXScene{
 		//mEGreatDialogScene = mainScene;
 //		mUILayer = new UI_Layer(this);
 //		mSmallSphere = new SmallSphere_Layer();
-//		mSkySphere = new SkySphere();
+		mSkySphere = new SkySphere();
 		mMetro = new Metro_Layer(this);
 
-		//addChild(mSkySphere.getLayer());
+		addChild(mSkySphere.getLayer());
+		addChild(mMetro.getLayer());
 //		addChild(mUILayer.getLayer());
 //		addChild(mSmallSphere.getLayer());
-		addChild(mMetro.getLayer());
 
 //		addChild(new MyWorldLayer().getLayer());
 

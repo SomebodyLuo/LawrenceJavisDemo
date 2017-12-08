@@ -44,6 +44,8 @@ public class SkySphere {
 			}
 		});
 	}
+
+
 	private Texture mRestoreTextre;
 	public int getVeodioTextureID() {
 		MaterialGroup mGroup = ((ObjDrawable)mSphere.getBaseDrawable()).mMaterials;
