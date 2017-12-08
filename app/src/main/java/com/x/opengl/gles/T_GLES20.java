@@ -32,7 +32,9 @@ public class T_GLES20 extends GLES {
 	@Override 
 	public Bitmap getSnapshot(int width,int heght){
 		return SavePixels(0, 0, width, heght, mGL);
-	} 
+	}
+
+
 	private Bitmap SavePixels(int x, int y, int w, int h, GL10 gl) {
 		int b[] = new int[w * h];
 		int bt[] = new int[w * h];

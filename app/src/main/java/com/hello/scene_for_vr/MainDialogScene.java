@@ -16,18 +16,24 @@ public class MainDialogScene extends DialogXScene{
 	private SmallSphere_Layer mSmallSphere;
 	private SkySphere mSkySphere;
 	private MyDirector mMyDirector;
+	private Metro_Layer mMetro;
 	
 	public MainDialogScene(MyDirector myDirector) {
 		this.mMyDirector = myDirector;
 		SetDebugName("MainDialogScene");
+
 		//mEGreatDialogScene = mainScene;
-		mUILayer = new UI_Layer(this);
-		mSmallSphere = new SmallSphere_Layer();
-		mSkySphere = new SkySphere();
+//		mUILayer = new UI_Layer(this);
+//		mSmallSphere = new SmallSphere_Layer();
+//		mSkySphere = new SkySphere();
+		mMetro = new Metro_Layer(this);
+
 		//addChild(mSkySphere.getLayer());
-		addChild(mUILayer.getLayer());
-		addChild(mSmallSphere.getLayer());
-		addChild(new MyWorldLayer().getLayer());
+//		addChild(mUILayer.getLayer());
+//		addChild(mSmallSphere.getLayer());
+		addChild(mMetro.getLayer());
+
+//		addChild(new MyWorldLayer().getLayer());
 
 		Director.getInstance().enableLight(0);
 		//setShowFocusView(true);

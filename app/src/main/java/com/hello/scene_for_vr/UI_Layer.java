@@ -53,7 +53,7 @@ public class UI_Layer {
 		mLayer.setHeight(EngineConstanst.REFERENCE_SCREEN_HEIGHT);
 		mLayer.setBackgroundColor(Color.parseColor("#55000000"));
 		mLayer.setVisibility(true);
-		mLayer.setTranslate(0, 0,0);
+		mLayer.setTranslate(0, 0, 0);
 		mLayer.setFocusable(false);
 		
 		{

@@ -75,7 +75,7 @@ public class MyDirector extends Director
 	{
 		super.initRenderer();
 		Com();
-	  
+
 	}
 	@Override
 	public void onDrawFrame(GL10 gl) {

@@ -157,6 +157,8 @@ public class SceneManager {
 			mToastScene.update();
 		}
 	}
+
+
 	public void engineInfoUpdate(Camera camera) {
 		if(mEnableEngineInfo){
 			camera.initViewPort();
