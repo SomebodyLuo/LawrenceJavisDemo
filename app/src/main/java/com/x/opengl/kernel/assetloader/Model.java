@@ -18,6 +18,7 @@ import com.x.opengl.kernel.Material;
 import com.x.opengl.kernel.MaterialGroup;
 import com.x.opengl.kernel.Mesh;
 import com.x.opengl.kernel.ObjDrawable;
+import com.x.opengl.kernel.SkyDrawable;
 import com.x.opengl.kernel.Texture;
 import com.x.opengl.kernel.assetloader.ObjLoader.MaterialPackage;
 import com.x.opengl.kernel.assetloader.ObjLoader.MeshPackage;
@@ -75,6 +76,53 @@ public class Model {
 		}
 		
 		return mTheObjDrawable;
+	}
+
+	public static SkyDrawable assembleSkyBox(ObjLoader objLoader) {
+//		mProduct = new View(new ObjDrawable(-1));
+//		ObjDrawable objDrawable = (ObjDrawable) mProduct.getBaseDrawable();
+		SkyDrawable mDrawable =  null;
+		// 组装Mesh
+		int meshSize = objLoader.mMeshes.size();
+		mDrawable = new SkyDrawable(2);
+		mDrawable.mMeshes = new Mesh[meshSize];
+		for (int i = 0; i < meshSize; i++) {
+			MeshPackage meshPackage = objLoader.mMeshes.get(i);
+
+			mDrawable.mMeshes[i] = new Mesh();
+			if (meshPackage.mVertexes != null) {
+				mDrawable.mMeshes[i].setVertexes(meshPackage.mVertexes);
+			}
+			if (meshPackage.mNormals != null) {
+				mDrawable.mMeshes[i].setNormals(meshPackage.mNormals);
+			}
+			if (meshPackage.mTextures != null) {
+				mDrawable.mMeshes[i].setCoordinates(meshPackage.mTextures);
+			}
+			if (meshPackage.mIndices != null) {
+				mDrawable.mMeshes[i].setIndices(meshPackage.mIndices);
+			}
+
+			if (meshPackage.mName != null) {
+				mDrawable.mMeshes[i].Name = meshPackage.mName;
+				Log.d("debug", "meshPackage.mName = "+meshPackage.mName );
+			}
+		}
+
+		// 组装Material
+		if (objLoader.mMaterials != null && objLoader.mMaterials.size() > 0) {
+			int materialSize = objLoader.mMaterials.size();
+			mDrawable.mMaterials = new MaterialGroup();
+			for (int i = 0; i < materialSize; i++) {
+				MaterialPackage materialPackage = objLoader.mMaterials.get(i);
+				Material material = materialPackage.mMaterial;
+				material.Name = materialPackage.mName;
+				mDrawable.mMaterials.addMaterial(material);
+				Log.d("ming", "material.mName = "+material.Name );
+			}
+		}
+
+		return mDrawable;
 	}
 
 	public static ObjDrawable assembleScene(Context context ,AiScene aiScene) {

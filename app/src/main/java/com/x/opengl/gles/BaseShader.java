@@ -154,6 +154,7 @@ public class BaseShader extends T_Shader{
         maLightLocationHandle=GLES20.glGetUniformLocation(mProgram, U_LightLocation);
 	}
 
+	// luoyouren: 最底层的绘制函数
 	protected void goRender(Mesh mesh, Material material,  float[] selfModelViewMatrix) {
 		
 		GLES20.glUseProgram(mProgram);

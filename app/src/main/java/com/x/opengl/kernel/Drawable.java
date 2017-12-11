@@ -334,6 +334,7 @@ public class Drawable
 	{
 		if (mMesh != null)
 		{
+			// 在T_GLES20.java中
 			Director.sGLESVersion.onRender(mMesh,mMaterial, mSelfModelViewMatrix,true);
 		}
 	}

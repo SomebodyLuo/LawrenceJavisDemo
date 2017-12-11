@@ -107,7 +107,7 @@ public class View    {
 		return mBGDrawable;
 	}
 
-	
+	// 图片纹理在这里加入到View的纹理列表中
 	protected void addDrawable(Drawable d) {
 		d.setAttachView(this);
 		mDrawableList.add(d);
@@ -116,6 +116,7 @@ public class View    {
 	/**
 	 * 更新物体
 	 */
+	// important: luoyouren-20171209
 	public void draw() {
 
 		if (!mIsVisible) {
@@ -149,6 +150,8 @@ public class View    {
 					if(drawable.isRenderable()){
 						GLES20.glStencilFunc(GLES20.GL_EQUAL, StencilValueStatck.getStackSize(), 0xff);
 						GLES20.glStencilOp(GLES20.GL_KEEP, GLES20.GL_KEEP, GLES20.GL_KEEP);
+
+						// 遍历View的纹理列表，然后绘制
 						drawable.draw( );
 					}
 				}

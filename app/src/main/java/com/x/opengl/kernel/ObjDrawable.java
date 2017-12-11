@@ -22,7 +22,7 @@ public class ObjDrawable extends Drawable{
 			this.minX = minX;
 			this.minY = minY;
 			this.minZ = minZ;
-			
+
 			this.maxX = maxX;
 			this.maxY = maxY;
 			this.maxZ = maxZ;
@@ -31,14 +31,14 @@ public class ObjDrawable extends Drawable{
 		public float  maxX = Float.NEGATIVE_INFINITY, maxY = Float.NEGATIVE_INFINITY, maxZ = Float.NEGATIVE_INFINITY;
 		public void generateBound(BoundSphere boundSphere, BoundBox boundBox) {
 //			Log.d("bound", "objDrawable =========== ");
-//			
+//
 //			Log.d("bound", "minX = " + minX + ",minY = "+minY + ",minZ = "+minZ);
 //			Log.d("bound", "maxX = " + maxX + ",maxY = "+maxY + ",maxZ = "+maxZ);
-		
+
 			boundSphere.generateBoundSphere(minX, minY, minZ, maxX, maxY, maxZ);
-			boundBox.generateBoundBox(minX, minY, minZ, maxX, maxY, maxZ);			
+			boundBox.generateBoundBox(minX, minY, minZ, maxX, maxY, maxZ);
 		}
-	
+
 	}
 	
 	public ObjDrawable(int depth) {
@@ -64,14 +64,14 @@ public class ObjDrawable extends Drawable{
 		super.setThickness(f*EngineConstanst.PIX_REFERENCE);
 	}
 	public ObjDrawable cloneObjDrawable() {
-		
+
 		ObjDrawable objDrawable  = new ObjDrawable(-1);
 		objDrawable.mMaterials = mMaterials;
 		objDrawable.mMeshes = mMeshes;
 		objDrawable.mAABBBoxCheckList = mAABBBoxCheckList;
 		return objDrawable;
 	}
-	
+
 
 	public void addAABBBoxPoint(float minX, float minY, float minZ, float maxX, float maxY, float maxZ) {
 		mAABBBoxCheckList.add(new Box(minX, minY, minZ, maxX, maxY, maxZ));
@@ -79,30 +79,30 @@ public class ObjDrawable extends Drawable{
 
 	@Override
 	public boolean generateBound() {
-		
+
 		boolean flag = false;
 
 //		Log.d("generate", "mAABBBoxCheckList = "+mAABBBoxCheckList.size());
 		for (int i = 0; i < mAABBBoxCheckList.size(); i++) {
 			Box box = mAABBBoxCheckList.get(i);
-			
+
 			BoundBox boundBox = new BoundBox();
 			boundBox.generateBoundBox(box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ);
 			mBoundBoxList.add(boundBox);
-			
-			
+
+
 			BoundSphere boundSphere = new BoundSphere();
 			boundSphere.generateBoundSphere(box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ);
 			mBoundSphereList.add(boundSphere);
-			
+
 			flag = true;
 		}
 		return flag;
 	}
-	
+
 	@Override
 	public ArrayList<PointF> findDrawableScreenCoordinate(T_AABBBox t_AABBBox) {
-		
+
 		ArrayList<PointF> raycastPointList = new ArrayList<PointF>();
 		for (int i = 0; i < mBoundBoxList.size(); i++) {
 			BoundBox boundBox = mBoundBoxList.get(i);
@@ -122,8 +122,8 @@ public class ObjDrawable extends Drawable{
 			PointF pointD = new PointF();
 			t_AABBBox.transformToScreenCoordinate(pointD,boundBox.getMaxX(),boundBox.getMaxY(),boundBox.getMinZ());
 			raycastPointList.add(pointD);
-			
-			
+
+
 			// 投射左上点
 			PointF pointAback = new PointF();
 			t_AABBBox.transformToScreenCoordinate(pointAback,boundBox.getMinX(),boundBox.getMaxY(),boundBox.getMaxZ());
@@ -140,7 +140,7 @@ public class ObjDrawable extends Drawable{
 			PointF pointDback = new PointF();
 			t_AABBBox.transformToScreenCoordinate(pointDback,boundBox.getMaxX(),boundBox.getMaxY(),boundBox.getMaxZ());
 			raycastPointList.add(pointDback);
-			
+
 		}
 		return raycastPointList;
 	}

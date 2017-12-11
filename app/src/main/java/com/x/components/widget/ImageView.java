@@ -32,6 +32,8 @@ public class ImageView extends View
 	{
 		super();
 		SetDebugName("ImageView");
+
+		// 图片纹理在这里加入到View的纹理列表中
 		mImageDrawable = new Drawable(1);
 		addDrawable(mImageDrawable);
 	}
@@ -99,6 +101,8 @@ public class ImageView extends View
 	 */
 	public void setImageBitmap(Bitmap bitmap)
 	{
+		// luoyouren
+		// 图片纹理在这里被设置
 		mImageDrawable.setTexture(bitmap);
 		setImageDrawable(mScaleType, bitmap);
 	}

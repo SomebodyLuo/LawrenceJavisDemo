@@ -95,6 +95,7 @@ public abstract class EngineGLView extends GLSurfaceView {
 //		 mEGLContextClientVersion = getAvaliableOpenGLESAPI(OPENGLES_1_1);//
 		// 初始化opengles版本
 
+		// luoyouren
 		mGLESVersion = new T_GLES20();
 
 		setEGLContextClientVersion(mEGLContextClientVersion);
@@ -242,13 +243,14 @@ public abstract class EngineGLView extends GLSurfaceView {
 
 	@Override
 	public boolean dispatchTouchEvent(final MotionEvent event) {
-		
+		// luoyouren 从这里开始分发
 		final MotionEvent newEvent = MotionEvent.obtain(event);
 		newEvent.setLocation(event.getX(), event.getY());
 
 		if (mDirector == null) {
 			
 		} else {
+
 
 			queueEvent(new Runnable() {
 

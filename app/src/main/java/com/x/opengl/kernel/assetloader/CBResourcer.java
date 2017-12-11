@@ -40,6 +40,7 @@ import com.x.Director;
 import com.x.GLEnvirnment;
 import com.x.EngineGLView;
 import com.x.opengl.kernel.ObjDrawable;
+import com.x.opengl.kernel.SkyDrawable;
 import com.x.opengl.kernel.Texture;
 import com.x.opengl.utils.Utils;
 
@@ -535,11 +536,22 @@ import com.x.opengl.utils.Utils;
 	}
 	
 	public ObjDrawable loadObjModel(String assetFile) {
-		ObjLoader objLoader = new ObjLoader(this, mContext );
+		ObjLoader objLoader = new ObjLoader(this, mContext);
 		objLoader.loadAsset(assetFile);
 		Log.d("ming", "going -     loadObjModel = " );
 		return  Model.assembleObj(objLoader);
 	}
+
+	public SkyDrawable generateSkyBox()
+	{
+		ObjLoader objLoader = new ObjLoader(this, mContext);
+		objLoader.loadSkyBox();
+		Log.d("ming", "going -     generateSkyBox = " );
+
+		return Model.assembleSkyBox(objLoader);
+	}
+
+
 	public ObjDrawable loadModelByAssimpAPI(Context context ,String[] assetFiles){
 		AssimpLoader assimpLoader = new AssimpLoader();
 

@@ -168,6 +168,8 @@ public class T_GLES20 extends GLES {
 //		}
 //
 //	}
+
+	// luoyouren:
 	@Override
 	public void onRender(Mesh mesh,Material mMaterial,float[] selfModelViewMatrix,boolean baseShader) {
 		

@@ -15,6 +15,7 @@ public class MainDialogScene extends DialogXScene{
 	private UI_Layer mUILayer;
 	private SmallSphere_Layer mSmallSphere;
 	private SkySphere mSkySphere;
+	private SkyBox mSkyBox;
 	private MyDirector mMyDirector;
 	private Metro_Layer mMetro;
 	
@@ -25,13 +26,18 @@ public class MainDialogScene extends DialogXScene{
 		//mEGreatDialogScene = mainScene;
 //		mUILayer = new UI_Layer(this);
 //		mSmallSphere = new SmallSphere_Layer();
-		mSkySphere = new SkySphere();
-		mMetro = new Metro_Layer(this);
-
-		addChild(mSkySphere.getLayer());
-		addChild(mMetro.getLayer());
 //		addChild(mUILayer.getLayer());
 //		addChild(mSmallSphere.getLayer());
+
+//		mSkySphere = new SkySphere();
+//		addChild(mSkySphere.getLayer());
+
+		mSkyBox = new SkyBox();
+		addChild(mSkyBox.getLayer());
+
+		mMetro = new Metro_Layer(this);
+		addChild(mMetro.getLayer());
+
 
 //		addChild(new MyWorldLayer().getLayer());
 
@@ -108,19 +114,19 @@ public class MainDialogScene extends DialogXScene{
 		return mSkySphere.getVeodioTextureID() ;
 	}
 	public void changeShowPosition(int i) {
-		if(i == 0){
-			mSmallSphere.restoreTexture();
-			mSkySphere.restoreTexture();
-			mMyDirector.changeTextureId(mUILayer.getVeodioTextureID());
-		}else if(i == 1){
-			mMyDirector.changeTextureId(mSmallSphere.getVeodioTextureID());
-			mSkySphere.restoreTexture();
-			mUILayer.restoreTexture();
-		}else {
-			mSmallSphere.restoreTexture();
-			mMyDirector.changeTextureId(mSkySphere.getVeodioTextureID());
-			mUILayer.restoreTexture();
-		}
+//		if(i == 0){
+//			mSmallSphere.restoreTexture();
+//			mSkySphere.restoreTexture();
+//			mMyDirector.changeTextureId(mUILayer.getVeodioTextureID());
+//		}else if(i == 1){
+//			mMyDirector.changeTextureId(mSmallSphere.getVeodioTextureID());
+//			mSkySphere.restoreTexture();
+//			mUILayer.restoreTexture();
+//		}else {
+//			mSmallSphere.restoreTexture();
+//			mMyDirector.changeTextureId(mSkySphere.getVeodioTextureID());
+//			mUILayer.restoreTexture();
+//		}
 	}
  
 }

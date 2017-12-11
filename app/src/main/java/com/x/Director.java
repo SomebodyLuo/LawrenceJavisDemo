@@ -171,6 +171,8 @@ public class Director implements Renderer {
 //		Log.d("Log"," EngineConstanst.REFERENCE_MOVE_CAN_ADD  = "+EngineConstanst.REFERENCE_MOVE_ATTRACT);
 
 	}
+
+	// luoyouren
 	@Override
 	public void onDrawFrame(GL10 gl) {
 		// FPS统计
@@ -189,6 +191,8 @@ public class Director implements Renderer {
 		// 处理同步加载列表,每一帧只调取列表中的一项进行纹理加载，防止一次性加载太多引起的卡顿
 		getGLHandler().dealMessage();
 		dealSyncRequest();
+
+		// luoyouren: 凝视点事件
 		dealVrStarePointEvent();
 
 		
@@ -252,6 +256,7 @@ public class Director implements Renderer {
 		mAbsSensorStrategy.register(mContext,new EngineSensorListenr() {
 			@Override
 			public void onSensorEvent(float[] tmpMatrix) {
+				// luoyouren: 这里把Sensor数据传给场景
 				mSceneManager.setEyeMatrix(tmpMatrix);
 			}
 		});		
@@ -320,6 +325,8 @@ public class Director implements Renderer {
 	 * @param event
 	 * @return
 	 */
+	// luoyouren: 事件分发
+	// 在EngineGLView.java中被调用
 	public boolean dispatchTouchEvent(MotionEvent event) {
 		boolean state = false;
 

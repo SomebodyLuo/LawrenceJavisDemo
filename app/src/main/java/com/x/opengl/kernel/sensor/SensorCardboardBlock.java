@@ -22,6 +22,8 @@ public class SensorCardboardBlock extends AbsSensorStrategy  {
 	private EngineSensorListenr mSensorListener;
 	private Sensor sensor1;
 	private Sensor sensor2;
+
+    //luoyouren: 扩展卡尔曼滤波
     private final OrientationEKF mTracker = new OrientationEKF();
     private Vector3d mLatestAcc = new Vector3d();
     private final Vector3d mLatestGyro = new Vector3d();
@@ -50,8 +52,7 @@ public class SensorCardboardBlock extends AbsSensorStrategy  {
 		
 		mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
 		mSensorManager.unregisterListener(this);
-		
-		
+
         sensor1 = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensor2 = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 

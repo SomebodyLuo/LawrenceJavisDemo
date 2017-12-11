@@ -155,6 +155,9 @@ public class OESShader extends T_Shader{
         maLightLocationHandle=GLES20.glGetUniformLocation(mProgram, U_LightLocation);
 	}
 
+	// important: luoyouren
+	// Shader code
+	// 最根本调用Shader绘制的地方
 	protected void goRender(Mesh mesh, Material material,  float[] selfModelViewMatrix) {
 		
 		GLES20.glUseProgram(mProgram);

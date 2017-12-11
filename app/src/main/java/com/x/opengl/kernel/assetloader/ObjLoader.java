@@ -19,6 +19,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
 
+import com.hello.R;
+import com.x.Director;
 import com.x.opengl.kernel.Material;
 import com.x.opengl.kernel.Texture;
 
@@ -198,6 +200,107 @@ public class ObjLoader {
 		}
 
 //		return mTheObjDrawable;
+	}
+
+	// luoyouren
+	public void loadSkyBox()
+	{
+		// 顶点坐标
+		float[][][] points = {
+				//front
+				{{-0.5f, -0.5f, -0.5f},
+				{0.5f, -0.5f, -0.5f},
+				{-0.5f, 0.5f, -0.5f},
+				{0.5f, 0.5f, -0.5f}},
+
+				//back
+				{{0.5f, -0.5f, 0.5f},
+				{-0.5f, -0.5f, 0.5f},
+				{0.5f, 0.5f, 0.5f},
+				{-0.5f, 0.5f, 0.5f}},
+
+				//left
+				{{-0.5f, -0.5f, 0.5f},
+				{-0.5f, -0.5f, -0.5f},
+				{-0.5f, 0.5f, 0.5f},
+				{-0.5f, 0.5f, -0.5f}},
+
+				//right
+				{{0.5f, -0.5f, -0.5f},
+				{0.5f, -0.5f, 0.5f},
+				{0.5f, 0.5f, -0.5f},
+				{0.5f, 0.5f, 0.5f}},
+
+				//top
+				{{-0.5f, 0.5f, -0.5f},
+				{0.5f, 0.5f, -0.5f},
+				{-0.5f, 0.5f, 0.5f},
+				{0.5f, 0.5f, 0.5f}},
+
+				//bottom
+				{{-0.5f, -0.5f, 0.5f},
+				{0.5f, -0.5f, 0.5f},
+				{-0.5f, -0.5f, -0.5f},
+				{0.5f, -0.5f, -0.5f}},
+		};
+
+		// 纹理坐标
+		float[][] texCoord = {
+				{0.0f, 0.0f},
+				{1.0f, 0.0f},
+				{0.0f, 1.0f},
+				{1.0f, 1.0f},
+
+		};
+
+		// 纹理ID
+		int sourceIds[] = {
+				R.drawable.bluenebula2048_front,
+				R.drawable.bluenebula2048_back,
+				R.drawable.bluenebula2048_left,
+				R.drawable.bluenebula2048_right,
+				R.drawable.bluenebula2048_top,
+				R.drawable.bluenebula2048_bottom,
+		};
+		Texture[] textures = new Texture[6];
+		for (int i = 0; i < 6; i++)
+		{
+			textures[i] = mResourcer.generateTexture(BitmapFactory.decodeResource(mContext.getResources(), sourceIds[i]));
+		}
+
+		//打包
+		if (null == mMeshes) {
+			mMeshes = new ArrayList<MeshPackage>();
+		}
+		mMeshes.clear();
+		MeshPackage meshPackage = null;
+
+		if (null == mMaterials) {
+			mMaterials = new ArrayList<MaterialPackage>();
+		}
+		mMaterials.clear();
+		MaterialPackage material = null;
+
+		for (int i = 0; i < 6; i ++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				meshPackage = new MeshPackage();
+
+				meshPackage.mName = "points[" + i + "][" + j + "]";
+
+				meshPackage.mVertexes = points[i][j];
+
+				meshPackage.mTextures = texCoord[j];
+
+				mMeshes.add(meshPackage);
+			}
+
+			material = new MaterialPackage();
+			material.mName = "face[" + i + "]";
+			material.mMaterial.Texture = textures[i];
+			mMaterials.add(material);
+		}
 	}
 
 	

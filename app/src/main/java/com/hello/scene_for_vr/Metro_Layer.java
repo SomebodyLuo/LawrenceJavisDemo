@@ -78,9 +78,9 @@ public class Metro_Layer {
             viewGroup2.addChild(canvasView);
 
             View leftArrow = makeImageView(R.drawable.arrow_left, 36, 59, -(1773 / 2 - 100), 0, 8);
-            leftArrow.setAlpha(0.5f);
+            leftArrow.setAlpha(0.3f);
             View rightArrow = makeImageView(R.drawable.arrow_right, 36, 59, (1773 / 2 - 100), 0, 8);
-            rightArrow.setAlpha(0.5f);
+            rightArrow.setAlpha(0.3f);
             viewGroup2.addChild(leftArrow);
             viewGroup2.addChild(rightArrow);
 
