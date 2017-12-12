@@ -84,7 +84,7 @@ public class Model {
 		SkyDrawable mDrawable =  null;
 		// 组装Mesh
 		int meshSize = objLoader.mMeshes.size();
-		mDrawable = new SkyDrawable(2);
+		mDrawable = new SkyDrawable(-2);
 		mDrawable.mMeshes = new Mesh[meshSize];
 		for (int i = 0; i < meshSize; i++) {
 			MeshPackage meshPackage = objLoader.mMeshes.get(i);

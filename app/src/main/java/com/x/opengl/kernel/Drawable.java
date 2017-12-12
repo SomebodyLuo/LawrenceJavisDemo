@@ -7,6 +7,7 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
+import android.util.Log;
 
 import com.x.Director;
 import com.x.components.node.View;
@@ -56,6 +57,8 @@ public class Drawable
 			Director.sGLESVersion.pushMatrix();
 
 			onAnimation();
+			// luoyouren: 在这里将View设置的尺寸转换为顶点的放大倍数，也就达到了操控一个面片的大小
+			// 最后影响的是 mModelMatrix
 			onDrawbleTransform();
 			
 			onRender();
@@ -318,6 +321,8 @@ public class Drawable
 		mTransform.run();
 		if (mTransform.hasMoreAnimation() || mFirst){
 
+			Log.i("Drawable.onAnimation: ", " mDrawableWidth = " + mDrawableWidth + "; mDrawableHeight = " + mDrawableHeight);
+			// luoyouren: 在这里将View设置的尺寸转换为顶点的放大倍数，也就达到了操控一个面片的大小
 			mTransform.normal(mDrawableWidth, mDrawableHeight, mDrawableThickness, 1, 1, 1);
 			mFirst = false;
 			invalidate();

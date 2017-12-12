@@ -74,6 +74,8 @@ public class ObjLoader {
 	private Context					mContext				= null;
 	private CBResourcer				mResourcer				= null;
 	private BufferedReader			mReader					= null;
+
+	// MeshPackage 就是OBJ文件中的face-面片，含有3个点坐标、3个纹理坐标、3个法线坐标、3个索引
 	public List<MeshPackage>		mMeshes					= null;
 	public List<MaterialPackage>	mMaterials				= null;
 	private String					mObjFile				= null;
@@ -91,6 +93,7 @@ public class ObjLoader {
 	 * 
 	 * @date 2013-08-20 18:37:15
 	 */
+	// MeshPackage 就是OBJ文件中的face-面片，含有3个点坐标、3个纹理坐标、3个法线坐标、3个索引
 	class MeshPackage {
 		public float[]	mVertexes		= null;
 		public float[]	mNormals		= null;
@@ -253,6 +256,11 @@ public class ObjLoader {
 
 		};
 
+		short[][] indices = {
+				{0, 1, 2},
+				{1, 2, 3},
+		};
+
 		// 纹理ID
 		int sourceIds[] = {
 				R.drawable.bluenebula2048_front,
@@ -285,21 +293,36 @@ public class ObjLoader {
 		{
 			for (int j = 0; j < 4; j++)
 			{
-				meshPackage = new MeshPackage();
+				if (3 == j)
+				{
+					// 每个四边形，有两个三角形，遍历两次
+					j = 1;
+				}
 
+				meshPackage = new MeshPackage();
 				meshPackage.mName = "points[" + i + "][" + j + "]";
 
-				meshPackage.mVertexes = points[i][j];
+				meshPackage.mVertexes = new float[3 * 3];
+				for (int p = 0; p < 3; p++)
+				{
+					meshPackage.mVertexes[3 * j + p] = points[i][j][p];
+				}
 
-				meshPackage.mTextures = texCoord[j];
+				meshPackage.mTextures = new float[3 * 2];
+				for (int p = 0; p < 2; p++)
+				{
+					meshPackage.mTextures[2 * j + p] = texCoord[j][p];
+				}
+
+				meshPackage.mIndices = new short[]{0, 1, 2};
 
 				mMeshes.add(meshPackage);
-			}
 
-			material = new MaterialPackage();
-			material.mName = "face[" + i + "]";
-			material.mMaterial.Texture = textures[i];
-			mMaterials.add(material);
+				material = new MaterialPackage();
+				material.mName = "face[" + i + "]";
+				material.mMaterial.Texture = textures[i];
+				mMaterials.add(material);
+			}
 		}
 	}
 
@@ -381,7 +404,7 @@ public class ObjLoader {
 				// 设定此模型终点
 				isNewObj = false;
 
-				// faceNode = [顶点索引,贴图索引,法线索引,顶点索引,贴图索引,法线索引,顶点索引,贴图索引,法线索引]
+				// faceNode = [顶点索引,贴图索引,法线索引,  顶点索引,贴图索引,法线索引,  顶点索引,贴图索引,法线索引]
 				// 顶点数组不动，把顶点数组的索引拷贝到索引数组中
 				// 通过贴图坐标索引和法线索引取出数据堆中的值，并放入到空的贴图坐标数组和法线数组中
 				int size = faceNode.length;

@@ -247,7 +247,8 @@ public class View    {
 		mRequestInvalidate = true;
 		Director.getInstance().postInvalidate();
 	}
-	public void setThickness(float f) {
+	public void
+	setThickness(float f) {
 		this.mViewThickness = f;
 		mBGDrawable.setThickness(f);
 		mRequestInvalidate = true;

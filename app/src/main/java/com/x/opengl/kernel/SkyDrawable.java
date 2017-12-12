@@ -9,8 +9,8 @@ import com.x.Director;
 
 public class SkyDrawable extends Drawable{
 
-    public MaterialGroup mMaterials = null;//专为加载Obj格式的文件而用个的临时变量
     public Mesh[] mMeshes = null;//专为加载Obj格式的文件而用个的临时变量
+    public MaterialGroup mMaterials = null;//专为加载Obj格式的文件而用个的临时变量
     private boolean mCullFrontFlag  = false;
 
 
