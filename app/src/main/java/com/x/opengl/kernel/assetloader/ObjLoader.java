@@ -266,11 +266,14 @@ public class ObjLoader {
 		};
 
 		// 纹理坐标
-		float[][] texCoord = {
-				{0.0f, 0.0f},
+		float[][][] texCoord = {
+				{{0.0f, 0.0f},
 				{1.0f, 0.0f},
+				{0.0f, 1.0f}},
+
+				{{1.0f, 0.0f},
 				{0.0f, 1.0f},
-				{1.0f, 1.0f},
+				{1.0f, 1.0f}},
 
 		};
 
@@ -302,35 +305,41 @@ public class ObjLoader {
 		mMaterials.clear();
 		MaterialPackage material = null;
 
-		for (int i = 0; i < 12; i ++)
+		for (int i = 0; i < 6; i ++)
 		{
+			meshPackage = new MeshPackage();
+			meshPackage.mName = "faces[" + i + "]";
+			meshPackage.mVertexes = new float[3 * 3 * 2];	// 每个mesh模型是一个四边形，有两个face三角形，每个三角形有3个坐标，每个坐标有3个分量
+			meshPackage.mTextures = new float[2 * 3 * 2];
+			meshPackage.mIndices = new short[]{0, 1, 2, 3, 4, 5};	//索引数组
 			for (int j = 0; j < 3; j++)
 			{
 
-				meshPackage = new MeshPackage();
-				meshPackage.mName = "points[" + i + "][" + j + "]";
-
-				meshPackage.mVertexes = new float[3 * 3 * 2];	// 每个mesh模型是一个四边形，有两个face三角形，每个三角形有3个坐标，每个坐标有3个分量
 				for (int p = 0; p < 3; p++)
 				{
-					meshPackage.mVertexes[3 * j + p] = points[i][j][p];
+					meshPackage.mVertexes[3 * j + p] = points[2 * i][j][p];		//第一个三角形 顶点坐标
+				}
+				for (int p = 0; p < 3; p++)
+				{
+					meshPackage.mVertexes[9 + 3 * j + p] = points[2 * i + 1][j][p];	//第二个三角形 顶点坐标
 				}
 
-				meshPackage.mTextures = new float[3 * 2];
+
 				for (int p = 0; p < 2; p++)
 				{
-					meshPackage.mTextures[2 * j + p] = texCoord[j][p];
+					meshPackage.mTextures[2 * j + p] = texCoord[0][j][p];		//第一个三角形 纹理坐标
 				}
-
-				meshPackage.mIndices = new short[]{0, 1, 2};
-
-				mMeshes.add(meshPackage);
-
-				material = new MaterialPackage();
-				material.mName = "face[" + i + "]";
-				material.mMaterial.Texture = textures[i];
-				mMaterials.add(material);
+				for (int p = 0; p < 2; p++)
+				{
+					meshPackage.mTextures[6 + 2 * j + p] = texCoord[1][j][p];	//第二个三角形 纹理坐标
+				}
 			}
+			mMeshes.add(meshPackage);
+
+			material = new MaterialPackage();
+			material.mName = meshPackage.mName;
+			material.mMaterial.Texture = textures[i];
+			mMaterials.add(material);
 		}
 	}
 

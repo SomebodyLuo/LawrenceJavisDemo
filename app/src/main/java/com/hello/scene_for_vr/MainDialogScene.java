@@ -32,8 +32,8 @@ public class MainDialogScene extends DialogXScene{
 //		mSkySphere = new SkySphere();
 //		addChild(mSkySphere.getLayer());
 
-		mSkyBox = new SkyBox();
-		addChild(mSkyBox.getLayer());
+//		mSkyBox = new SkyBox();
+//		addChild(mSkyBox.getLayer());
 
 		mMetro = new Metro_Layer(this);
 		addChild(mMetro.getLayer());

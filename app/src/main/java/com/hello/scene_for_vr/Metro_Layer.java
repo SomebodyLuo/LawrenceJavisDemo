@@ -56,6 +56,149 @@ public class Metro_Layer {
         mLayer.setFocusable(false);
 
 
+        // 纹理ID
+        int sourceIds1[] = {
+                R.drawable.bluenebula2048_front,
+                R.drawable.bluenebula2048_back,
+                R.drawable.bluenebula2048_left,
+                R.drawable.bluenebula2048_right,
+                R.drawable.bluenebula2048_top,
+                R.drawable.bluenebula2048_bottom,
+        };
+//        1
+        if (true)
+        {
+            //背景盒
+            MyRotateViewGroup viewGroup2 = new MyRotateViewGroup();
+            viewGroup2.SetDebugName("mBackGroundBox");
+            viewGroup2.setWidth(EngineConstanst.BOX_LENGTH*2);
+            viewGroup2.setHeight(EngineConstanst.BOX_LENGTH*2);
+//			viewGroup2.setBackgroundColor(Color.parseColor("#2200ffff"));
+            viewGroup2.setVisibility(true);
+            viewGroup2.setTranslate(0, 0 ,0);
+            viewGroup2.setFocusable(false);
+
+            View backgroundView = makeImageView(R.drawable.bluenebula2048_front, EngineConstanst.BOX_LENGTH*2, EngineConstanst.BOX_LENGTH*2, 0, 0, -EngineConstanst.BOX_LENGTH/2);
+            viewGroup2.addChild(backgroundView);
+
+            mLayer.addChild(viewGroup2);
+
+        }
+//        2
+        if (true)
+        {
+            //背景盒
+            MyRotateViewGroup viewGroup2 = new MyRotateViewGroup();
+            viewGroup2.SetDebugName("mBackGroundBox");
+            viewGroup2.setWidth(EngineConstanst.BOX_LENGTH*2);
+            viewGroup2.setHeight(EngineConstanst.BOX_LENGTH*2);
+//			viewGroup2.setBackgroundColor(Color.parseColor("#2200ffff"));
+            viewGroup2.setVisibility(true);
+            viewGroup2.setTranslate(0, 0 ,0);
+            viewGroup2.setFocusable(false);
+
+            View backgroundView = null;
+
+            backgroundView = makeImageView(R.drawable.bluenebula2048_back, EngineConstanst.BOX_LENGTH*2, EngineConstanst.BOX_LENGTH*2, 0, 0, EngineConstanst.BOX_LENGTH/2);
+            viewGroup2.addChild(backgroundView);
+
+            mLayer.addChild(viewGroup2);
+
+        }
+
+//        3
+        if (false)
+        {
+            //背景盒
+            MyRotateViewGroup viewGroup2 = new MyRotateViewGroup();
+            viewGroup2.SetDebugName("mBackGroundBox");
+            viewGroup2.setWidth(EngineConstanst.BOX_LENGTH);
+            viewGroup2.setHeight(EngineConstanst.BOX_LENGTH);
+//			viewGroup2.setBackgroundColor(Color.parseColor("#2200ffff"));
+            viewGroup2.setVisibility(true);
+            viewGroup2.setTranslate(0, 0 ,0);
+            viewGroup2.setFocusable(false);
+
+
+
+            View backgroundView = null;
+
+            backgroundView = makeImageView(R.drawable.bluenebula2048_left, EngineConstanst.BOX_LENGTH, EngineConstanst.BOX_LENGTH, -EngineConstanst.BOX_LENGTH/2, 0, 0);
+            viewGroup2.addChild(backgroundView);
+
+            mLayer.addChild(viewGroup2);
+
+        }
+
+//        4
+        if (false)
+        {
+            //背景盒
+            MyRotateViewGroup viewGroup2 = new MyRotateViewGroup();
+            viewGroup2.SetDebugName("mBackGroundBox");
+            viewGroup2.setWidth(EngineConstanst.BOX_LENGTH);
+            viewGroup2.setHeight(EngineConstanst.BOX_LENGTH);
+//			viewGroup2.setBackgroundColor(Color.parseColor("#2200ffff"));
+            viewGroup2.setVisibility(true);
+            viewGroup2.setTranslate(0, 0 ,0);
+            viewGroup2.setFocusable(false);
+
+
+
+            View backgroundView = null;
+
+            backgroundView = makeImageView(R.drawable.bluenebula2048_right, EngineConstanst.BOX_LENGTH, EngineConstanst.BOX_LENGTH, EngineConstanst.BOX_LENGTH/2, 0, 0);
+            viewGroup2.addChild(backgroundView);
+
+            mLayer.addChild(viewGroup2);
+
+        }
+
+//        5
+        if (false)
+        {
+            //背景盒
+            MyRotateViewGroup viewGroup2 = new MyRotateViewGroup();
+            viewGroup2.SetDebugName("mBackGroundBox");
+            viewGroup2.setWidth(EngineConstanst.BOX_LENGTH);
+            viewGroup2.setHeight(EngineConstanst.BOX_LENGTH);
+//			viewGroup2.setBackgroundColor(Color.parseColor("#2200ffff"));
+            viewGroup2.setVisibility(true);
+            viewGroup2.setTranslate(0, 0 ,0);
+            viewGroup2.setFocusable(false);
+
+            View backgroundView = null;
+
+            backgroundView = makeImageView(R.drawable.bluenebula2048_top, EngineConstanst.BOX_LENGTH, EngineConstanst.BOX_LENGTH, 0, EngineConstanst.BOX_LENGTH/2, 0);
+            viewGroup2.addChild(backgroundView);
+
+            mLayer.addChild(viewGroup2);
+
+        }
+
+//        6
+        if (false)
+        {
+            //背景盒
+            MyRotateViewGroup viewGroup2 = new MyRotateViewGroup();
+            viewGroup2.SetDebugName("mBackGroundBox");
+            viewGroup2.setWidth(EngineConstanst.BOX_LENGTH);
+            viewGroup2.setHeight(EngineConstanst.BOX_LENGTH);
+//			viewGroup2.setBackgroundColor(Color.parseColor("#2200ffff"));
+            viewGroup2.setVisibility(true);
+            viewGroup2.setTranslate(0, 0 ,0);
+            viewGroup2.setFocusable(false);
+
+
+
+            View backgroundView = null;
+
+            backgroundView = makeImageView(R.drawable.bluenebula2048_bottom, EngineConstanst.BOX_LENGTH, EngineConstanst.BOX_LENGTH, 0, -EngineConstanst.BOX_LENGTH/2, 0);
+            viewGroup2.addChild(backgroundView);
+
+            mLayer.addChild(viewGroup2);
+
+        }
 
         {
             //背景与画布
@@ -67,6 +210,8 @@ public class Metro_Layer {
             viewGroup2.setVisibility(true);
             viewGroup2.setTranslate(0, 0 ,0);
             viewGroup2.setFocusable(false);
+
+
 
 //            View backgroundView = makeBackgroundView(R.drawable.background);
             View backgroundView = makeImageView(R.drawable.background, EngineConstanst.REFERENCE_SCREEN_WIDTH, EngineConstanst.REFERENCE_SCREEN_HEIGHT, 0, 0, 0);
@@ -83,6 +228,7 @@ public class Metro_Layer {
             rightArrow.setAlpha(0.3f);
             viewGroup2.addChild(leftArrow);
             viewGroup2.addChild(rightArrow);
+
 
             mLayer.addChild(viewGroup2);
 

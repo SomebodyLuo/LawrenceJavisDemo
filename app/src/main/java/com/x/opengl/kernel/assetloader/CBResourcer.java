@@ -549,6 +549,15 @@ import com.x.opengl.utils.Utils;
 		return  Model.assembleSkyBox(objLoader);
 	}
 
+	public SkyDrawable generateSkyBox()
+	{
+		ObjLoader objLoader = new ObjLoader(this, mContext);
+		objLoader.loadSkyBox();
+		Log.d("ming", "going -     generateSkyBox = " );
+
+		return Model.assembleSkyBox(objLoader);
+	}
+
 
 	public ObjDrawable loadModelByAssimpAPI(Context context ,String[] assetFiles){
 		AssimpLoader assimpLoader = new AssimpLoader();

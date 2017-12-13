@@ -156,7 +156,9 @@ public class BaseShader extends T_Shader{
 
 	// luoyouren: 最底层的绘制函数
 	protected void goRender(Mesh mesh, Material material,  float[] selfModelViewMatrix) {
-		
+
+//		Log.i("luoyouren", mesh.VertexBuffer.limit() + )
+
 		GLES20.glUseProgram(mProgram);
 
 

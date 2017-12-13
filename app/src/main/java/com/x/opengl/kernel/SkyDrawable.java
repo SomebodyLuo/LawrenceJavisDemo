@@ -67,7 +67,7 @@ public class SkyDrawable extends Drawable{
         int meshSize = mMeshes.length;
         for (int i = 0; i < meshSize; i++) {
             if (mMeshes[i].isEnabled()) {
-                onRender(mMeshes[i],mMaterials.getMaterial(mMeshes[i].Name));
+                onRender(mMeshes[i], mMaterials.getMaterial(mMeshes[i].Name));
             }
         }
 

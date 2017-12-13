@@ -26,7 +26,7 @@ public class SkyBox {
         mBox.setHeight(EngineConstanst.REFERENCE_SCREEN_HEIGHT * 10);
         mBox.setThickness(EngineConstanst.REFERENCE_SCREEN_HEIGHT * 10);
 
-        mBox.setTranslate(0, 0, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+//        mBox.setTranslate(0, 0, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
         mBox.setFocusable(false);
         mBox.setTouchAble(false);
 //        mBox.setCullFrontFace(false);
