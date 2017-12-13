@@ -69,9 +69,10 @@ public class SceneManager {
 		mToastScene.setRenderable(false);
 		
 		// 初始化用于显示引擎信息的场景
+		// luoyouren: 引擎信息
 		mEngineInfoScene = new EngineInfoScene();
 		mEngineInfoScene.initScene();
-		mEngineInfoScene.setRenderable(true);
+		mEngineInfoScene.setRenderable(false);
 
 		// 粒子系统管理场景
 		mParticleSystemScene = new ParticleSystemScene();
@@ -79,6 +80,7 @@ public class SceneManager {
 		mParticleSystemScene.setRenderable(true);
 
 		// 灯光系统管理场景
+		// luoyouren: 光照物体
 		mLightingScene = new LightingScene();
 		mLightingScene.initScene();
 		mLightingScene.setRenderable(true);

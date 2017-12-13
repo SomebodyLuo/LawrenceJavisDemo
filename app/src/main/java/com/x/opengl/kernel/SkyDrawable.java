@@ -44,12 +44,7 @@ public class SkyDrawable extends Drawable{
 
     public void draw( ) {
 
-
-//        if(mCullFrontFlag){
-//            Director.sGLESVersion.openCullFrontFace();
-//        }else{
-//            Director.sGLESVersion.openCullBackFace();
-//        }
+        Director.sGLESVersion.closeCullFace();
 
         Director.sGLESVersion.closeDepthTest();
 
@@ -69,13 +64,10 @@ public class SkyDrawable extends Drawable{
 
 
 
-        for (int i = 0; i < 6; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                if (mMeshes[i].isEnabled()) {
-                    onRender(mMeshes[4 * i + j], mMaterials.getMaterial(i));
-                }
+        int meshSize = mMeshes.length;
+        for (int i = 0; i < meshSize; i++) {
+            if (mMeshes[i].isEnabled()) {
+                onRender(mMeshes[i],mMaterials.getMaterial(mMeshes[i].Name));
             }
         }
 

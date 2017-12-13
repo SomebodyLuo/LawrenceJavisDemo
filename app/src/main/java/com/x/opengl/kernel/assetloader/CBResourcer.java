@@ -542,13 +542,11 @@ import com.x.opengl.utils.Utils;
 		return  Model.assembleObj(objLoader);
 	}
 
-	public SkyDrawable generateSkyBox()
-	{
+	public SkyDrawable loadSkyBox(String assetFile) {
 		ObjLoader objLoader = new ObjLoader(this, mContext);
-		objLoader.loadSkyBox();
-		Log.d("ming", "going -     generateSkyBox = " );
-
-		return Model.assembleSkyBox(objLoader);
+		objLoader.loadAsset(assetFile);
+		Log.d("ming", "going -     loadObjModel = " );
+		return  Model.assembleSkyBox(objLoader);
 	}
 
 

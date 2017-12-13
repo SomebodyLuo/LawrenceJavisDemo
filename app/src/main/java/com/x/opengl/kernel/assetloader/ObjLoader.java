@@ -213,36 +213,54 @@ public class ObjLoader {
 				//front
 				{{-0.5f, -0.5f, -0.5f},
 				{0.5f, -0.5f, -0.5f},
+				{-0.5f, 0.5f, -0.5f}},
+
+				{{0.5f, -0.5f, -0.5f},
 				{-0.5f, 0.5f, -0.5f},
 				{0.5f, 0.5f, -0.5f}},
 
 				//back
 				{{0.5f, -0.5f, 0.5f},
 				{-0.5f, -0.5f, 0.5f},
+				{0.5f, 0.5f, 0.5f}},
+
+				{{-0.5f, -0.5f, 0.5f},
 				{0.5f, 0.5f, 0.5f},
 				{-0.5f, 0.5f, 0.5f}},
 
 				//left
 				{{-0.5f, -0.5f, 0.5f},
 				{-0.5f, -0.5f, -0.5f},
+				{-0.5f, 0.5f, 0.5f}},
+
+				{{-0.5f, -0.5f, -0.5f},
 				{-0.5f, 0.5f, 0.5f},
 				{-0.5f, 0.5f, -0.5f}},
 
 				//right
 				{{0.5f, -0.5f, -0.5f},
 				{0.5f, -0.5f, 0.5f},
+				{0.5f, 0.5f, -0.5f}},
+
+				{{0.5f, -0.5f, 0.5f},
 				{0.5f, 0.5f, -0.5f},
 				{0.5f, 0.5f, 0.5f}},
 
 				//top
 				{{-0.5f, 0.5f, -0.5f},
 				{0.5f, 0.5f, -0.5f},
+				{-0.5f, 0.5f, 0.5f}},
+
+				{{0.5f, 0.5f, -0.5f},
 				{-0.5f, 0.5f, 0.5f},
 				{0.5f, 0.5f, 0.5f}},
 
 				//bottom
 				{{-0.5f, -0.5f, 0.5f},
 				{0.5f, -0.5f, 0.5f},
+				{-0.5f, -0.5f, -0.5f}},
+
+				{{0.5f, -0.5f, 0.5f},
 				{-0.5f, -0.5f, -0.5f},
 				{0.5f, -0.5f, -0.5f}},
 		};
@@ -254,11 +272,6 @@ public class ObjLoader {
 				{0.0f, 1.0f},
 				{1.0f, 1.0f},
 
-		};
-
-		short[][] indices = {
-				{0, 1, 2},
-				{1, 2, 3},
 		};
 
 		// 纹理ID
@@ -289,20 +302,15 @@ public class ObjLoader {
 		mMaterials.clear();
 		MaterialPackage material = null;
 
-		for (int i = 0; i < 6; i ++)
+		for (int i = 0; i < 12; i ++)
 		{
-			for (int j = 0; j < 4; j++)
+			for (int j = 0; j < 3; j++)
 			{
-				if (3 == j)
-				{
-					// 每个四边形，有两个三角形，遍历两次
-					j = 1;
-				}
 
 				meshPackage = new MeshPackage();
 				meshPackage.mName = "points[" + i + "][" + j + "]";
 
-				meshPackage.mVertexes = new float[3 * 3];
+				meshPackage.mVertexes = new float[3 * 3 * 2];	// 每个mesh模型是一个四边形，有两个face三角形，每个三角形有3个坐标，每个坐标有3个分量
 				for (int p = 0; p < 3; p++)
 				{
 					meshPackage.mVertexes[3 * j + p] = points[i][j][p];
@@ -551,7 +559,7 @@ public class ObjLoader {
 		for (int i = 0; i < mMaterials.size(); i++) {
 			MaterialPackage mat  = mMaterials.get(i);
 			if(  mat.mMaterial.Texture == null){
-
+				// luoyouren: 程序纹理
 				//如果没有纹理图，则使用材质颜色构造一张纹理
 				float[] ambient = mat.mMaterial.getAmbient();
 				float[] diffuse = mat.mMaterial.getDiffuse();
