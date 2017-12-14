@@ -288,6 +288,8 @@ public class T_GLES20 extends GLES {
 
 		return geTexture(bmp,recycleBitmap);
 	}
+
+	//luoyouren: 生成纹理
 	private Texture geTexture(Bitmap bmp,boolean recycleLast ){
 
 //		Log.d("debug","generateTexture" );

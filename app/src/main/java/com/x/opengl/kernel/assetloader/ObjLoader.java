@@ -279,12 +279,12 @@ public class ObjLoader {
 
 		// 纹理ID
 		int sourceIds[] = {
-				R.drawable.bluenebula2048_front,
-				R.drawable.bluenebula2048_back,
-				R.drawable.bluenebula2048_left,
-				R.drawable.bluenebula2048_right,
-				R.drawable.bluenebula2048_top,
-				R.drawable.bluenebula2048_bottom,
+//				R.drawable.bluenebula2048_front,
+//				R.drawable.bluenebula2048_back,
+//				R.drawable.bluenebula2048_left,
+//				R.drawable.bluenebula2048_right,
+//				R.drawable.bluenebula2048_top,
+//				R.drawable.bluenebula2048_bottom,
 		};
 		Texture[] textures = new Texture[6];
 		for (int i = 0; i < 6; i++)

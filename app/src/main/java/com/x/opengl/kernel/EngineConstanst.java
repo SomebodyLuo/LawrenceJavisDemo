@@ -13,7 +13,7 @@ public class EngineConstanst {
 	
 	// 是否有按键音
 	public static boolean ISSOUND = true;
-	public static final float BOX_LENGTH = 2048;//用户参考屏幕宽度
+	public static final float BOX_LENGTH = 2048 * 10;//用户参考屏幕宽度
 
 	public static final float REFERENCE_SCREEN_WIDTH = 1920;//用户参考屏幕宽度
 	public static final float REFERENCE_SCREEN_HEIGHT = 1080;//用户参考屏幕高度
