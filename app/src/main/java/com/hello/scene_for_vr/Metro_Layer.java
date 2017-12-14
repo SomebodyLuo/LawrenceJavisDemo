@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.util.Log;
 import android.view.Gravity;
 
 import com.hello.R;
@@ -36,6 +37,9 @@ public class Metro_Layer {
     private MainDialogScene mMainDialogScene;
     private int mShowIndex = 0 ;
 
+    private boolean isBackgroundInit = false;
+    private int mBackgroundWallIndex;
+
     public Metro_Layer(MainDialogScene mainDialogScene) {
 
         this.mMainDialogScene = mainDialogScene;
@@ -56,163 +60,10 @@ public class Metro_Layer {
         mLayer.setFocusable(false);
 
 
-        // 纹理ID
-        int sourceIds1[] = {
-//                R.drawable.bluenebula2048_front,
-//                R.drawable.bluenebula2048_back,
-//                R.drawable.bluenebula2048_left,
-//                R.drawable.bluenebula2048_right,
-//                R.drawable.bluenebula2048_top,
-//                R.drawable.bluenebula2048_bottom,
+        // luoyouren: 增加背景墙
+        InitBackgroundWall();
 
-
-                R.drawable.bluenebula1024_front,
-                R.drawable.bluenebula1024_back,
-                R.drawable.bluenebula1024_left,
-                R.drawable.bluenebula1024_right,
-                R.drawable.bluenebula1024_top,
-                R.drawable.bluenebula1024_bottom,
-
-
-//                R.drawable.ic_launcher,
-//                R.drawable.ic_launcher,
-//                R.drawable.ic_launcher,
-//                R.drawable.ic_launcher,
-//                R.drawable.ic_launcher,
-//                R.drawable.ic_launcher,
-        };
-//        1
         if (true)
-        {
-            //背景盒
-            MyRotateViewGroup viewGroup2 = new MyRotateViewGroup();
-            viewGroup2.SetDebugName("mBackGroundBox");
-            viewGroup2.setWidth(EngineConstanst.BOX_LENGTH);
-            viewGroup2.setHeight(EngineConstanst.BOX_LENGTH);
-//			viewGroup2.setBackgroundColor(Color.parseColor("#2200ffff"));
-            viewGroup2.setVisibility(true);
-            viewGroup2.setTranslate(0, 0 ,0);
-            viewGroup2.setFocusable(false);
-
-            View backgroundView = makeImageView(sourceIds1[0], EngineConstanst.BOX_LENGTH, EngineConstanst.BOX_LENGTH, 0, 0, -EngineConstanst.BOX_LENGTH/2);
-            viewGroup2.addChild(backgroundView);
-
-            mLayer.addChild(viewGroup2);
-
-        }
-//        2
-        if (true)
-        {
-            //背景盒
-            MyRotateViewGroup viewGroup2 = new MyRotateViewGroup();
-            viewGroup2.SetDebugName("mBackGroundBox");
-            viewGroup2.setWidth(EngineConstanst.BOX_LENGTH*2);
-            viewGroup2.setHeight(EngineConstanst.BOX_LENGTH*2);
-//			viewGroup2.setBackgroundColor(Color.parseColor("#2200ffff"));
-            viewGroup2.setVisibility(true);
-            viewGroup2.setTranslate(0, 0 ,0);
-            viewGroup2.setFocusable(false);
-
-            View backgroundView = makeImageView(sourceIds1[1], EngineConstanst.BOX_LENGTH, EngineConstanst.BOX_LENGTH, 0, 0, EngineConstanst.BOX_LENGTH/2);
-            backgroundView.setRotate(0, 180, 0);
-            viewGroup2.addChild(backgroundView);
-
-            mLayer.addChild(viewGroup2);
-
-        }
-
-//        3
-        if (true)
-        {
-            //背景盒
-            MyRotateViewGroup viewGroup2 = new MyRotateViewGroup();
-            viewGroup2.SetDebugName("mBackGroundBox");
-            viewGroup2.setWidth(EngineConstanst.BOX_LENGTH);
-            viewGroup2.setHeight(EngineConstanst.BOX_LENGTH);
-//			viewGroup2.setBackgroundColor(Color.parseColor("#2200ffff"));
-            viewGroup2.setVisibility(true);
-            viewGroup2.setTranslate(0, 0 ,0);
-            viewGroup2.setFocusable(false);
-
-
-
-            View backgroundView = null;
-
-            backgroundView = makeImageView(sourceIds1[2], EngineConstanst.BOX_LENGTH, EngineConstanst.BOX_LENGTH, -EngineConstanst.BOX_LENGTH/2, 0, 0);
-            backgroundView.setRotate(0, 90, 0);
-            viewGroup2.addChild(backgroundView);
-
-            mLayer.addChild(viewGroup2);
-
-        }
-
-//        4
-        if (true)
-        {
-            //背景盒
-            MyRotateViewGroup viewGroup2 = new MyRotateViewGroup();
-            viewGroup2.SetDebugName("mBackGroundBox");
-            viewGroup2.setWidth(EngineConstanst.BOX_LENGTH);
-            viewGroup2.setHeight(EngineConstanst.BOX_LENGTH);
-//			viewGroup2.setBackgroundColor(Color.parseColor("#2200ffff"));
-            viewGroup2.setVisibility(true);
-            viewGroup2.setTranslate(0, 0 ,0);
-            viewGroup2.setFocusable(false);
-
-
-
-            View backgroundView = makeImageView(sourceIds1[3], EngineConstanst.BOX_LENGTH, EngineConstanst.BOX_LENGTH, EngineConstanst.BOX_LENGTH/2, 0, 0);
-            backgroundView.setRotate(0, -90, 0);
-            viewGroup2.addChild(backgroundView);
-
-            mLayer.addChild(viewGroup2);
-
-        }
-
-//        5
-        if (true)
-        {
-            //背景盒
-            MyRotateViewGroup viewGroup2 = new MyRotateViewGroup();
-            viewGroup2.SetDebugName("mBackGroundBox");
-            viewGroup2.setWidth(EngineConstanst.BOX_LENGTH);
-            viewGroup2.setHeight(EngineConstanst.BOX_LENGTH);
-//			viewGroup2.setBackgroundColor(Color.parseColor("#2200ffff"));
-            viewGroup2.setVisibility(true);
-            viewGroup2.setTranslate(0, 0 ,0);
-            viewGroup2.setFocusable(false);
-
-            View backgroundView = makeImageView(sourceIds1[4], EngineConstanst.BOX_LENGTH, EngineConstanst.BOX_LENGTH, 0, EngineConstanst.BOX_LENGTH/2, 0);
-            backgroundView.setRotate(-90, 0, 0);
-            viewGroup2.addChild(backgroundView);
-
-            mLayer.addChild(viewGroup2);
-
-        }
-
-//        6
-        if (true)
-        {
-            //背景盒
-            MyRotateViewGroup viewGroup2 = new MyRotateViewGroup();
-            viewGroup2.SetDebugName("mBackGroundBox");
-            viewGroup2.setWidth(EngineConstanst.BOX_LENGTH);
-            viewGroup2.setHeight(EngineConstanst.BOX_LENGTH);
-//			viewGroup2.setBackgroundColor(Color.parseColor("#2200ffff"));
-            viewGroup2.setVisibility(true);
-            viewGroup2.setTranslate(0, 0 ,0);
-            viewGroup2.setFocusable(false);
-
-
-
-            View backgroundView = makeImageView(sourceIds1[5], EngineConstanst.BOX_LENGTH, EngineConstanst.BOX_LENGTH, 0, -EngineConstanst.BOX_LENGTH/2, 0);
-            backgroundView.setRotate(90, 0, 0);
-            viewGroup2.addChild(backgroundView);
-
-            mLayer.addChild(viewGroup2);
-
-        }
-
         {
             //背景与画布
             MyRotateViewGroup viewGroup2 = new MyRotateViewGroup();
@@ -233,6 +84,9 @@ public class Metro_Layer {
 //            View canvasView = makeCanvasView(R.drawable.gray_shadow);
             View canvasView = makeImageView(R.drawable.gray_shadow, 1773, 913, 0, 0, 4);
             canvasView.setAlpha(0.5f);
+            canvasView.setFocusable(false);
+            canvasView.setTouchAble(false);
+            canvasView.setClickable(false);
             viewGroup2.addChild(canvasView);
 
             View leftArrow = makeImageView(R.drawable.arrow_left, 36, 59, -(1773 / 2 - 100), 0, 8);
@@ -270,6 +124,22 @@ public class Metro_Layer {
             for (int i = 0; i  < sourceIds.length; i++)
             {
                 View view = makeImageView(sourceIds[i], ImageWidth, ImageHeight, (2 * (i % COLUMNS) - 3) * (ImageWidth + ImageStride / 2) * 0.5f, (2 * (i / COLUMNS) - 1) * (ImageHeight + ImageStride / 2) * 0.5f,  12);
+                if (0 == i)
+                {
+                    view.setOnFocusListener(new View.OnFocusListener() {
+                        @Override
+                        public boolean onFocus(View v) {
+                            touchCounts++;
+                            updateBackground(touchCounts % 2);
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onRemoveFocus(View v) {
+                            return false;
+                        }
+                    });
+                }
                 metroViewGroup.addChild(view);
             }
 
@@ -290,104 +160,176 @@ public class Metro_Layer {
             viewGroup2.setTranslate( (EngineConstanst.REFERENCE_SCREEN_WIDTH - 500)/2 ,0,0);
             viewGroup2.setFocusable(false);
 
-            final List<String> messageList = new ArrayList<String>();
-            messageList.add(0, "推送消息"+(int)(Math.random()*1000));//初始化推送消息
-            messageIndex = 0;
-            final List<View> mViewLists = new ArrayList<View>();
-
-            for (int i = 0; i <6; i++) {
-                View view = makeMessage(i);
-                view.setTranslate(0, -220+i * (100+10),  0);
-                view.setAlpha(0);
-
-                mViewLists.add(view);
-                viewGroup2.addChild(view);
-            }
 
             final TextView te = (TextView) makeTextView(-4);
-            te.setText(messageList.get(0));
+            te.setText("看我");
             te.setBackgroundColor(Color.WHITE);
             te.setTextColor(Color.BLACK);
             te.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
-                    mViewLists.get(0).setOnAnimationListenner(new OnAnimationListener() {
-
-                        @Override
-                        public void onAnimationStart(View view) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(View view) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(View v) {
-
-
-                            mViewLists.get(0).setOnAnimationListenner(null);
-                            for (int i = 0; i < mViewLists.size(); i++) {
-                                View view1 = mViewLists.get(i);
-                                //view1.translateTo(0, -220+(i + 1)* (100+10), 0);
-                                if(i  > messageList.size() - 1){ //如果没有消息直接设置为透明
-                                    view1.setAlpha(0);
-                                }else{
-                                    if(i == 0 ){
-                                        view1.setAlpha(0);
-                                    }else{
-                                        ViewGroup vg = (ViewGroup) view1;
-                                        TextView tv = (TextView) vg.get(1);
-                                        tv.setText(messageList.get(i));
-                                        view1.setAlpha(1);
-                                    }
-                                }
-                                view1.setTranslate(0, -220+i * (100+10),  	0);
-                            }
-                        }
-                    });
-
-                    for (int i = 0; i < mViewLists.size(); i++) {
-                        View view = mViewLists.get(i);
-
-                        if(i  > messageList.size() - 1){ //如果没有消息直接设置为透明
-                            view.setAlpha(0);
-                        }else{
-
-                            if(i == 0 ){
-                                view.setAlpha(0);
-                                view.alphaTo(1);
-                            }else if(i == mViewLists.size() - 1 ){
-                                view.setAlpha(1);
-                                view.alphaTo(0);
-                            }
-
-                            ViewGroup vg = (ViewGroup) view;
-                            TextView tv = (TextView) vg.get(1);
-                            tv.setText(messageList.get(i));
-                        }
-
-                        view.setTranslate(0, -220+i * (100+10),  	0);
-                        view.translateTo(0, -220+(i +1)* (100+10), 0);
-
-                    }
-
-                    messageList.add(0, "推送消息"+(int)(Math.random()*1000));//初始化推送消息
-                    messageIndex++;//
-                    te.setText(messageList.get(0));
+                    touchCounts++;
+                    te.setText("看我" + touchCounts);
                 }
             });
+
+            te.setOnFocusListener(new View.OnFocusListener() {
+                @Override
+                public boolean onFocus(View v) {
+
+                    touchCounts++;
+                    updateBackground(touchCounts % 2);
+
+                    return true;
+                }
+
+                @Override
+                public boolean onRemoveFocus(View v) {
+                    return false;
+                }
+            });
+
             viewGroup2.addChild(te);
 
             mLayer.addChild(viewGroup2);
 
         }
-
-
-
     }
+
+    int touchCounts = 0;
+
+    public void InitBackgroundWall()
+    {
+        // 纹理ID
+        int sourceIds1[] = {
+                R.drawable.redsunset_ft,
+                R.drawable.redsunset_bk,
+                R.drawable.redsunset_lf,
+                R.drawable.redsunset_rt,
+                R.drawable.redsunset_up,
+                R.drawable.redsunset_dn,
+
+//                R.drawable.bluenebula1024_front,
+//                R.drawable.bluenebula1024_back,
+//                R.drawable.bluenebula1024_left,
+//                R.drawable.bluenebula1024_right,
+//                R.drawable.bluenebula1024_top,
+//                R.drawable.bluenebula1024_bottom,
+
+
+//                R.drawable.ic_launcher,
+//                R.drawable.ic_launcher,
+//                R.drawable.ic_launcher,
+//                R.drawable.ic_launcher,
+//                R.drawable.ic_launcher,
+//                R.drawable.ic_launcher,
+        };
+        if (true)
+        {
+            //背景盒 前
+            MyRotateViewGroup viewGroup2 = new MyRotateViewGroup();
+            viewGroup2.SetDebugName("mBackGroundBox");
+            viewGroup2.setWidth(EngineConstanst.BOX_LENGTH);
+            viewGroup2.setHeight(EngineConstanst.BOX_LENGTH);
+//			viewGroup2.setBackgroundColor(Color.parseColor("#2200ffff"));
+            viewGroup2.setVisibility(true);
+            viewGroup2.setTranslate(0, 0 ,0);
+            viewGroup2.setFocusable(false);
+
+            View backgroundView = null;
+
+            // front
+            backgroundView = makeImageView(sourceIds1[0], EngineConstanst.BOX_LENGTH, EngineConstanst.BOX_LENGTH, 0, 0, -EngineConstanst.BOX_LENGTH/2);
+            viewGroup2.addChild(backgroundView);
+            Log.i("luoyouren", "viewGroup2's child = " + viewGroup2.getChildCount());
+
+            // back
+            backgroundView = makeImageView(sourceIds1[1], EngineConstanst.BOX_LENGTH, EngineConstanst.BOX_LENGTH, 0, 0, EngineConstanst.BOX_LENGTH/2);
+            backgroundView.setRotate(0, 180, 0);
+            viewGroup2.addChild(backgroundView);
+            Log.i("luoyouren", "viewGroup2's child = " + viewGroup2.getChildCount());
+
+            // left
+            backgroundView = makeImageView(sourceIds1[2], EngineConstanst.BOX_LENGTH, EngineConstanst.BOX_LENGTH, -EngineConstanst.BOX_LENGTH/2, 0, 0);
+            backgroundView.setRotate(0, 90, 0);
+            viewGroup2.addChild(backgroundView);
+            Log.i("luoyouren", "viewGroup2's child = " + viewGroup2.getChildCount());
+
+            // right
+            backgroundView = makeImageView(sourceIds1[3], EngineConstanst.BOX_LENGTH, EngineConstanst.BOX_LENGTH, EngineConstanst.BOX_LENGTH/2, 0, 0);
+            backgroundView.setRotate(0, -90, 0);
+            viewGroup2.addChild(backgroundView);
+            Log.i("luoyouren", "viewGroup2's child = " + viewGroup2.getChildCount());
+
+            // top
+            backgroundView = makeImageView(sourceIds1[4], EngineConstanst.BOX_LENGTH, EngineConstanst.BOX_LENGTH, 0, EngineConstanst.BOX_LENGTH/2, 0);
+            backgroundView.setRotate(90, 0, 0);
+            viewGroup2.addChild(backgroundView);
+            Log.i("luoyouren", "viewGroup2's child = " + viewGroup2.getChildCount());
+
+            // bottom
+            backgroundView = makeImageView(sourceIds1[5], EngineConstanst.BOX_LENGTH, EngineConstanst.BOX_LENGTH, 0, -EngineConstanst.BOX_LENGTH/2, 0);
+            backgroundView.setRotate(-90, 0, 0);
+            viewGroup2.addChild(backgroundView);
+            Log.i("luoyouren", "viewGroup2's child = " + viewGroup2.getChildCount());
+
+
+            mLayer.addChild(viewGroup2);
+            mBackgroundWallIndex = mLayer.indexOf(viewGroup2);
+        }
+
+        Log.i("luoyouren", "mLayer's child = " + mLayer.getChildCount());
+        isBackgroundInit = true;
+    }
+
+    private void updateBackground(int index)
+    {
+        // 纹理ID
+        int sourceIds2[][] = {
+
+
+                {R.drawable.redsunset_ft,
+                R.drawable.redsunset_bk,
+                R.drawable.redsunset_lf,
+                R.drawable.redsunset_rt,
+                R.drawable.redsunset_up,
+                R.drawable.redsunset_dn},
+
+                {R.drawable.desert_front,
+                R.drawable.desert_back,
+                R.drawable.desert_left,
+                R.drawable.desert_right,
+                R.drawable.desert_top,
+                R.drawable.redsunset_dn},
+
+                {R.drawable.bluenebula1024_front,
+                R.drawable.bluenebula1024_back,
+                R.drawable.bluenebula1024_left,
+                R.drawable.bluenebula1024_right,
+                R.drawable.bluenebula1024_top,
+                R.drawable.bluenebula1024_bottom},
+
+
+//                R.drawable.ic_launcher,
+//                R.drawable.ic_launcher,
+//                R.drawable.ic_launcher,
+//                R.drawable.ic_launcher,
+//                R.drawable.ic_launcher,
+//                R.drawable.ic_launcher,
+        };
+        if (isBackgroundInit)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                ViewGroup viewGroup = (ViewGroup)(mLayer.get(mBackgroundWallIndex));
+                ImageView imageView = (ImageView)viewGroup.get(i);
+                imageView.setImageResource(sourceIds2[index][i], true);
+            }
+        }
+    }
+
+
     public View getLayer() {
         return mLayer;
     }

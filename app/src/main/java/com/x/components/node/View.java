@@ -822,6 +822,7 @@ public class View    {
 
 		public boolean dealStarePointEvent(boolean isHit, MotionEvent event) {
 			if(isHit){
+				// 凝视点问题在这儿！
 				performStareAt();
 			}
 			return isHit;

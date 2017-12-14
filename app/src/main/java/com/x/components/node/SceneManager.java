@@ -83,7 +83,7 @@ public class SceneManager {
 		// luoyouren: 光照物体
 		mLightingScene = new LightingScene();
 		mLightingScene.initScene();
-		mLightingScene.setRenderable(true);
+		mLightingScene.setRenderable(false);
 
 	}
 	
@@ -249,7 +249,7 @@ public class SceneManager {
 	}
 
 
-	
+	// luoyouren: 凝视点事件分发
 	public boolean dispatchStarePointEvent( ) {
 
 		if(mStarePointMotionEvent == null){
