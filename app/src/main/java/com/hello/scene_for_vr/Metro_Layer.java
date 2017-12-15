@@ -217,7 +217,25 @@ public class Metro_Layer {
 
             for (int i = 0; i  < sourceIds.length; i++)
             {
-                View view = makeImageView(sourceIds[i], ImageWidth, ImageHeight, (2 * (i % COLUMNS) - 3) * (ImageWidth + ImageStride / 2) * 0.5f, (2 * (i / COLUMNS) - 1) * (ImageHeight + ImageStride / 2) * 0.5f,  12);
+                final View view = makeImageView(sourceIds[i], ImageWidth, ImageHeight, (2 * (i % COLUMNS) - 3) * (ImageWidth + ImageStride / 2) * 0.5f, (2 * (i / COLUMNS) - 1) * (ImageHeight + ImageStride / 2) * 0.5f,  12);
+
+                view.setOnFocusListener(new View.OnFocusListener() {
+                    @Override
+                    public boolean onFocus(View v) {
+                        view.translateZTo(ImageHeight);
+
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onRemoveFocus(View v) {
+
+                        view.translateZTo(12);
+
+                        return false;
+                    }
+                });
+
                 metroViewGroup.addChild(view);
             }
 

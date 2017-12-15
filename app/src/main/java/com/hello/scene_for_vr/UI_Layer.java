@@ -248,6 +248,8 @@ public class UI_Layer {
 					te.setText(messageList.get(0));
 				}
 			});
+
+
 			viewGroup2.addChild(te);
 			
 			mLayer.addChild(viewGroup2);
