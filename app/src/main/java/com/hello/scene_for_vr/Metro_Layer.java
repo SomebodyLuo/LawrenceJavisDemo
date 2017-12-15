@@ -178,23 +178,14 @@ public class Metro_Layer {
             viewGroup2.setFocusable(false);
 
 
-
-//            View backgroundView = makeBackgroundView(R.drawable.background);
-//            View backgroundView = makeImageView(R.drawable.background, EngineConstanst.REFERENCE_SCREEN_WIDTH, EngineConstanst.REFERENCE_SCREEN_HEIGHT, 0, 0, 0);
-//            viewGroup2.addChild(backgroundView);
-
-//            View canvasView = makeCanvasView(R.drawable.gray_shadow);
             View canvasView = makeImageView(R.drawable.gray_shadow, 1773, 913, 0, 0, 4);
-            canvasView.setAlpha(0.5f);
             canvasView.setFocusable(false);
             canvasView.setTouchAble(false);
             canvasView.setClickable(false);
             viewGroup2.addChild(canvasView);
 
             View leftArrow = makeImageView(R.drawable.arrow_left, 36, 59, -(1773 / 2 - 100), 0, 8);
-            leftArrow.setAlpha(0.3f);
             View rightArrow = makeImageView(R.drawable.arrow_right, 36, 59, (1773 / 2 - 100), 0, 8);
-            rightArrow.setAlpha(0.3f);
             viewGroup2.addChild(leftArrow);
             viewGroup2.addChild(rightArrow);
 
@@ -274,7 +265,6 @@ public class Metro_Layer {
             viewGroup2.addChild(canvasView);
 
             View change = makeImageView(R.drawable.test22, 48, 48, -WEATHER_PIC_WIDTH/2 + 100, EngineConstanst.REFERENCE_SCREEN_HEIGHT, EngineConstanst.REFERENCE_SCREEN_HEIGHT - (WEATHER_PIC_HEIGHT/2+50));
-            change.setAlpha(1.0f);
             change.setRotate(90, 0, 0);
             change.setOnFocusListener(new View.OnFocusListener() {
                 @Override
@@ -354,130 +344,8 @@ public class Metro_Layer {
         return mLayer;
     }
 
-    View makeBackgroundView(int sourceId)
-    {
-        final ImageView vv = new ImageView();
-        vv.SetDebugName("makeBackgroundView");
-        vv.setWidth(EngineConstanst .REFERENCE_SCREEN_WIDTH);
-        vv.setHeight(EngineConstanst .REFERENCE_SCREEN_HEIGHT);
-        vv.setBackgroundColor(Color.parseColor("#ff777777"));
-        vv.setImageResource(sourceId);
-
-        vv.setTranslate(0, 0, 0);
-
-        return vv;
-    }
-
-    View makeCanvasView(int sourceId)
-    {
-        final ImageView vv = new ImageView();
-        vv.SetDebugName("makeCanvasView");
-        vv.setWidth(1773);
-        vv.setHeight(913);
-        vv.setBackgroundColor(Color.parseColor("#ff777777"));
-        vv.setImageResource(sourceId);
-
-        vv.setTranslate(0, 0, 4.0f);
-
-        return vv;
-    }
-
-    View makeChangeShowPosition(final int i ){
-
-        final TextView vv = new TextView();
-        vv.SetDebugName("makeView  "+i);
-        vv.setWidth(200);
-        vv.setHeight(60);
-        vv.setTextSize(30);
-        vv.setTextColor(Color.BLACK);
-        vv.setText("切换显示位置");
-        vv.setTextGravity(Gravity.CENTER);
-        vv.setBackgroundColor(Color.WHITE);
-        vv.setTranslate((i) * (150+10), 0  ,  0);
-        vv.setOnStareAtListener(OnStareAtListener);
-
-        return vv;
-    }
-    View makeSendGiftView(final int i ){
-
-        final TextView vv = new TextView();
-        vv.SetDebugName("makeView  "+i);
-        vv.setWidth(150);
-        vv.setHeight(60);
-        vv.setTextSize(30);
-        vv.setTextColor(Color.WHITE);
-        vv.setText("点我送花");
-        vv.setTextGravity(Gravity.CENTER);
-        vv.setBackgroundColor(Color.parseColor("#44000000"));
-        vv.setTranslate((i-1) * (150+10), 0  ,  0);
-        vv.setOnStareAtListener(OnStareAtListener);
-
-        return vv;
-    }
-    View makeTextView(final int i ){
-
-        final TextView vv = new TextView();
-        vv.SetDebugName("makeView  "+i);
-        vv.setWidth(400);
-        vv.setHeight(100);
-        vv.setTextSize(50);
-        vv.setTextColor(Color.WHITE);
-        vv.setText("光能蜗牛");
-        vv.setTextGravity(Gravity.CENTER);
-        vv.setBackgroundColor(Color.BLACK);
-        vv.setTranslate(0 ,  i * 110,  0);
-        vv.setOnStareAtListener(OnStareAtListener);
-        return vv;
-    }
-    View makeMessage(final int i ){
-
-        //右侧界面
-        ViewGroup viewgroup = new ViewGroup();
-        viewgroup.SetDebugName("mUpmDownViewGroup");
-        viewgroup.setWidth(500);
-        viewgroup.setHeight(EngineConstanst.REFERENCE_SCREEN_HEIGHT);
-        //viewGroup2.setBackgroundColor(Color.parseColor("#2200ffff"));
-        viewgroup.setVisibility(true);
-        viewgroup.setFocusable(false);
 
 
-        final View headview = new View();
-        headview.SetDebugName("makeView  "+i);
-        headview.setWidth(80);
-        headview.setHeight(80);
-        headview.setTranslate( -400/2 -60 , 0,  0);
-        Bitmap bitmap = createCircleImage(R.drawable.head,150);
-        headview.setBackground(bitmap);
-        viewgroup.addChild(headview);
-
-        final TextView vv = new TextView();
-        vv.SetDebugName("makeView  "+i);
-        vv.setWidth(400);
-        vv.setHeight(100);
-        vv.setTextSize(30);
-        vv.setTextColor(Color.WHITE);
-        vv.setText("光能蜗牛");
-        vv.setTextGravity(Gravity.CENTER);
-        vv.setBackgroundColor(Color.parseColor("#44000000"));
-        vv.setTranslate(0 ,  0,  0);
-        vv.setOnStareAtListener(OnStareAtListener);
-        viewgroup.addChild(vv);
-
-        return viewgroup;
-    }
-    View makeImageView222(final int i ){
-
-        final ImageView vv = new ImageView();
-        vv.SetDebugName("makeImageView  "+i);
-        vv.setWidth(1000);
-        vv.setHeight(200);
-        vv.setBackgroundColor(Color.parseColor("#ff777777"));
-        vv.setImageResource(R.drawable.ic_launcher);
-
-        vv.setTranslate(0 + i * 450,0,  -EngineConstanst .REFERENCE_SCREEN_HEIGHT/2);
-        vv.setOnStareAtListener(OnStareAtListener);
-        return vv;
-    }
 
     final int ImageWidth = 326;
     final int ImageHeight = 199;
@@ -504,7 +372,9 @@ public class Metro_Layer {
         vv.setWidth(imageWidth);
         vv.setHeight(imageHeight);
 
-        vv.setBackgroundColor(Color.parseColor("#ff777777"));
+        // luoyouren:
+        // 注意：某个View的mBGDrawable 没有任何贴图时，焦点扫描不到它，也就不会产生凝视点事件
+        vv.setBackgroundColor(Color.parseColor("#00000000"));
         vv.setImageResource(sourceId);
 
         vv.setTranslate(x, y, z);
@@ -512,20 +382,20 @@ public class Metro_Layer {
         return vv;
     }
 
-//    View makeImageView(int sourceId, float imageWidth, float imageHeight, float x, float y, float z)
-//    {
-//        final View vv = new View();
-//        vv.SetDebugName("makeImageView");
-//        vv.setWidth(imageWidth);
-//        vv.setHeight(imageHeight);
-//
-////        vv.setBackgroundColor(Color.parseColor("#ff777777"));
-//        vv.setBackgroundResource(sourceId);
-//
-//        vv.setTranslate(x, y, z);
-////        vv.setOnStareAtListener(OnStareAtListener);
-//        return vv;
-//    }
+    View makeImageView(int sourceId, float imageWidth, float imageHeight, float x, float y, float z, int xxx)
+    {
+        final View vv = new View();
+        vv.SetDebugName("makeImageView");
+        vv.setWidth(imageWidth);
+        vv.setHeight(imageHeight);
+
+//        vv.setBackgroundColor(Color.parseColor("#ff777777"));
+        vv.setBackgroundResource(sourceId);
+
+        vv.setTranslate(x, y, z);
+//        vv.setOnStareAtListener(OnStareAtListener);
+        return vv;
+    }
 
     View makeImageView(int sourceId, float imageWidth, float imageHeight, float x, float y, float z, String color)
     {
