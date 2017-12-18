@@ -189,9 +189,7 @@ public class Metro_Layer {
             viewGroup2.addChild(leftArrow);
             viewGroup2.addChild(rightArrow);
 
-
             mLayer.addChild(viewGroup2);
-
         }
 
         if (true)
@@ -274,7 +272,7 @@ public class Metro_Layer {
             viewGroup2.setTranslate(0, 0 ,0);
             viewGroup2.setFocusable(false);
 
-            View canvasView = makeImageView(R.drawable.weather_board, WEATHER_PIC_WIDTH, WEATHER_PIC_HEIGHT, 0, EngineConstanst.REFERENCE_SCREEN_HEIGHT, EngineConstanst.REFERENCE_SCREEN_HEIGHT + 0);
+            View canvasView = makeImageView(R.drawable.weather_board, WEATHER_PIC_WIDTH, WEATHER_PIC_HEIGHT, 0, EngineConstanst.REFERENCE_SCREEN_HEIGHT * 0.8f, EngineConstanst.REFERENCE_SCREEN_HEIGHT + 0);
             canvasView.setAlpha(1.0f);
             canvasView.setRotate(90, 0, 0);
             canvasView.setFocusable(false);
@@ -282,7 +280,7 @@ public class Metro_Layer {
             canvasView.setClickable(false);
             viewGroup2.addChild(canvasView);
 
-            View change = makeImageView(R.drawable.test22, 48, 48, -WEATHER_PIC_WIDTH/2 + 100, EngineConstanst.REFERENCE_SCREEN_HEIGHT, EngineConstanst.REFERENCE_SCREEN_HEIGHT - (WEATHER_PIC_HEIGHT/2+50));
+            View change = makeImageView(R.drawable.test22, 48, 48, -WEATHER_PIC_WIDTH/2 + 100, EngineConstanst.REFERENCE_SCREEN_HEIGHT * 0.8f, EngineConstanst.REFERENCE_SCREEN_HEIGHT - (WEATHER_PIC_HEIGHT/2+50));
             change.setRotate(90, 0, 0);
             change.setOnFocusListener(new View.OnFocusListener() {
                 @Override
@@ -308,7 +306,37 @@ public class Metro_Layer {
 
     private void InitBottom()
     {
+        if (true)
+        {
+            //Top: 天气
+            MyRotateViewGroup viewGroup2 = new MyRotateViewGroup();
+            viewGroup2.SetDebugName("LOGOViewGroup");
+            viewGroup2.setWidth(EngineConstanst.REFERENCE_SCREEN_WIDTH);
+            viewGroup2.setHeight(EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+//			viewGroup2.setBackgroundColor(Color.parseColor("#2200ffff"));
+            viewGroup2.setVisibility(true);
+            viewGroup2.setTranslate(0, 0 ,0);
+            viewGroup2.setFocusable(false);
 
+            View canvasView = makeImageView(R.drawable.pacific_logo, 1147, 306, 0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT, EngineConstanst.REFERENCE_SCREEN_HEIGHT + 0);
+            canvasView.setRotate(-90, 0, 0);
+            canvasView.setFocusable(false);
+            canvasView.setTouchAble(false);
+            canvasView.setClickable(false);
+            viewGroup2.addChild(canvasView);
+
+            View change = makeImageView(R.drawable.pacific_site, 812, 79, 0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT, EngineConstanst.REFERENCE_SCREEN_HEIGHT + (WEATHER_PIC_HEIGHT/2+50));
+            change.setRotate(-90, 0, 0);
+            canvasView.setFocusable(false);
+            canvasView.setTouchAble(false);
+            canvasView.setClickable(false);
+
+            viewGroup2.addChild(change);
+
+
+            mLayer.addChild(viewGroup2);
+
+        }
     }
 
     private void updateBackground(int index)
