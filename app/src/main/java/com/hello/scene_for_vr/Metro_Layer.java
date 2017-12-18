@@ -17,6 +17,7 @@ import android.view.Gravity;
 import com.hello.R;
 import com.x.Director;
 import com.x.opengl.kernel.EngineConstanst;
+import com.x.opengl.kernel.ObjDrawable;
 import com.x.opengl.kernel.Texture;
 import com.x.components.listener.OnAnimationListener;
 import com.x.components.node.View;
@@ -29,13 +30,8 @@ import com.x.components.widget.TextView;
 public class Metro_Layer {
 
     private MyRotateViewGroup mLayer;
-    int messageIndex = 0;
-    private Texture mTextureFlower;
-    private Texture mTextureStar;
-    private Texture mTextureWindmill;
-    private Texture mTextureBubble;
+    private MyObjeView mSphere;
     private MainDialogScene mMainDialogScene;
-    private int mShowIndex = 0 ;
 
     private boolean isBackgroundInit = false;
     private int mBackgroundWallIndex;
@@ -43,15 +39,9 @@ public class Metro_Layer {
     public Metro_Layer(MainDialogScene mainDialogScene) {
 
         this.mMainDialogScene = mainDialogScene;
-        if(mTextureFlower == null){
-            mTextureFlower = Director.getInstance().sResourcer.generateTexture(R.drawable.flower200_200);
-            mTextureStar = Director.getInstance().sResourcer.generateTexture(R.drawable.star);
-            mTextureWindmill = Director.getInstance().sResourcer.generateTexture(R.drawable.windmill);
-            mTextureBubble = Director.getInstance().sResourcer.generateTexture(R.drawable.bubble);
-        }
 
         mLayer = new MyRotateViewGroup();
-        mLayer.SetDebugName("mUpmDownViewGroup");
+        mLayer.SetDebugName("ViewGroup");
         mLayer.setWidth(EngineConstanst.REFERENCE_SCREEN_WIDTH);
         mLayer.setHeight(EngineConstanst.REFERENCE_SCREEN_HEIGHT);
         mLayer.setBackgroundColor(Color.parseColor("#55000000"));
@@ -59,9 +49,11 @@ public class Metro_Layer {
         mLayer.setTranslate(0, 0, 0);
         mLayer.setFocusable(false);
 
+        // luoyouren: 初始化背景球
+//        InitSphere();
 
         // luoyouren: 增加背景墙
-        InitBackgroundWall();
+//        InitBackgroundWall();
 
         InitFront();
 
@@ -76,7 +68,55 @@ public class Metro_Layer {
         InitBottom();
     }
 
+    // 纹理ID
+    int sphereBG[] = {
+            R.drawable.redsunset_ft,
+            R.drawable.redsunset_bk,
+            R.drawable.redsunset_lf,
+            R.drawable.redsunset_rt,
+            R.drawable.redsunset_up,
+            R.drawable.redsunset_dn,
 
+//                R.drawable.bluenebula1024_front,
+//                R.drawable.bluenebula1024_back,
+//                R.drawable.bluenebula1024_left,
+//                R.drawable.bluenebula1024_right,
+//                R.drawable.bluenebula1024_top,
+//                R.drawable.bluenebula1024_bottom,
+
+
+//                R.drawable.ic_launcher,
+//                R.drawable.ic_launcher,
+//                R.drawable.ic_launcher,
+//                R.drawable.ic_launcher,
+//                R.drawable.ic_launcher,
+//                R.drawable.ic_launcher,
+    };
+
+    public void InitSphere()
+    {
+        if (false)
+        {
+            //Front: 背景与画布
+            MyRotateViewGroup viewGroup2 = new MyRotateViewGroup();
+            viewGroup2.SetDebugName("SphereBackgroundViewGroup");
+            viewGroup2.setWidth(EngineConstanst.REFERENCE_SCREEN_WIDTH);
+            viewGroup2.setHeight(EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+//			viewGroup2.setBackgroundColor(Color.parseColor("#2200ffff"));
+            viewGroup2.setVisibility(true);
+            viewGroup2.setTranslate(0, 0 ,0);
+            viewGroup2.setFocusable(false);
+
+
+            mSphere = (MyObjeView) makeSphereView(R.drawable.gray_shadow);
+            mSphere.setFocusable(false);
+            mSphere.setTouchAble(false);
+            mSphere.setClickable(false);
+            viewGroup2.addChild(mSphere);
+
+            mLayer.addChild(viewGroup2);
+        }
+    }
 
     int touchCounts = 0;
     public void InitBackgroundWall()
@@ -172,7 +212,7 @@ public class Metro_Layer {
             viewGroup2.SetDebugName("FrontBackgroundViewGroup");
             viewGroup2.setWidth(EngineConstanst.REFERENCE_SCREEN_WIDTH);
             viewGroup2.setHeight(EngineConstanst.REFERENCE_SCREEN_HEIGHT);
-//			viewGroup2.setBackgroundColor(Color.parseColor("#2200ffff"));
+//			viewGroup2.setBackgroundColor(Color.parseColor("#0000ffff"));
             viewGroup2.setVisibility(true);
             viewGroup2.setTranslate(0, 0 ,0);
             viewGroup2.setFocusable(false);
@@ -199,7 +239,7 @@ public class Metro_Layer {
             metroViewGroup.SetDebugName("FrontMetroViewGroup");
             metroViewGroup.setWidth(330 * 4 + 20 * 3);
             metroViewGroup.setHeight(200 + 25 + 200);
-//			viewGroup2.setBackgroundColor(Color.parseColor("#2200ffff"));
+            metroViewGroup.setBackgroundColor(Color.parseColor("#0000ffff"));
             metroViewGroup.setVisibility(true);
             metroViewGroup.setTranslate(0, 0, 0);
             metroViewGroup.setFocusable(false);
@@ -286,7 +326,7 @@ public class Metro_Layer {
                 @Override
                 public boolean onFocus(View v) {
                     touchCounts++;
-                    updateBackground(touchCounts % 3);
+//                    updateBackground(touchCounts % 3);
                     return false;
                 }
 
@@ -308,7 +348,7 @@ public class Metro_Layer {
     {
         if (true)
         {
-            //Top: 天气
+            //Bottom: LOGO
             MyRotateViewGroup viewGroup2 = new MyRotateViewGroup();
             viewGroup2.SetDebugName("LOGOViewGroup");
             viewGroup2.setWidth(EngineConstanst.REFERENCE_SCREEN_WIDTH);
@@ -392,12 +432,40 @@ public class Metro_Layer {
 
 
 
+    public View makeSphereView(int sourceId)
+    {
+            MyObjeView view = null;
+//		ObjDrawable objDrawable = Director.getInstance().sResourcer.loadObjModel("models/MySphere.obj");
+                    ObjDrawable            objDrawable = Director.getInstance().sResourcer.loadObjModel("models/MySkySphere.obj");
+//		ObjDrawable objDrawable = Director.getInstance().sResourcer.loadObjModel("models/TankWorld.obj");
+//		ObjDrawable objDrawable = Director.getInstance().sResourcer.loadObjModel("models/MyCube.obj");
+            mSphere = new MyObjeView(objDrawable);
+            mSphere.setWidth(EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+            mSphere.setHeight(EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+            mSphere.setThickness(EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+            mSphere.setScale(2, 2, 2);
+
+            mSphere.setTranslate(0, 0, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+            mSphere.setFocusable(false);
+            mSphere.setTouchAble(false);
+            mSphere.setCullFrontFace(true);
+            mSphere.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    mSphere.changeState();
+                }
+            });
+
+        return mSphere;
+    }
+
 
     final int ImageWidth = 326;
     final int ImageHeight = 199;
     final int ImageStride = 60;
     final int COLUMNS = 4;
-    View makeImageView(int sourceId, int index)
+    public View makeImageView(int sourceId, int index)
     {
         final ImageView vv = new ImageView();
         vv.SetDebugName("makeImageView  "+ index);
@@ -411,7 +479,7 @@ public class Metro_Layer {
         return vv;
     }
 
-    View makeImageView(int sourceId, float imageWidth, float imageHeight, float x, float y, float z)
+    public View makeImageView(int sourceId, float imageWidth, float imageHeight, float x, float y, float z)
     {
         final ImageView vv = new ImageView();
         vv.SetDebugName("makeImageView  ");
@@ -428,7 +496,7 @@ public class Metro_Layer {
         return vv;
     }
 
-    View makeImageView(int sourceId, float imageWidth, float imageHeight, float x, float y, float z, int xxx)
+    public View makeImageView(int sourceId, float imageWidth, float imageHeight, float x, float y, float z, int xxx)
     {
         final View vv = new View();
         vv.SetDebugName("makeImageView");
@@ -443,7 +511,7 @@ public class Metro_Layer {
         return vv;
     }
 
-    View makeImageView(int sourceId, float imageWidth, float imageHeight, float x, float y, float z, String color)
+    public View makeImageView(int sourceId, float imageWidth, float imageHeight, float x, float y, float z, String color)
     {
         final ImageView vv = new ImageView();
         vv.SetDebugName("makeImageView  ");
@@ -458,7 +526,7 @@ public class Metro_Layer {
         return vv;
     }
 
-    View makeImageView(final int i ){
+    public View makeImageView(final int i ){
 
         final ImageView vv = new ImageView();
         vv.SetDebugName("makeImageView  "+i);

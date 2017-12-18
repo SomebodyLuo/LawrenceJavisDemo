@@ -26,13 +26,14 @@ public class SkySphere {
 		ObjDrawable objDrawable = Director.getInstance().sResourcer.loadObjModel("models/MySkySphere.obj");
 //		ObjDrawable objDrawable = Director.getInstance().sResourcer.loadObjModel("models/TankWorld.obj");
 //		ObjDrawable objDrawable = Director.getInstance().sResourcer.loadObjModel("models/MyCube.obj");
+//		ObjDrawable objDrawable = Director.getInstance().sResourcer.loadObjModel("models/sphere02.obj");
 		mSphere = new MyObjeView(objDrawable);
 		mSphere.setWidth(EngineConstanst.REFERENCE_SCREEN_HEIGHT);
 		mSphere.setHeight(EngineConstanst.REFERENCE_SCREEN_HEIGHT);
 		mSphere.setThickness(EngineConstanst.REFERENCE_SCREEN_HEIGHT);
-//		mSphere.setScale(2, 2, 2);
+		mSphere.setScale(2, 2, 2);
 		
-		mSphere.setTranslate(0, 0, EngineConstanst.REFERENCE_SCREEN_HEIGHT/2);
+		mSphere.setTranslate(0, 0, 0);
 		mSphere.setFocusable(false);
 		mSphere.setTouchAble(false);
 		mSphere.setCullFrontFace(true);

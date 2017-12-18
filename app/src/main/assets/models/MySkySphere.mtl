@@ -1,5 +1,5 @@
 # 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
-# ╢╢╫╗╣днд╪Ч:15.12.2016 10:34:29
+# О©╫О©╫О©╫О©╫О©╫О©╫О©╫д╪О©╫:15.12.2016 10:34:29
 
 newmtl 01___Default
 	Ns 10.0000
@@ -12,5 +12,5 @@ newmtl 01___Default
 	Kd 0.5882 0.5882 0.5882
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka maps/xingkong.png
-	map_Kd maps/xingkong.png
+	map_Ka maps/bg_100.png
+	map_Kd maps/bg_100.png
