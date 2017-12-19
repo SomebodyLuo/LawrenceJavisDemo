@@ -12,5 +12,5 @@ newmtl 01___Default
 	Kd 0.5882 0.5882 0.5882
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka maps/bg_100.png
-	map_Kd maps/bg_100.png
+	map_Ka maps/bg1_10.png
+	map_Kd maps/bg1_10.png

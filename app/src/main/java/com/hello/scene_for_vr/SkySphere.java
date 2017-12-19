@@ -19,6 +19,8 @@ public class SkySphere {
 	public View getLayer() {
 		return mSphere;
 	}
+
+	final float diameter = EngineConstanst.REFERENCE_SCREEN_HEIGHT;
 	public SkySphere() {
 		
 
@@ -28,10 +30,10 @@ public class SkySphere {
 //		ObjDrawable objDrawable = Director.getInstance().sResourcer.loadObjModel("models/MyCube.obj");
 //		ObjDrawable objDrawable = Director.getInstance().sResourcer.loadObjModel("models/sphere02.obj");
 		mSphere = new MyObjeView(objDrawable);
-		mSphere.setWidth(EngineConstanst.REFERENCE_SCREEN_HEIGHT);
-		mSphere.setHeight(EngineConstanst.REFERENCE_SCREEN_HEIGHT);
-		mSphere.setThickness(EngineConstanst.REFERENCE_SCREEN_HEIGHT);
-		mSphere.setScale(2, 2, 2);
+		mSphere.setWidth(diameter);
+		mSphere.setHeight(diameter);
+		mSphere.setThickness(diameter);
+//		mSphere.setScale(2, 2, 2);
 		
 		mSphere.setTranslate(0, 0, 0);
 		mSphere.setFocusable(false);

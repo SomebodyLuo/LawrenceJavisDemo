@@ -53,7 +53,7 @@ public class Metro_Layer {
 //        InitSphere();
 
         // luoyouren: 增加背景墙
-//        InitBackgroundWall();
+        InitBackgroundWall();
 
         InitFront();
 
@@ -147,7 +147,7 @@ public class Metro_Layer {
         };
         if (true)
         {
-            //背景墙 前
+            //背景墙
             MyRotateViewGroup viewGroup2 = new MyRotateViewGroup();
             viewGroup2.SetDebugName("mBackGroundBox");
             viewGroup2.setWidth(EngineConstanst.BOX_LENGTH);
@@ -239,7 +239,7 @@ public class Metro_Layer {
             metroViewGroup.SetDebugName("FrontMetroViewGroup");
             metroViewGroup.setWidth(330 * 4 + 20 * 3);
             metroViewGroup.setHeight(200 + 25 + 200);
-            metroViewGroup.setBackgroundColor(Color.parseColor("#0000ffff"));
+//            metroViewGroup.setBackgroundColor(Color.parseColor("#0000ffff"));
             metroViewGroup.setVisibility(true);
             metroViewGroup.setTranslate(0, 0, 0);
             metroViewGroup.setFocusable(false);
@@ -326,7 +326,7 @@ public class Metro_Layer {
                 @Override
                 public boolean onFocus(View v) {
                     touchCounts++;
-//                    updateBackground(touchCounts % 3);
+                    updateBackground(touchCounts % 3);
                     return false;
                 }
 
@@ -353,24 +353,29 @@ public class Metro_Layer {
             viewGroup2.SetDebugName("LOGOViewGroup");
             viewGroup2.setWidth(EngineConstanst.REFERENCE_SCREEN_WIDTH);
             viewGroup2.setHeight(EngineConstanst.REFERENCE_SCREEN_HEIGHT);
-//			viewGroup2.setBackgroundColor(Color.parseColor("#2200ffff"));
+//			viewGroup2.setBackgroundColor(Color.parseColor("#0000ffff"));
             viewGroup2.setVisibility(true);
             viewGroup2.setTranslate(0, 0 ,0);
             viewGroup2.setFocusable(false);
 
-            View canvasView = makeImageView(R.drawable.pacific_logo, 1147, 306, 0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT, EngineConstanst.REFERENCE_SCREEN_HEIGHT + 0);
+            View circleView = makeImageView(R.drawable.circle, 2048, 2048, 0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+            circleView.setFocusable(false);
+            circleView.setTouchAble(false);
+            circleView.setClickable(false);
+            viewGroup2.addChild(circleView);
+
+            View canvasView = makeImageView(R.drawable.pacific_logo, 1147, 306, 0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT + 100, EngineConstanst.REFERENCE_SCREEN_HEIGHT + 0);
             canvasView.setRotate(-90, 0, 0);
             canvasView.setFocusable(false);
             canvasView.setTouchAble(false);
             canvasView.setClickable(false);
             viewGroup2.addChild(canvasView);
 
-            View change = makeImageView(R.drawable.pacific_site, 812, 79, 0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT, EngineConstanst.REFERENCE_SCREEN_HEIGHT + (WEATHER_PIC_HEIGHT/2+50));
+            View change = makeImageView(R.drawable.pacific_site, 812, 79, 0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT + 100, EngineConstanst.REFERENCE_SCREEN_HEIGHT + (WEATHER_PIC_HEIGHT/2+50));
             change.setRotate(-90, 0, 0);
-            canvasView.setFocusable(false);
-            canvasView.setTouchAble(false);
-            canvasView.setClickable(false);
-
+            change.setFocusable(false);
+            change.setTouchAble(false);
+            change.setClickable(false);
             viewGroup2.addChild(change);
 
 
@@ -430,7 +435,36 @@ public class Metro_Layer {
         return mLayer;
     }
 
+    public View makeCircleView(int sourceId)
+    {
+//        final View vv = new View();
+//        vv.SetDebugName("makeCircleView");
+//        vv.setWidth(2736);
+//        vv.setHeight(2736);
+//        vv.setTranslate(0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+//        Bitmap bitmap = createCircleImage(R.drawable.circle, 2736);
+//        vv.setBackground(bitmap);
+////        vv.setBackgroundResource(R.drawable.circle);
+////        vv.setBackgroundColor(Color.parseColor("#ffff0000"));
+//        vv.setRotate(-90, 0, 0);
+//
+//        return vv;
 
+
+        final ImageView vv = new ImageView();
+        vv.SetDebugName("makeCircleView");
+        vv.setWidth(2736);
+        vv.setHeight(2736);
+
+        // luoyouren:
+        // 注意：某个View的mBGDrawable 没有任何贴图时，焦点扫描不到它，也就不会产生凝视点事件
+        vv.setBackgroundColor(Color.parseColor("#00000000"));
+        vv.setImageResource(sourceId);
+
+        vv.setTranslate(0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+//        vv.setOnStareAtListener(OnStareAtListener);
+        return vv;
+    }
 
     public View makeSphereView(int sourceId)
     {
