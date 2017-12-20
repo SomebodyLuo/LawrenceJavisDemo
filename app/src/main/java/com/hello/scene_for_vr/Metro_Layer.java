@@ -145,7 +145,9 @@ public class Metro_Layer {
 //                R.drawable.ic_launcher,
 //                R.drawable.ic_launcher,
         };
-        if (true)
+
+        // 天空盒
+        if (false)
         {
             //背景墙
             MyRotateViewGroup viewGroup2 = new MyRotateViewGroup();
@@ -197,10 +199,32 @@ public class Metro_Layer {
 
             mLayer.addChild(viewGroup2);
             mBackgroundWallIndex = mLayer.indexOf(viewGroup2);
+            isBackgroundInit = true;
+        } else {
+            // 天空球
+            final float diameter = EngineConstanst.REFERENCE_SCREEN_HEIGHT;
+//		ObjDrawable objDrawable = Director.getInstance().sResourcer.loadObjModel("models/MySphere.obj");
+            ObjDrawable objDrawable = Director.getInstance().sResourcer.loadObjModel("models/MySkySphere.obj");
+//		ObjDrawable objDrawable = Director.getInstance().sResourcer.loadObjModel("models/TankWorld.obj");
+//		ObjDrawable objDrawable = Director.getInstance().sResourcer.loadObjModel("models/MyCube.obj");
+//		ObjDrawable objDrawable = Director.getInstance().sResourcer.loadObjModel("models/sphere02.obj");
+            mSphere = new MyObjeView(objDrawable);
+            mSphere.setWidth(diameter);
+            mSphere.setHeight(diameter);
+            mSphere.setThickness(diameter);
+//		mSphere.setScale(2, 2, 2);
+            mSphere.setRotate(0, 180, 0);
+
+            mSphere.setTranslate(0, 0, 0);
+            mSphere.setFocusable(false);
+            mSphere.setTouchAble(false);
+            mSphere.setCullFrontFace(true);
+
+            mLayer.addChild(mSphere);
         }
 
         Log.i("luoyouren", "mLayer's child = " + mLayer.getChildCount());
-        isBackgroundInit = true;
+
     }
 
     private void InitFront()
@@ -218,11 +242,11 @@ public class Metro_Layer {
             viewGroup2.setFocusable(false);
 
 
-            View canvasView = makeImageView(R.drawable.gray_shadow, 1773, 913, 0, 0, 4);
-            canvasView.setFocusable(false);
-            canvasView.setTouchAble(false);
-            canvasView.setClickable(false);
-            viewGroup2.addChild(canvasView);
+//            View canvasView = makeImageView(R.drawable.gray_shadow, 1773, 913, 0, 0, 4);
+//            canvasView.setFocusable(false);
+//            canvasView.setTouchAble(false);
+//            canvasView.setClickable(false);
+//            viewGroup2.addChild(canvasView);
 
             View leftArrow = makeImageView(R.drawable.arrow_left, 36, 59, -(1773 / 2 - 100), 0, 8);
             View rightArrow = makeImageView(R.drawable.arrow_right, 36, 59, (1773 / 2 - 100), 0, 8);
@@ -313,7 +337,6 @@ public class Metro_Layer {
             viewGroup2.setFocusable(false);
 
             View canvasView = makeImageView(R.drawable.weather_board, WEATHER_PIC_WIDTH, WEATHER_PIC_HEIGHT, 0, EngineConstanst.REFERENCE_SCREEN_HEIGHT * 0.8f, EngineConstanst.REFERENCE_SCREEN_HEIGHT + 0);
-            canvasView.setAlpha(1.0f);
             canvasView.setRotate(90, 0, 0);
             canvasView.setFocusable(false);
             canvasView.setTouchAble(false);
@@ -338,6 +361,10 @@ public class Metro_Layer {
 
             viewGroup2.addChild(change);
 
+            // 调整到45°
+            viewGroup2.setTranslate(0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT * 0.5f, +EngineConstanst.REFERENCE_SCREEN_HEIGHT * 0.0f);
+            viewGroup2.setRotate(-30, 0, 0);
+
 
             mLayer.addChild(viewGroup2);
 
@@ -358,7 +385,8 @@ public class Metro_Layer {
             viewGroup2.setTranslate(0, 0 ,0);
             viewGroup2.setFocusable(false);
 
-            View circleView = makeImageView(R.drawable.circle, 2048, 2048, 0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+            View circleView = makeImageView(R.drawable.circle3, 2048, 2048, 0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+            circleView.setRotate(-90, 0, 0);
             circleView.setFocusable(false);
             circleView.setTouchAble(false);
             circleView.setClickable(false);

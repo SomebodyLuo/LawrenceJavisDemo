@@ -34,6 +34,7 @@ public class SkySphere {
 		mSphere.setHeight(diameter);
 		mSphere.setThickness(diameter);
 //		mSphere.setScale(2, 2, 2);
+		mSphere.setRotate(0, 180, 0);
 		
 		mSphere.setTranslate(0, 0, 0);
 		mSphere.setFocusable(false);

@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.util.Log;
 import android.view.Gravity;
 
 import com.hello.R;
@@ -130,19 +131,43 @@ public class UI_Layer {
 				viewGroup2.addChild(view);
 				int ii = i + 100;
 				if(ii %4 == 1){
-					Bitmap bitmap = createCircleImage(R.drawable.head,150);
+					Bitmap bitmap = createCircleImage(R.drawable.circle, 100);
 					view.setBackground(bitmap);
 				}else if(ii %4 == 2){
-					Bitmap bitmap = createCircleImage(R.drawable.head2,80);
+					Bitmap bitmap = createCircleImage(R.drawable.head2, 110);
 					view.setBackground(bitmap);
 				}else if(ii %4 == 3){
-					Bitmap bitmap = createCircleImage(R.drawable.head3,80);
+					Bitmap bitmap = createCircleImage(R.drawable.head3, 120);
 					view.setBackground(bitmap);
 				}else if(ii %4 == 0){
-					Bitmap bitmap = createCircleImage(R.drawable.head4,80);
+					Bitmap bitmap = createCircleImage(R.drawable.head4, 130);
 					view.setBackground(bitmap);
 				}
 			}
+
+			if (true)
+			{
+				final View vv = new View();
+				vv.SetDebugName("makeView");
+				vv.setTranslate(  6 * (80+10), 0 , 500);
+
+				// circle4像素达到2048x2048, 报错：内存不够
+				// 面片，报错跟面片的大小无关，跟图片加载内存不够有关
+				// Bitmap bitmap = createCircleImage(R.drawable.circle4, 499);
+
+				//这样也可以加载一个圆形图片纹理
+//				Bitmap bitmap = createCircleImage(R.drawable.circle3, 499);
+
+				//这样也可以加载一个圆形图片纹理
+				Bitmap bitmap = BitmapFactory.decodeResource(Director.getInstance().getContext().getResources(), R.drawable.circle3);
+				vv.setWidth(512 * 2);
+				vv.setHeight(512 * 2);
+				Log.i("luoyouren", "bitmap.getWidth() = " + bitmap.getWidth());
+				vv.setBackground(bitmap);
+
+				viewGroup2.addChild(vv);
+			}
+
 			mLayer.addChild(viewGroup2);
 
 		}
@@ -422,9 +447,11 @@ public class UI_Layer {
      * @return 
      */  
     private Bitmap createCircleImage(int  sourceId, int min)  
-    {  
+    {
+		Log.i("luoyouren", "min = " + min);
     	Bitmap source = BitmapFactory.decodeResource(Director.getInstance().getContext().getResources(), sourceId);
     	min = source.getWidth();
+		Log.i("luoyouren", "min = " + min);
         final Paint paint = new Paint();  
         paint.setAntiAlias(true);  
         Bitmap target = Bitmap.createBitmap(min, min, Config.ARGB_8888);  
