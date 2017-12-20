@@ -52,6 +52,7 @@ public class Director implements Renderer {
 	private List<PostRunnable>	mPostList		= new ArrayList<PostRunnable>();
 	private List<FocusRunnable>	mFocusPostList	= new ArrayList<FocusRunnable>();
 
+	// luoyouren: 传感器数据
 	private AbsSensorStrategy mAbsSensorStrategy   = new SensorCardboardBlock( );
 	private boolean							mInitFlag;
 	private boolean 						mIsVR = false;
@@ -253,6 +254,8 @@ public class Director implements Renderer {
 		if(!mIsVR){
 			return;
 		}
+
+		// luoyouren: 传感器数据
 		mAbsSensorStrategy.register(mContext,new EngineSensorListenr() {
 			@Override
 			public void onSensorEvent(float[] tmpMatrix) {
