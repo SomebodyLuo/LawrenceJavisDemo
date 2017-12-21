@@ -6,6 +6,7 @@ import android.content.Context;
 import android.util.Log;
 import android.view.KeyEvent;
 
+import com.hello.R;
 import com.hello.scene_for_vr.mymediaplayerpackage.MediaPlayerManager;
 import com.x.Director;
 import com.x.EngineGLView;
@@ -21,24 +22,30 @@ public class MyDirector extends Director
 	//private  EGreatDialogScene mEGreatDialogScene = null;
 
 	//private BlurControl mBlurControl ;
+
 	MediaPlayerManager mMediaPlayerManager;
+
+
 	public MyDirector(Context context, EngineGLView tarotView)
 	{
 		super(context, tarotView);
 		this.mMyTarotView = (VRGLView) tarotView;
-		mMediaPlayerManager =new MediaPlayerManager();
+		mMediaPlayerManager = new MediaPlayerManager(context, R.raw.pacific_ar_building);
 		setVREnable(true);
 		setDoubleEyeEnable(false);
 	}
+
 	public void requstTextInput(TextInputListenner textInputListenner) {
 
 		Log.d("box", "===requstTextInput===");
 		this.mTextInputListenner = textInputListenner;
 		mMyTarotView.requstEditBoxFocus();
 	}
+
 	public boolean isEditBoxFocused() {
 		return mMyTarotView.isInputTextFocus();
 	}
+
 	public void callBackEditText(String destString) {
 		if(mTextInputListenner != null){
 			mTextInputListenner.onTextChange(destString);
@@ -81,10 +88,14 @@ public class MyDirector extends Director
 	public void onDrawFrame(GL10 gl) {
 		// TODO Auto-generated method stub
 		super.onDrawFrame(gl);
-	//	mMediaPlayerManager.updateTexImage(null);
+		mMediaPlayerManager.updateTexImage(null);
 		postInvalidate();
 	}
+
+
 	MainDialogScene mAllAppDialogScene;
+
+
 	public void Com(){
 //		Log.d("ming","Com()  "+( System.currentTimeMillis()- HomeActivity. time)+"   time");
 //
@@ -101,11 +112,14 @@ public class MyDirector extends Director
 		mAllAppDialogScene.initScene(); 
 		Director.getInstance().addDialogScene(mAllAppDialogScene);
 
-	//	mMediaPlayerManager.playVideo(mAllAppDialogScene.getOesTextureId(mMediaPlayerManager));
+		mMediaPlayerManager.initVideo(mAllAppDialogScene.getOesTextureId(mMediaPlayerManager));
+		mMediaPlayerManager.onStart();
 	}
+
+
 	public void changeTextureId(int veodioTextureID) {
 		// TODO Auto-generated method stub
-		mMediaPlayerManager.playVideo(veodioTextureID);
+		mMediaPlayerManager.initVideo(veodioTextureID);
 		
 	}
 

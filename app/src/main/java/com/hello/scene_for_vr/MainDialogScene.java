@@ -110,22 +110,21 @@ public class MainDialogScene extends DialogXScene{
 
 	
 	public int getOesTextureId(MediaPlayerManager mMediaPlayerManager) {
-//		mSkySphere.getVeodioTextureID( );
-//		mSmallSphere.getVeodioTextureID( );
-		return mSkySphere.getVeodioTextureID() ;
+
+		return mMetro.getVideoTextureID() ;
 	}
 	public void changeShowPosition(int i) {
 //		if(i == 0){
 //			mSmallSphere.restoreTexture();
 //			mSkySphere.restoreTexture();
-//			mMyDirector.changeTextureId(mUILayer.getVeodioTextureID());
+//			mMyDirector.changeTextureId(mUILayer.getVideoTextureID());
 //		}else if(i == 1){
-//			mMyDirector.changeTextureId(mSmallSphere.getVeodioTextureID());
+//			mMyDirector.changeTextureId(mSmallSphere.getVideoTextureID());
 //			mSkySphere.restoreTexture();
 //			mUILayer.restoreTexture();
 //		}else {
 //			mSmallSphere.restoreTexture();
-//			mMyDirector.changeTextureId(mSkySphere.getVeodioTextureID());
+//			mMyDirector.changeTextureId(mSkySphere.getVideoTextureID());
 //			mUILayer.restoreTexture();
 //		}
 	}

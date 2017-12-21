@@ -51,11 +51,13 @@ public class SkySphere {
 
 
 	private Texture mRestoreTextre;
-	public int getVeodioTextureID() {
+
+	// luoyouren: 视频贴图
+	public int getVideoTextureID() {
 		MaterialGroup mGroup = ((ObjDrawable)mSphere.getBaseDrawable()).mMaterials;
 		for (int i = 0; i < mGroup.size(); i++) {
 			Material material = mGroup.getMaterial(i );
-			Log.d("ming", "getVeodioTextureID material = "+material.Name);
+			Log.d("ming", "getVideoTextureID material = "+material.Name);
 		}
 		if(mGroup.size() > 0){
 			Material material = mGroup.getMaterial(0);

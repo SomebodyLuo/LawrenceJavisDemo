@@ -17,6 +17,8 @@ import android.view.Gravity;
 import com.hello.R;
 import com.x.Director;
 import com.x.opengl.kernel.EngineConstanst;
+import com.x.opengl.kernel.Material;
+import com.x.opengl.kernel.MaterialGroup;
 import com.x.opengl.kernel.ObjDrawable;
 import com.x.opengl.kernel.Texture;
 import com.x.components.listener.OnAnimationListener;
@@ -31,6 +33,7 @@ public class Metro_Layer {
 
     private MyRotateViewGroup mLayer;
     private MyObjeView mSphere;
+    private View mVideoWall;
     private MainDialogScene mMainDialogScene;
 
     private boolean isBackgroundInit = false;
@@ -213,7 +216,7 @@ public class Metro_Layer {
             mSphere.setHeight(diameter);
             mSphere.setThickness(diameter);
 //		mSphere.setScale(2, 2, 2);
-            mSphere.setRotate(0, 180, 0);
+            mSphere.setRotate(0, 90, 0);
 
             mSphere.setTranslate(0, 0, 0);
             mSphere.setFocusable(false);
@@ -305,9 +308,25 @@ public class Metro_Layer {
         }
     }
 
+
     private void InitBack()
     {
+        if (true) {
+            mVideoWall = new View();
+            mVideoWall.SetDebugName("mVideoWall");
+            mVideoWall.setWidth(EngineConstanst.REFERENCE_SCREEN_WIDTH);
+            mVideoWall.setHeight(EngineConstanst.REFERENCE_SCREEN_HEIGHT);
 
+            // luoyouren:
+            // 注意：某个View的mBGDrawable 没有任何贴图时，焦点扫描不到它，也就不会产生凝视点事件
+//            mVideoWall.setBackgroundColor(Color.parseColor("#ffff0000"));
+            mVideoWall.setBackgroundResource(R.raw.preview);
+
+            mVideoWall.setTranslate(0, 0, EngineConstanst.REFERENCE_SCREEN_HEIGHT * 2.3f);
+            mVideoWall.setRotate(0, 180, 0);
+
+            mLayer.addChild(mVideoWall);
+        }
     }
 
     private void InitLeft()
@@ -675,17 +694,20 @@ public class Metro_Layer {
 
         }
     };
+
+
     private Texture mRestoreTextre;
-    public int getVeodioTextureID() {
-        mRestoreTextre = mLayer.getBackground();
+    public int getVideoTextureID() {
+        mRestoreTextre = mVideoWall.getBackground();
         Texture texture  = Director.sResourcer.generateOES_Texture();
-        mLayer.setBackground(texture,false);
+        mVideoWall.setBackground(texture, false);
+
         return texture.getTextureID();
     }
     public void restoreTexture() {
         // TODO Auto-generated method stub
         if(mRestoreTextre != null){
-            mLayer.setBackground(mRestoreTextre);
+            mVideoWall.setBackground(mRestoreTextre);
         }
     }
 

@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.x.Director;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.SurfaceTexture;
 import android.media.MediaPlayer;
 import android.os.Environment;
@@ -20,8 +21,16 @@ public class MediaPlayerManager implements SurfaceTexture.OnFrameAvailableListen
     
     private SurfaceTexture videoTexture;
 
+    private Context mContext;
+    private int mVideoSourceId;
+
+    public MediaPlayerManager(Context context, int sourceId) {
+        mContext = context;
+        mVideoSourceId = sourceId;
+    }
+
     // luoyouren: 视频贴图
-    public  void playVideo(int texturesid) {
+    public  void initVideo(int texturesid) {
     	
     	
     	if(mediaPlayer != null){
@@ -35,23 +44,32 @@ public class MediaPlayerManager implements SurfaceTexture.OnFrameAvailableListen
         videoTexture = new SurfaceTexture(texturesid);
         videoTexture.setOnFrameAvailableListener(this  );
         if (mediaPlayer == null) {
-            mediaPlayer = new MediaPlayer();
-            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mp) {
-                    mp.start();
-                }
-            });
+            mediaPlayer = MediaPlayer.create(mContext, mVideoSourceId);
+            mediaPlayer.setLooping(true);
+//            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//                @Override
+//                public void onPrepared(MediaPlayer mp) {
+//                    mp.start();
+//                }
+//            });
             Surface surface = new Surface(videoTexture);
             mediaPlayer.setSurface(surface);
             surface.release();
-            try {
-                mediaPlayer.setDataSource(videoPath);
-                mediaPlayer.prepareAsync();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
+//            try {
+//                mediaPlayer.setDataSource(videoPath);
+//                mediaPlayer.prepareAsync();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         } else {
+//            mediaPlayer.start();
+        }
+    }
+
+    public void onStart()
+    {
+        if (mediaPlayer != null) {
             mediaPlayer.start();
         }
     }
