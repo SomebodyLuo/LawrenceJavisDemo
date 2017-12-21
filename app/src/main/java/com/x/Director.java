@@ -261,6 +261,8 @@ public class Director implements Renderer {
 			public void onSensorEvent(float[] tmpMatrix) {
 				// luoyouren: 这里把Sensor数据传给场景
 				mSceneManager.setEyeMatrix(tmpMatrix);
+
+				mSceneManager.updateEyeMatrixToScene(tmpMatrix);
 			}
 		});		
 	}

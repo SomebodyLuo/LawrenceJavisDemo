@@ -311,6 +311,19 @@ import android.view.MotionEvent;
 		return mViewList.contains(View);
 	}
 
+	// luoyouren: 让某些场景跟随视线移动
+	public void updateEyeMatrixToScene(float[] tmpMatrix)
+	{
+		for (int i = 0; i < mViewList.size(); i++)
+		{
+			View view = mViewList.get(i);
+			if (view.isEyeMatrixUpdate())
+			{
+
+			}
+		}
+	}
+
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent event) {
 

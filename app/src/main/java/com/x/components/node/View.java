@@ -51,6 +51,16 @@ public class View    {
 	protected boolean			mFocusable			= true;
 	private boolean 			mTouchable 			= true;
 
+	public boolean isEyeMatrixUpdate() {
+		return mIsEyeMatrixUpdate;
+	}
+
+	public void setEyeMatrixUpdate(boolean isEyeMatrixUpdate) {
+		this.mIsEyeMatrixUpdate = isEyeMatrixUpdate;
+	}
+
+	private boolean				mIsEyeMatrixUpdate	= false;
+
 	protected boolean			mIsVisible			= true;
 
 //	private T_Transform			mTransform			= new T_Transform();	// 相对位移缩放旋转等等

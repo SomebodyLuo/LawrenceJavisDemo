@@ -592,6 +592,18 @@ public class SceneManager {
 		}		
 	}
 
+	// luoyouren: 让某些场景跟随视线移动
+	public void updateEyeMatrixToScene(float[] tmpMatrix)
+	{
+		for (int i = 0; i < mSceneStack.size(); i++)
+		{
+			XScene scene = mSceneStack.get(i);
+			if (scene.isEyeMatrixUpdate()) {
+				scene.updateEyeMatrixToScene(tmpMatrix);
+			}
+		}
+	}
+
 	public void playParticleEffect(int effect,Texture texture) {
 		mEnableParticleEffect = true;
 		mParticleSystemScene.playParticleEffect(effect,texture);
