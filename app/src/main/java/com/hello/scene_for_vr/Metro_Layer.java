@@ -362,8 +362,8 @@ public class Metro_Layer {
             viewGroup2.addChild(change);
 
             // 调整到45°
-            viewGroup2.setTranslate(0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT * 0.5f, +EngineConstanst.REFERENCE_SCREEN_HEIGHT * 0.0f);
-            viewGroup2.setRotate(-30, 0, 0);
+            viewGroup2.setTranslate(0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT * 0.5f, +EngineConstanst.REFERENCE_SCREEN_HEIGHT * 0.2f);
+            viewGroup2.setRotate(-40, 0, 0);
 
 
             mLayer.addChild(viewGroup2);
@@ -385,12 +385,13 @@ public class Metro_Layer {
             viewGroup2.setTranslate(0, 0 ,0);
             viewGroup2.setFocusable(false);
 
-            View circleView = makeImageView(R.drawable.circle3, 2048, 2048, 0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+            final int side_length = 256 * 6;
+            View circleView = makeImageView(R.drawable.circle3, side_length, side_length, 0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
             circleView.setRotate(-90, 0, 0);
             circleView.setFocusable(false);
             circleView.setTouchAble(false);
             circleView.setClickable(false);
-            viewGroup2.addChild(circleView);
+//            viewGroup2.addChild(circleView);
 
             View canvasView = makeImageView(R.drawable.pacific_logo, 1147, 306, 0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT + 100, EngineConstanst.REFERENCE_SCREEN_HEIGHT + 0);
             canvasView.setRotate(-90, 0, 0);

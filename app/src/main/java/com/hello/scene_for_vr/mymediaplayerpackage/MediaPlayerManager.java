@@ -19,6 +19,8 @@ public class MediaPlayerManager implements SurfaceTexture.OnFrameAvailableListen
     private boolean frameAvailable = false;
     
     private SurfaceTexture videoTexture;
+
+    // luoyouren: 视频贴图
     public  void playVideo(int texturesid) {
     	
     	
