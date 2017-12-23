@@ -151,6 +151,7 @@ public class SensorCardboardBlock extends AbsSensorStrategy  {
          Matrix.multiplyMM(mResultMatrix, 0, mRotateMatrix, 0, mTmpMatrix , 0);
          Matrix.multiplyMM(mTmpMatrix, 0, mResultMatrix, 0, mEkfToHeadTracker, 0);
 
+         // luoyouren: 这里把Sensor数据传给场景
          mSensorListener.onSensorEvent(mTmpMatrix) ;
      }
     private static float[] mTmp = new float[16];

@@ -1,10 +1,15 @@
 package com.x.components.node;
 
 import android.opengl.Matrix;
+import android.util.Log;
 
 import com.x.Director;
 import com.x.opengl.kernel.Quat;
 import com.x.opengl.kernel.Vector3;
+
+import java.lang.reflect.Array;
+import java.nio.FloatBuffer;
+import java.util.Arrays;
 
 /**
  *
@@ -23,8 +28,10 @@ import com.x.opengl.kernel.Vector3;
 public class CameraView extends View{
 
 	
-	private final float[] mSourceFrontward_four = new float[ ]{Vector3.FRONT_AXIS.X,Vector3.FRONT_AXIS.Y,Vector3.FRONT_AXIS.Z,0};
+	private final float[] mSourceFrontward_four = new float[ ]{Vector3.FRONT_AXIS.X, Vector3.FRONT_AXIS.Y, Vector3.FRONT_AXIS.Z, 0};
+
 	private final float[] mSourceUpward_four = new float[ ]{Vector3.UP_AXIS.X,Vector3.UP_AXIS.Y,Vector3.UP_AXIS.Z,0};
+
 	private final float[] mSourceRightward_four = new float[ ]{Vector3.RIGHT_AXIS.X,Vector3.RIGHT_AXIS.Y,Vector3.RIGHT_AXIS.Z,0};
 	
 	public float[] mFrontward_four = new float[ ]{Vector3.FRONT_AXIS.X,Vector3.FRONT_AXIS.Y,Vector3.FRONT_AXIS.Z,0};
@@ -100,9 +107,9 @@ public class CameraView extends View{
 		fixDirection(mFinalMatrix); 
 		
 		Director.sGLESVersion.cameraViewMatrix(
-				mTransform.Position.X, 						mTransform.Position.Y,  						mTransform.Position.Z , 
+				mTransform.Position.X, 						mTransform.Position.Y,  						mTransform.Position.Z,
 				mTransform.Position.X+ (-mFrontward_four[0]), 	mTransform.Position.Y+ -mFrontward_four[1], 	mTransform.Position.Z+ -mFrontward_four[2] , 
-				mUpward_four[0] ,mUpward_four[1],mUpward_four[2]);
+				mUpward_four[0], mUpward_four[1], mUpward_four[2]);
 		
 		
 	}	
@@ -118,8 +125,11 @@ public class CameraView extends View{
 		Matrix.multiplyMV(mRightward_four, 0, matrix, 0, mSourceRightward_four, 0);		
 	}
 
+	// luoyouren: 传感器的数据进来，给到Camera
 	public void setGyroscopeMatrix(float[] matrix) {
+		Log.i("luoyouren", "setGyroscopeMatrix 1: " + Arrays.toString(matrix));
 		Matrix.invertM(mGyroscopeMatrix, 0, matrix, 0);
+		Log.i("luoyouren", "setGyroscopeMatrix 2: " + Arrays.toString(mGyroscopeMatrix));
 	}
 
 	public float[] getEyePosition() {

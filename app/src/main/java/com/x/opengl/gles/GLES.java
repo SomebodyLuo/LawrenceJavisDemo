@@ -30,6 +30,8 @@ public abstract class GLES {
 	public abstract void onRender(Mesh mesh, Material mMaterial,  float[] mSelfModelViewMatrix, boolean baseShader) ;
 
 	public abstract void onViewTransform(Transform mFinalTransform) ;
+	public abstract void onViewTransform(Transform mFinalTransform, float[] gyroscopeMatrix) ;
+
 	public abstract void onViewTransformAlpha(Transform mFinalTransform) ;
 	public abstract void onViewTransformRotate(Transform mFinalTransform) ;
 	public abstract void onViewTransformTranslate(Transform mFinalTransform) ;

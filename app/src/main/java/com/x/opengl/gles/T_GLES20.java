@@ -12,7 +12,9 @@ import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.util.Log;
 
+import com.x.components.node.View;
 import com.x.opengl.kernel.Material;
+import com.x.opengl.kernel.Matrix;
 import com.x.opengl.kernel.Mesh;
 import com.x.opengl.kernel.T_AABBBox;
 import com.x.opengl.kernel.Texture;
@@ -199,11 +201,11 @@ public class T_GLES20 extends GLES {
 
 	@Override
 	public void onViewTransform(Transform finalTransform) {
-		
+
 //		float translateX = finalTransform.Position.X;
 //		float translateY = finalTransform.Position.Y;
 //		float translateZ = finalTransform.Position.Z;
-//		
+//
 //		float scaleX = finalTransform.Scale.X;
 //		float scaleY = finalTransform.Scale.Y;
 //		float scaleZ = finalTransform.Scale.Z;
@@ -217,6 +219,33 @@ public class T_GLES20 extends GLES {
 		MatrixState.scale(finalTransform.Scale.X, finalTransform.Scale.Y, finalTransform.Scale.Z);
 
 	}
+
+	@Override
+	public void onViewTransform(Transform finalTransform, float[] gyroscopeMatrix) {
+		
+//		float translateX = finalTransform.Position.X;
+//		float translateY = finalTransform.Position.Y;
+//		float translateZ = finalTransform.Position.Z;
+//
+//		float scaleX = finalTransform.Scale.X;
+//		float scaleY = finalTransform.Scale.Y;
+//		float scaleZ = finalTransform.Scale.Z;
+
+
+		MatrixState.alpha(finalTransform.Alpha);
+		MatrixState.translate(finalTransform.Position.X,finalTransform.Position.Y,finalTransform.Position.Z);
+		MatrixState.rotate(finalTransform.Rotate.X, 1, 0, 0);
+		MatrixState.rotate(finalTransform.Rotate.Y, 0, 1, 0);
+		MatrixState.rotate(finalTransform.Rotate.Z, 0, 0, 1);
+		MatrixState.scale(finalTransform.Scale.X, finalTransform.Scale.Y, finalTransform.Scale.Z);
+
+		// luoyouren: 使用陀螺仪的旋转数据
+		MatrixState.updateEyeMatrixToScene(gyroscopeMatrix);
+
+	}
+
+
+
 	@Override
 	public void onViewTransformAlpha(Transform finalTransform) {
 

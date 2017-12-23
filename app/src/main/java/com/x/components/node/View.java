@@ -7,6 +7,8 @@ import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.opengl.GLES20;
+import android.opengl.Matrix;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.accessibility.AccessibilityEvent;
@@ -66,6 +68,8 @@ public class View    {
 //	private T_Transform			mTransform			= new T_Transform();	// 相对位移缩放旋转等等
 	private Transform			mDecodeTransform	= new Transform();
 	protected Transform			mTransform			= new Transform();
+
+	private float[] mGyroscopeMatrix = new float[16];
 	
 	private EventManager		mEventManager		= new EventManager();
 	private Rotate				mFinalRoate = new Rotate();
@@ -90,10 +94,16 @@ public class View    {
 		mDebugName = name;
 	}
 	public View() {
+
+		Matrix.setIdentityM(mGyroscopeMatrix, 0);
+
 		initView();
 		setFocused(false);
 	}
 	public View(Drawable drawable) {
+
+		Matrix.setIdentityM(mGyroscopeMatrix, 0);
+
 		mDrawableList = new ArrayList<Drawable>();
 		mBGDrawable = drawable;
 		addDrawable(mBGDrawable);
@@ -101,6 +111,9 @@ public class View    {
 	}
 
 	public View(int width, int height) {
+
+		Matrix.setIdentityM(mGyroscopeMatrix, 0);
+
 		initView();
 		mViewWidth = width;
 		mViewHeight = height;
@@ -227,10 +240,43 @@ public class View    {
 		}
 	}
 
+	// luoyouren: 我们所有的移动、旋转、缩放物体的操作，最终都通过这个函数传递到mModelMatrix，如下MatrixState.java：
+//	public static void translate(float x,float y,float z)
+//	{
+//		Matrix.translateM(mModelMatrix, 0, x, y, z);
+//	}
+//
+//	public static void rotate(float angle,float x,float y,float z)
+//	{
+//		Matrix.rotateM(mModelMatrix,0,angle,x,y,z);
+//	}
+//
+//	public static void scale(float x,float y,float z)
+//	{
+//		Matrix.scaleM(mModelMatrix,0, x, y, z);
+//	}
 	protected void onViewTransform() {
 		// 转换自身位移
-		Director.sGLESVersion.onViewTransform(mTransform);
+		if (mIsEyeMatrixUpdate)
+		{
+			Director.sGLESVersion.onViewTransform(mTransform, mGyroscopeMatrix);
+		} else {
+			Director.sGLESVersion.onViewTransform(mTransform);
+		}
 		// 如果当前被当前焦点绑定，则转换焦点位移
+	}
+
+	// luoyouren: 让某些场景跟随视线移动
+	public void updateEyeMatrixToScene(float[] tmpMatrix)
+	{
+		if (mIsEyeMatrixUpdate) {
+			Log.i("luoyouren", "View: getDebugName = " + getDebugName());
+//			Director.sGLESVersion.updateEyeMatrixToScene(tmpMatrix);
+			for (int i = 0; i < 16; i++)
+			{
+				mGyroscopeMatrix[i] = tmpMatrix[i];
+			}
+		}
 	}
 
 	public CBResourcer getCBResourcer() {
@@ -931,6 +977,8 @@ public class View    {
 	public Transform getRelativeTransform() {
 		return mTransform;
 	}
+
+
 
 	/*
 	 * 获取绝对位移三元数

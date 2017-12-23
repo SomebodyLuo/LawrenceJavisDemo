@@ -106,14 +106,15 @@ public class MyDirector extends Director
 			mAllAppDialogScene.setRenderable(true);
 			mAllAppDialogScene.setWidth(EngineConstanst.REFERENCE_SCREEN_WIDTH);
 			mAllAppDialogScene.setHeight(EngineConstanst.REFERENCE_SCREEN_HEIGHT/2);
+//			mAllAppDialogScene.setEyeMatrixUpdate(true);
 			isTextureOk = true;
 		}
 		
 		mAllAppDialogScene.initScene(); 
 		Director.getInstance().addDialogScene(mAllAppDialogScene);
 
-		mMediaPlayerManager.initVideo(mAllAppDialogScene.getOesTextureId(mMediaPlayerManager));
-		mMediaPlayerManager.onStart();
+//		mMediaPlayerManager.initVideo(mAllAppDialogScene.getOesTextureId(mMediaPlayerManager));
+//		mMediaPlayerManager.onStart();
 	}
 
 

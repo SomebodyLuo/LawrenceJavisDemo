@@ -6,6 +6,7 @@ import android.opengl.Matrix;
 import android.util.Log;
 
 import com.x.opengl.kernel.T_AABBBox;
+import com.x.opengl.kernel.Vector3;
 
 @SuppressLint("NewApi") 
 public class MatrixState 
@@ -13,6 +14,7 @@ public class MatrixState
 	private static float[] mProjMatrix = new float[16];
     private static float[] mCameraMatrix = new float[16];   
     private static float[] mModelMatrix=new float[16];
+
     
     private static float[] mModelViewMatrix=new float[16];
     private static float[] m_M_V_P_Matrix=new float[16];
@@ -28,6 +30,9 @@ public class MatrixState
 
     	Matrix.setIdentityM(mModelMatrix, 0);
     	Matrix.setRotateM(mModelMatrix, 0, 0, 1, 0, 0);
+
+
+
     	mAlpha = 1;
     }
     
@@ -50,6 +55,27 @@ public class MatrixState
     	mAlpha  = mStackAlpha[stackTop][0];
     	stackTop--;
     }
+
+	private static final float[] mSourceFrontward_four = new float[ ]{Vector3.FRONT_AXIS.X, Vector3.FRONT_AXIS.Y, Vector3.FRONT_AXIS.Z, 0};
+
+	// luoyouren: 让某些场景跟随视线移动
+	public static void updateEyeMatrixToScene(float[] gyroscopeMatrix)
+	{
+		float[] tmpMatrix = new float[16];
+		Matrix.setIdentityM(tmpMatrix, 0);
+
+		Matrix.invertM(tmpMatrix, 0, gyroscopeMatrix, 0);
+
+		tmpMatrix[4] = 0.0f;
+		tmpMatrix[5] = 1.0f;
+		tmpMatrix[6] = 0.0f;
+
+//		float[] mFrontward_four = new float[ ]{Vector3.FRONT_AXIS.X, Vector3.FRONT_AXIS.Y, Vector3.FRONT_AXIS.Z, 0};
+//
+//		Matrix.multiplyMV(mFrontward_four, 0, tmpMatrix, 0, mSourceFrontward_four, 0);
+
+		Matrix.multiplyMM(mModelMatrix, 0, tmpMatrix, 0, mModelMatrix.clone(), 0);
+	}
     
     public static void translate(float x,float y,float z)
     {
@@ -198,6 +224,7 @@ public class MatrixState
     }
 
 
+    // luoyouren: 或者View的MVP矩阵
     public static float[] getFinalMatrix(float[] selfModelMatrix)
     {	
 

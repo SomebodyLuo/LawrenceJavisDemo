@@ -72,7 +72,7 @@ public class SceneManager {
 		// luoyouren: 引擎信息
 		mEngineInfoScene = new EngineInfoScene();
 		mEngineInfoScene.initScene();
-		mEngineInfoScene.setRenderable(false);
+		mEngineInfoScene.setRenderable(true);
 
 		// 粒子系统管理场景
 		mParticleSystemScene = new ParticleSystemScene();
@@ -595,12 +595,10 @@ public class SceneManager {
 	// luoyouren: 让某些场景跟随视线移动
 	public void updateEyeMatrixToScene(float[] tmpMatrix)
 	{
-		for (int i = 0; i < mSceneStack.size(); i++)
+		for (int i = 0; i < mDialogSceneStack.size(); i++)
 		{
-			XScene scene = mSceneStack.get(i);
-			if (scene.isEyeMatrixUpdate()) {
-				scene.updateEyeMatrixToScene(tmpMatrix);
-			}
+			XScene scene = mDialogSceneStack.get(i);
+			scene.updateEyeMatrixToScene(tmpMatrix);
 		}
 	}
 

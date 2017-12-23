@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
@@ -303,7 +304,7 @@ import android.view.MotionEvent;
 	 * @return
 	 */
 	public LinkedList<View> getChildList() {
-		return mViewList ;
+		return mViewList;
 	}
 
 
@@ -314,13 +315,15 @@ import android.view.MotionEvent;
 	// luoyouren: 让某些场景跟随视线移动
 	public void updateEyeMatrixToScene(float[] tmpMatrix)
 	{
+		Log.i("luoyouren", "ViewGroup: getDebugName = " + getDebugName());
+		// luoyouren: 1. ViewGroup自身的旋转
+		super.updateEyeMatrixToScene(tmpMatrix);
+
+		// luoyouren: 2. ViewGroup中子View的旋转
 		for (int i = 0; i < mViewList.size(); i++)
 		{
 			View view = mViewList.get(i);
-			if (view.isEyeMatrixUpdate())
-			{
-
-			}
+			view.updateEyeMatrixToScene(tmpMatrix);
 		}
 	}
 
