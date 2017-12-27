@@ -1,5 +1,6 @@
 package com.x.opengl.gles;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 
 import android.annotation.SuppressLint;
 import android.opengl.Matrix;
@@ -7,6 +8,9 @@ import android.util.Log;
 
 import com.x.opengl.kernel.T_AABBBox;
 import com.x.opengl.kernel.Vector3;
+import com.x.opengl.math.Matrix4;
+import com.x.opengl.utils.ArrayUtils;
+//import com.x.opengl.math.vector.Vector3;
 
 @SuppressLint("NewApi") 
 public class MatrixState 
@@ -56,25 +60,43 @@ public class MatrixState
     	stackTop--;
     }
 
-	private static final float[] mSourceFrontward_four = new float[ ]{Vector3.FRONT_AXIS.X, Vector3.FRONT_AXIS.Y, Vector3.FRONT_AXIS.Z, 0};
+	private static final float[] mSourceFrontward_four = new float[ ]{0, 0, -1, 0};
 
 	// luoyouren: 让某些场景跟随视线移动
 	public static void updateEyeMatrixToScene(float[] gyroscopeMatrix)
 	{
-		float[] tmpMatrix = new float[16];
-		Matrix.setIdentityM(tmpMatrix, 0);
+//		float[] tmpMatrix = new float[16];
+//		Matrix.setIdentityM(tmpMatrix, 0);
+//		tmpMatrix[5] = 0;
 
-		Matrix.invertM(tmpMatrix, 0, gyroscopeMatrix, 0);
+		float[] mFrontward_four = new float[ ]{0, 0, 0, 0};
 
-		tmpMatrix[4] = 0.0f;
-		tmpMatrix[5] = 1.0f;
-		tmpMatrix[6] = 0.0f;
+		// 1. -Z是正前方，用陀螺仪复合矩阵作用于-Z的单位向量
+		Matrix.multiplyMV(mFrontward_four, 0, gyroscopeMatrix, 0, mSourceFrontward_four, 0);
+		Log.i("luoyouren", "mFrontward_four: " + Arrays.toString(mFrontward_four));
 
-//		float[] mFrontward_four = new float[ ]{Vector3.FRONT_AXIS.X, Vector3.FRONT_AXIS.Y, Vector3.FRONT_AXIS.Z, 0};
+		// 2. XOZ平面--投影向量; 直接Y轴赋值0
+		mFrontward_four[1] = 0.0f;
+
+		// 3. 向量点积求角度
+		Vector3 vector1 = new Vector3(mSourceFrontward_four[0], mSourceFrontward_four[1], mSourceFrontward_four[2]);
+		Vector3 vector2 = new Vector3(mFrontward_four[0], mFrontward_four[1], mFrontward_four[2]);
+		float angle = Vector3.angleBetween(vector1, vector2);
+		angle = (float) Math.toDegrees(angle);
+		Log.i("luoyouren", "angle = " + angle);
+
+		// 4. 重新构造旋转矩阵
+		Matrix4 objMatrix = new Matrix4();
+		objMatrix.setToRotation(com.x.opengl.math.vector.Vector3.Axis.Y, angle);
+
+
+//		float[] tmpMatrix2 = new float[16];
+//		Matrix.setIdentityM(tmpMatrix2, 0);
 //
-//		Matrix.multiplyMV(mFrontward_four, 0, tmpMatrix, 0, mSourceFrontward_four, 0);
+//		Matrix.multiplyMM(tmpMatrix2, 0, tmpMatrix, 0, gyroscopeMatrix, 0);
+//		Log.i("luoyouren", "tmpMatrix2" + Arrays.toString(tmpMatrix2));
 
-		Matrix.multiplyMM(mModelMatrix, 0, tmpMatrix, 0, mModelMatrix.clone(), 0);
+		Matrix.multiplyMM(mModelMatrix, 0, objMatrix.getFloatValues(), 0, mModelMatrix.clone(), 0);
 	}
     
     public static void translate(float x,float y,float z)

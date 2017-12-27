@@ -231,6 +231,8 @@ public class T_GLES20 extends GLES {
 //		float scaleY = finalTransform.Scale.Y;
 //		float scaleZ = finalTransform.Scale.Z;
 
+		// luoyouren: 使用陀螺仪的旋转数据
+		MatrixState.updateEyeMatrixToScene(gyroscopeMatrix);
 
 		MatrixState.alpha(finalTransform.Alpha);
 		MatrixState.translate(finalTransform.Position.X,finalTransform.Position.Y,finalTransform.Position.Z);
@@ -239,8 +241,7 @@ public class T_GLES20 extends GLES {
 		MatrixState.rotate(finalTransform.Rotate.Z, 0, 0, 1);
 		MatrixState.scale(finalTransform.Scale.X, finalTransform.Scale.Y, finalTransform.Scale.Z);
 
-		// luoyouren: 使用陀螺仪的旋转数据
-		MatrixState.updateEyeMatrixToScene(gyroscopeMatrix);
+
 
 	}
 
@@ -294,7 +295,6 @@ public class T_GLES20 extends GLES {
 		// 初始化变换矩阵
 		MatrixState.setInitStack();
 		//
-		MatrixState.setViewPort(left, top, (int) width, (int) height);
 		// 调用此方法计算产生透视投影矩阵
 //		MatrixState.setProjectFrustum(-ratio, ratio, -1f, 1f, near, far);
 		MatrixState.setProjectFrustum(-ratio/4, +ratio/4, -1f/4, 1f/4, near, far);

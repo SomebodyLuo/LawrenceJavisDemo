@@ -104,8 +104,8 @@ public class CameraView extends View{
 	 */
 	public void updateWorldViewMatrix() {
 		Matrix.multiplyMM(mFinalMatrix, 0, mGyroscopeMatrix, 0, mMatrixRotate, 0);
-		fixDirection(mFinalMatrix); 
-		
+		fixDirection(mFinalMatrix);
+
 		Director.sGLESVersion.cameraViewMatrix(
 				mTransform.Position.X, 						mTransform.Position.Y,  						mTransform.Position.Z,
 				mTransform.Position.X+ (-mFrontward_four[0]), 	mTransform.Position.Y+ -mFrontward_four[1], 	mTransform.Position.Z+ -mFrontward_four[2] , 

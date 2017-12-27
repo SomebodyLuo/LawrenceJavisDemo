@@ -38,13 +38,13 @@ public class TestSensorCardboardBlock extends AbsSensorStrategy  {
     private float[] mRotateMatrix = new float[16];
 	public TestSensorCardboardBlock() {
 	}
-	public void register(Context context,EngineSensorListenr sensorListenr){
+	public void register(Context context,EngineSensorListenr sensorListenrForCamera, EngineSensorListenr sensorListenrForObj){
 
 		Log.d("ming", "register "+mRegistered);
 		Log.d("ming", "register this "+this + ",,director = "+Director.getInstance());
         if (mRegistered) return;
 		this.mContext = context;
-		this.mSensorListener = sensorListenr;
+		this.mSensorListener = sensorListenrForCamera;
 		
 		mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
 		mSensorManager.unregisterListener(this);

@@ -174,7 +174,7 @@ public class Vector3 extends Vector2 implements Cloneable{
 		}
 		
 		factor = Vector3.dotProduct(vectorA, vectorB) / lengthProduce;
-		factor = factor < -1.0f ? -1.0f : (factor > 1.0f ? 1.0f : factor);
+//		factor = factor < -1.0f ? -1.0f : (factor > 1.0f ? 1.0f : factor);
 		
 		return (float) Math.acos(factor);
 	}
