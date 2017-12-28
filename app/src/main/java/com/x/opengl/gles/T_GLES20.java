@@ -13,6 +13,7 @@ import android.opengl.GLUtils;
 import android.util.Log;
 
 import com.x.components.node.View;
+import com.x.opengl.kernel.EngineConstanst;
 import com.x.opengl.kernel.Material;
 import com.x.opengl.kernel.Matrix;
 import com.x.opengl.kernel.Mesh;
@@ -233,8 +234,6 @@ public class T_GLES20 extends GLES {
 
 
 
-		// luoyouren: 使用陀螺仪的旋转数据
-		MatrixState.updateEyeMatrixToScene(gyroscopeMatrix);
 
 		MatrixState.alpha(finalTransform.Alpha);
 		MatrixState.translate(finalTransform.Position.X,finalTransform.Position.Y,finalTransform.Position.Z);
@@ -245,10 +244,22 @@ public class T_GLES20 extends GLES {
 
 		MatrixState.scale(finalTransform.Scale.X, finalTransform.Scale.Y, finalTransform.Scale.Z);
 
-
+		if (true) {
+			// luoyouren: 使用陀螺仪的旋转数据
+			MatrixState.updateEyeMatrixToScene(gyroscopeMatrix);
+		} else {
+			android.opengl.Matrix.setRotateM(m, 0, angle, 0, 1, 0);
+			angle++;
+			if (angle > 360) {
+				angle = 0;
+			}
+			android.opengl.Matrix.multiplyMM(MatrixState.getMMatrix(), 0, MatrixState.getMMatrix(), 0, m, 0);
+		}
 
 
 	}
+	float angle = 0;
+	float[] m =new float[16];
 
 
 

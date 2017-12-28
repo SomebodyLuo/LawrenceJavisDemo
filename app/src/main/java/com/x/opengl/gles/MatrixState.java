@@ -61,7 +61,7 @@ public class MatrixState
     }
 
 	private static final float[] mSourceFrontward_four = new float[ ]{1, 0, 0, 0};
-
+	private static float angle;
 	// luoyouren: 让某些场景跟随视线移动
 	public static void updateEyeMatrixToScene(float[] gyroscopeMatrix)
 	{
@@ -85,7 +85,7 @@ public class MatrixState
 		// 3. 向量点积求角度
 		Vector3 vector1 = new Vector3(mSourceFrontward_four[0], mSourceFrontward_four[1], mSourceFrontward_four[2]);
 		Vector3 vector2 = new Vector3(mFrontward_four[0], mFrontward_four[1], mFrontward_four[2]);
-		float angle = Vector3.angleBetween(vector1, vector2);
+		angle = Vector3.angleBetween(vector1, vector2);
 		angle = (float) Math.toDegrees(angle);
 
 		/*
@@ -109,9 +109,10 @@ public class MatrixState
 		Log.i("luoyouren", "angle = " + angle);
 
 		// 4. 重新构造旋转矩阵
-		Matrix4 objMatrix = new Matrix4();
-		objMatrix.setToRotation(com.x.opengl.math.vector.Vector3.Axis.Y, angle);
-		//Matrix.setRotateM();
+//		Matrix4 objMatrix = new Matrix4();
+//		objMatrix.setToRotation(com.x.opengl.math.vector.Vector3.Axis.Y, angle);
+		float[] m = new float[16];
+		android.opengl.Matrix.setRotateM(m, 0, -angle, 0, 1, 0);
 
 //		float[] tmpMatrix2 = new float[16];
 //		Matrix.setIdentityM(tmpMatrix2, 0);
@@ -124,10 +125,14 @@ public class MatrixState
 //		android.opengl.Matrix.invertM(invModelMatrix, 0, mModelMatrix, 0);
 //		Matrix.multiplyMM(invModelMatrix, 0, objMatrix.getFloatValues(), 0, invModelMatrix , 0);
 		//==========================================================================
-		Matrix.multiplyMM(mModelMatrix, 0, mModelMatrix, 0,  objMatrix.getFloatValues(), 0);
+
+
+		android.opengl.Matrix.multiplyMM(mModelMatrix, 0, mModelMatrix, 0,  m, 0);
 
 	}
-    
+    public static float getAngel(){
+		return angle;
+	}
     public static void translate(float x,float y,float z)
     {
     	Matrix.translateM(mModelMatrix, 0, x, y, z);

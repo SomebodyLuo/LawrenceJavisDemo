@@ -357,8 +357,12 @@ public class Metro_Layer {
             viewGroup2.setHeight(EngineConstanst.REFERENCE_SCREEN_HEIGHT);
 //			viewGroup2.setBackgroundColor(Color.parseColor("#2200ffff"));
             viewGroup2.setVisibility(true);
-            viewGroup2.setTranslate(0, EngineConstanst.REFERENCE_SCREEN_HEIGHT - 100, EngineConstanst.REFERENCE_SCREEN_HEIGHT * 1.0f);
             viewGroup2.setFocusable(false);
+
+            // 调整到45°
+//            viewGroup2.setTranslate(0, EngineConstanst.REFERENCE_SCREEN_HEIGHT - 100, EngineConstanst.REFERENCE_SCREEN_HEIGHT * 1.0f);
+            viewGroup2.setTranslate(0, EngineConstanst.REFERENCE_SCREEN_HEIGHT * 0.5f, +EngineConstanst.REFERENCE_SCREEN_HEIGHT * 0.2f);
+            viewGroup2.setRotate(-40, 0, 0);
 
             View canvasView = makeImageView(R.drawable.weather_board, WEATHER_PIC_WIDTH, WEATHER_PIC_HEIGHT, 0, 0, 0);
             canvasView.setRotate(90, 0, 0);
@@ -385,9 +389,7 @@ public class Metro_Layer {
 
             viewGroup2.addChild(change);
 
-            // 调整到45°
-//            viewGroup2.setTranslate(0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT * 0.5f, +EngineConstanst.REFERENCE_SCREEN_HEIGHT * 0.2f);
-//            viewGroup2.setRotate(-40, 0, 0);
+
 
             // luoyouren: 让某些场景跟随视线移动
             viewGroup2.setEyeMatrixUpdate(true);
@@ -407,11 +409,10 @@ public class Metro_Layer {
             viewGroup2.SetDebugName("LOGOViewGroup");
             viewGroup2.setWidth(EngineConstanst.REFERENCE_SCREEN_WIDTH);
             viewGroup2.setHeight(EngineConstanst.REFERENCE_SCREEN_HEIGHT);
-//			viewGroup2.setBackgroundColor(Color.parseColor("#0000ffff"));
+//			viewGroup2.setBackgroundColor(Color.parseColor("#ff00ffff"));
             viewGroup2.setVisibility(true);
-//            viewGroup2.setTranslate(0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT + 100, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
-            viewGroup2.setTranslate(0, 0, 0);
             viewGroup2.setFocusable(false);
+            viewGroup2.setTranslate(0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT + 100, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
 
             final int side_length = 256 * 6;
             View circleView = makeImageView(R.drawable.circle3, side_length, side_length, 0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
@@ -421,14 +422,14 @@ public class Metro_Layer {
             circleView.setClickable(false);
 //            viewGroup2.addChild(circleView);
 
-            View canvasView = makeImageView(R.drawable.pacific_logo, 1147, 306, 0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT + 100, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+            View canvasView = makeImageView(R.drawable.pacific_logo, 1147, 306, 0, 0, 0);
             canvasView.setRotate(-90, 0, 0);
             canvasView.setFocusable(false);
             canvasView.setTouchAble(false);
             canvasView.setClickable(false);
             viewGroup2.addChild(canvasView);
 
-            View change = makeImageView(R.drawable.pacific_site, 812, 79, 0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT + 100, EngineConstanst.REFERENCE_SCREEN_HEIGHT + WEATHER_PIC_HEIGHT/2 + 50);
+            View change = makeImageView(R.drawable.pacific_site, 812, 79, 0, 0, WEATHER_PIC_HEIGHT/2 + 50);
             change.setRotate(-90, 0, 0);
             change.setFocusable(false);
             change.setTouchAble(false);
@@ -436,8 +437,7 @@ public class Metro_Layer {
             viewGroup2.addChild(change);
 
             // luoyouren: 让某些场景跟随视线移动
-//            viewGroup2.setEyeMatrixUpdate(true);
-            viewGroup2.setRotate(0, 90, 0);
+            viewGroup2.setEyeMatrixUpdate(true);
 
             mLayer.addChild(viewGroup2);
 
