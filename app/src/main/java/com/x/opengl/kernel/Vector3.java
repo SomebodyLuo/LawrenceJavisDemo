@@ -124,6 +124,19 @@ public class Vector3 extends Vector2 implements Cloneable{
             vectorA.Z * vectorB.X - vectorA.X * vectorB.Z,
             vectorA.X * vectorB.Y - vectorA.Y * vectorB.X);
     }
+
+	/**
+	 * 向量叉积
+	 *
+	 * @param vectorA
+	 * @param vectorB
+	 * @return
+	 */
+	public static float Cross(Vector3 vectorA, Vector3 vectorB) {
+		return (vectorA.Y * vectorB.Z - vectorA.Z * vectorB.Y +
+				vectorA.Z * vectorB.X - vectorA.X * vectorB.Z +
+				vectorA.X * vectorB.Y - vectorA.Y * vectorB.X );
+	}
 	
 	/**
 	 * 计算向量的范数（长度）

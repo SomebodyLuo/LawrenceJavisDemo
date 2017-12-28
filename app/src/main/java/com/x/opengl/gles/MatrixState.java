@@ -65,9 +65,6 @@ public class MatrixState
 	// luoyouren: 让某些场景跟随视线移动
 	public static void updateEyeMatrixToScene(float[] gyroscopeMatrix)
 	{
-//		float[] tmpMatrix = new float[16];
-//		Matrix.setIdentityM(tmpMatrix, 0);
-//		tmpMatrix[5] = 0;
 
 		float[] mFrontward_four = new float[ ]{0, 0, 0, 0};
 
@@ -81,8 +78,22 @@ public class MatrixState
 		// 3. 向量点积求角度
 		Vector3 vector1 = new Vector3(mSourceFrontward_four[0], mSourceFrontward_four[1], mSourceFrontward_four[2]);
 		Vector3 vector2 = new Vector3(mFrontward_four[0], mFrontward_four[1], mFrontward_four[2]);
-		float angle = Vector3.angleBetween(vector1, vector2);
-		angle = (float) Math.toDegrees(angle);
+//		float angle = Vector3.angleBetween(vector1, vector2);
+//		angle = (float) Math.toDegrees(angle);
+
+		/*
+		若要直接算出0～2pi的逆时针角度，由：
+		sin<a,b>=cross(a,b)/norm(a)/norm(b)
+		cos<a,b>=(a.*b)/norm(a)/norm(b)
+		可得：
+		tan<a,b>=cross(a,b)/(a.*b)
+		a～b逆时针0～360角度就是：pi+atan(tan<a,b>)。
+		*/
+		double crossVal = Vector3.Cross(vector1, vector2);
+		double dotVal = Vector3.dotProduct(vector1, vector2);
+		float angle = (float) Math.toDegrees(Math.atan(crossVal / dotVal));
+		angle += 180;
+
 		Log.i("luoyouren", "angle = " + angle);
 
 		// 4. 重新构造旋转矩阵
