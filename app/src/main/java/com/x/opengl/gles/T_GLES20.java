@@ -233,19 +233,18 @@ public class T_GLES20 extends GLES {
 
 
 
+		// luoyouren: 使用陀螺仪的旋转数据
+		MatrixState.updateEyeMatrixToScene(gyroscopeMatrix);
+
 		MatrixState.alpha(finalTransform.Alpha);
 		MatrixState.translate(finalTransform.Position.X,finalTransform.Position.Y,finalTransform.Position.Z);
-
-
 
 		MatrixState.rotate(finalTransform.Rotate.X, 1, 0, 0);
 		MatrixState.rotate(finalTransform.Rotate.Y, 0, 1, 0);
 		MatrixState.rotate(finalTransform.Rotate.Z, 0, 0, 1);
 
-		// luoyouren: 使用陀螺仪的旋转数据
-		MatrixState.updateEyeMatrixToScene(gyroscopeMatrix);
-
 		MatrixState.scale(finalTransform.Scale.X, finalTransform.Scale.Y, finalTransform.Scale.Z);
+
 
 
 

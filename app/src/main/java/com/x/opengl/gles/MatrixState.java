@@ -60,26 +60,33 @@ public class MatrixState
     	stackTop--;
     }
 
-	private static final float[] mSourceFrontward_four = new float[ ]{0, 0, -1, 0};
+	private static final float[] mSourceFrontward_four = new float[ ]{1, 0, 0, 0};
 
 	// luoyouren: 让某些场景跟随视线移动
 	public static void updateEyeMatrixToScene(float[] gyroscopeMatrix)
 	{
 
+
 		float[] mFrontward_four = new float[ ]{0, 0, 0, 0};
 
 		// 1. -Z是正前方，用陀螺仪复合矩阵作用于-Z的单位向量
 		Matrix.multiplyMV(mFrontward_four, 0, gyroscopeMatrix, 0, mSourceFrontward_four, 0);
+//		mFrontward_four[0]  =(int)(mFrontward_four[0]*10);
+//		mFrontward_four[0] /=10f;
+//		mFrontward_four[1]  =  (int)(mFrontward_four[1]*10);
+//		mFrontward_four[1] /=10f;
+//		mFrontward_four[2]   =(int)(mFrontward_four[2]*10);
+//		mFrontward_four[2] /=10f;
 		Log.i("luoyouren", "mFrontward_four: " + Arrays.toString(mFrontward_four));
 
 		// 2. XOZ平面--投影向量; 直接Y轴赋值0
-		mFrontward_four[1] = 0.0f;
+		mFrontward_four[2] = 0.0f;
 
 		// 3. 向量点积求角度
 		Vector3 vector1 = new Vector3(mSourceFrontward_four[0], mSourceFrontward_four[1], mSourceFrontward_four[2]);
 		Vector3 vector2 = new Vector3(mFrontward_four[0], mFrontward_four[1], mFrontward_four[2]);
-//		float angle = Vector3.angleBetween(vector1, vector2);
-//		angle = (float) Math.toDegrees(angle);
+		float angle = Vector3.angleBetween(vector1, vector2);
+		angle = (float) Math.toDegrees(angle);
 
 		/*
 		若要直接算出0～2pi的逆时针角度，由：
@@ -91,15 +98,20 @@ public class MatrixState
 		*/
 		double crossVal = Vector3.Cross(vector1, vector2);
 		double dotVal = Vector3.dotProduct(vector1, vector2);
-		float angle = (float) Math.toDegrees(Math.atan(crossVal / dotVal));
-		angle += 180;
+//		float angle = (float) Math.toDegrees(Math.atan(crossVal / dotVal));
+//		angle += 180;
+
+
+		angle = angle * (crossVal> 0 ? 1 : -1);
+		angle += 360;
+		angle %= 360;
 
 		Log.i("luoyouren", "angle = " + angle);
 
 		// 4. 重新构造旋转矩阵
 		Matrix4 objMatrix = new Matrix4();
 		objMatrix.setToRotation(com.x.opengl.math.vector.Vector3.Axis.Y, angle);
-
+		//Matrix.setRotateM();
 
 //		float[] tmpMatrix2 = new float[16];
 //		Matrix.setIdentityM(tmpMatrix2, 0);
@@ -107,7 +119,13 @@ public class MatrixState
 //		Matrix.multiplyMM(tmpMatrix2, 0, tmpMatrix, 0, gyroscopeMatrix, 0);
 //		Log.i("luoyouren", "tmpMatrix2" + Arrays.toString(tmpMatrix2));
 
-		Matrix.multiplyMM(mModelMatrix, 0, objMatrix.getFloatValues(), 0, mModelMatrix.clone(), 0);
+		//==========================================================================
+//		float[] invModelMatrix = new float[16];
+//		android.opengl.Matrix.invertM(invModelMatrix, 0, mModelMatrix, 0);
+//		Matrix.multiplyMM(invModelMatrix, 0, objMatrix.getFloatValues(), 0, invModelMatrix , 0);
+		//==========================================================================
+		Matrix.multiplyMM(mModelMatrix, 0, mModelMatrix, 0,  objMatrix.getFloatValues(), 0);
+
 	}
     
     public static void translate(float x,float y,float z)
