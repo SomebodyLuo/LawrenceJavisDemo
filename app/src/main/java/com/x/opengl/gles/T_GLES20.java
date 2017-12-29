@@ -246,7 +246,7 @@ public class T_GLES20 extends GLES {
 
 		if (true) {
 			// luoyouren: 使用陀螺仪的旋转数据
-			MatrixState.updateEyeMatrixToScene(gyroscopeMatrix);
+			MatrixState.updateEyeMatrixToScene(finalTransform.isTowardsPositiveY(), gyroscopeMatrix);
 		} else {
 			android.opengl.Matrix.setRotateM(m, 0, angle, 0, 1, 0);
 			angle++;

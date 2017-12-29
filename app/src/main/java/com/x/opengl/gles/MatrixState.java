@@ -63,7 +63,7 @@ public class MatrixState
 	private static final float[] mSourceFrontward_four = new float[ ]{1, 0, 0, 0};
 	private static float angle;
 	// luoyouren: 让某些场景跟随视线移动
-	public static void updateEyeMatrixToScene(float[] gyroscopeMatrix)
+	public static void updateEyeMatrixToScene(boolean isTowardsPositiveY, float[] gyroscopeMatrix)
 	{
 
 
@@ -102,7 +102,7 @@ public class MatrixState
 //		angle += 180;
 
 
-		angle = angle * (crossVal> 0 ? 1 : -1);
+		angle = angle * (crossVal > 0 ? 1 : -1) * (isTowardsPositiveY ? 1 : -1);
 		angle += 360;
 		angle %= 360;
 

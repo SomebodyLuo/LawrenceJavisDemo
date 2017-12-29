@@ -52,6 +52,20 @@ public class Transform implements Cloneable {
 	
 	public float 				Alpha 				= 1;
 
+
+	// luoyouren: 这个属性描述了，陀螺仪的旋转作用于View时，在Camera视野内，View旋转法线方向
+	private boolean 				isTowardsPositiveY = true;
+
+	public boolean isTowardsPositiveY() {
+		return isTowardsPositiveY;
+	}
+
+	public void setTowardsPositiveY(boolean towardsPositiveY) {
+		isTowardsPositiveY = towardsPositiveY;
+	}
+
+
+
 	/**
 	 * 渲染排序 是物体在世界坐标系中距离视点的距离
 	 */

@@ -348,6 +348,8 @@ public class Metro_Layer {
     final float WEATHER_PIC_HEIGHT = 685;
     private void InitTop()
     {
+        // 强烈注意：
+        // ViewGroup旋转时，子View的旋转动作是，以ViewGroup的Translate为圆心，以子View的Translate为半径旋转！！！
         if (true)
         {
             //Top: 天气
@@ -358,38 +360,21 @@ public class Metro_Layer {
 //			viewGroup2.setBackgroundColor(Color.parseColor("#2200ffff"));
             viewGroup2.setVisibility(true);
             viewGroup2.setFocusable(false);
+            viewGroup2.setTowardsPositiveY(false);
 
             // 调整到45°
-//            viewGroup2.setTranslate(0, EngineConstanst.REFERENCE_SCREEN_HEIGHT - 100, EngineConstanst.REFERENCE_SCREEN_HEIGHT * 1.0f);
-            viewGroup2.setTranslate(0, EngineConstanst.REFERENCE_SCREEN_HEIGHT * 0.5f, +EngineConstanst.REFERENCE_SCREEN_HEIGHT * 0.2f);
-            viewGroup2.setRotate(-40, 0, 0);
+            viewGroup2.setTranslate(0, EngineConstanst.REFERENCE_SCREEN_HEIGHT - 100, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+//            viewGroup2.setTranslate(0, EngineConstanst.REFERENCE_SCREEN_HEIGHT * 0.5f, +EngineConstanst.REFERENCE_SCREEN_HEIGHT * 0.2f);
+//            viewGroup2.setRotate(40, 0, 0);
 
-            View canvasView = makeImageView(R.drawable.weather_board, WEATHER_PIC_WIDTH, WEATHER_PIC_HEIGHT, 0, 0, 0);
-            canvasView.setRotate(90, 0, 0);
+            float angle = 45;
+
+            View canvasView = makeImageView(R.drawable.weather_board, EngineConstanst.REFERENCE_SCREEN_WIDTH, EngineConstanst.REFERENCE_SCREEN_HEIGHT, 0, 0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+            canvasView.setRotate(angle, 0, 0);
             canvasView.setFocusable(false);
             canvasView.setTouchAble(false);
             canvasView.setClickable(false);
             viewGroup2.addChild(canvasView);
-
-            View change = makeImageView(R.drawable.test22, 48, 48, -WEATHER_PIC_WIDTH/2 + 100, 0, -(WEATHER_PIC_HEIGHT/2+50));
-            change.setRotate(90, 0, 0);
-            change.setOnFocusListener(new View.OnFocusListener() {
-                @Override
-                public boolean onFocus(View v) {
-                    touchCounts++;
-                    updateBackground(touchCounts % 4);
-                    return false;
-                }
-
-                @Override
-                public boolean onRemoveFocus(View v) {
-                    return false;
-                }
-            });
-
-            viewGroup2.addChild(change);
-
-
 
             // luoyouren: 让某些场景跟随视线移动
             viewGroup2.setEyeMatrixUpdate(true);
@@ -402,6 +387,8 @@ public class Metro_Layer {
 
     private void InitBottom()
     {
+        // 强烈注意：
+        // ViewGroup旋转时，子View的旋转动作是，以ViewGroup的Translate为圆心，以子View的Translate为半径旋转！！！
         if (true)
         {
             //Bottom: LOGO
@@ -412,10 +399,11 @@ public class Metro_Layer {
 //			viewGroup2.setBackgroundColor(Color.parseColor("#ff00ffff"));
             viewGroup2.setVisibility(true);
             viewGroup2.setFocusable(false);
+            viewGroup2.setTowardsPositiveY(true);
             viewGroup2.setTranslate(0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT + 100, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
 
             final int side_length = 256 * 6;
-            View circleView = makeImageView(R.drawable.circle3, side_length, side_length, 0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+            View circleView = makeImageView(R.drawable.circle3, side_length, side_length, 0, -100, 0);
             circleView.setRotate(-90, 0, 0);
             circleView.setFocusable(false);
             circleView.setTouchAble(false);

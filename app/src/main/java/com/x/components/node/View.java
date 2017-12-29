@@ -430,6 +430,16 @@ public class View    {
 	public void setScale(float x, float y, float z) {
 		mTransform.setScale(x, y, z);
 	}
+
+	// luoyouren: 这个属性描述了，陀螺仪的旋转作用于View时，在Camera视野内，View旋转法线方向
+	public boolean isTowardsPositiveY() {
+		return mTransform.isTowardsPositiveY();
+	}
+
+	public void setTowardsPositiveY(boolean towardsPositiveY) {
+		mTransform.setTowardsPositiveY(towardsPositiveY);
+	}
+
 	public void setTranslate(float x, float y, float z) {
 		mTransform.setTranslate(x, y, z);
 	}
