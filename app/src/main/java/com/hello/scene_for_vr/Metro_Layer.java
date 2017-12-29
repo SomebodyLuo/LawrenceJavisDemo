@@ -237,7 +237,7 @@ public class Metro_Layer {
 
             for (int i = 0; i  < sourceIds.length; i++)
             {
-                final View view = makeImageView(sourceIds[i], ImageWidth, ImageHeight, (2 * (i % COLUMNS) - 3) * (ImageWidth + ImageStride / 2) * 0.5f, (2 * (i / COLUMNS) - 1) * (ImageHeight + ImageStride / 2) * 0.5f - 150,  12);
+                final View view = makeImageView(sourceIds[i], ImageWidth, ImageHeight, (2 * (i % COLUMNS) - 3) * (ImageWidth + ImageStride / 2) * 0.5f, (2 * (i / COLUMNS) - 1) * (ImageHeight + ImageStride / 2) * 0.5f - 150,  4);
 
                 view.setOnFocusListener(new View.OnFocusListener() {
                     @Override
@@ -289,6 +289,32 @@ public class Metro_Layer {
 
         if (true)
         {
+            //Right: 背景与画布
+            MyRotateViewGroup viewGroup2 = new MyRotateViewGroup();
+            viewGroup2.SetDebugName("InitFront1");
+            viewGroup2.setWidth(1200);
+            viewGroup2.setHeight(800);
+			viewGroup2.setBackgroundColor(Color.parseColor("#33ffffff"));
+            viewGroup2.setVisibility(true);
+            viewGroup2.setFocusable(false);
+            viewGroup2.setClickable(false);
+            viewGroup2.setTouchAble(false);
+
+            viewGroup2.setTranslate(-EngineConstanst.REFERENCE_SCREEN_HEIGHT, 0, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+            viewGroup2.setRotate(0, -90, 0);
+
+//            View canvasView = makeImageView(R.raw.gray_shadow, 1200, 800, 0, 0, 0);
+//            canvasView.setFocusable(false);
+//            canvasView.setTouchAble(false);
+//            canvasView.setClickable(false);
+//            viewGroup2.addChild(canvasView);
+
+
+            mLayer.addChild(viewGroup2);
+        }
+
+        if (true)
+        {
             //Left: ICON
             MyRotateViewGroup metroViewGroup = new MyRotateViewGroup();
             metroViewGroup.SetDebugName("InitLeft");
@@ -314,7 +340,7 @@ public class Metro_Layer {
 
             for (int i = 0; i  < sourceIds.length; i++)
             {
-                final View view = makeImageView(sourceIds[i], ImageWidth, ImageHeight, (2 * (i % COLUMNS) - 3) * (ImageWidth + ImageStride / 2) * 0.5f, (2 * (i / COLUMNS) - 1) * (ImageHeight + ImageStride / 2) * 0.5f,  12);
+                final View view = makeImageView(sourceIds[i], ImageWidth, ImageHeight, (2 * (i % COLUMNS) - 3) * (ImageWidth + ImageStride / 2) * 0.5f + 150, (2 * (i / COLUMNS) - 1) * (ImageHeight + ImageStride / 2) * 0.5f,  4);
 
                 view.setOnFocusListener(new View.OnFocusListener() {
                     @Override
