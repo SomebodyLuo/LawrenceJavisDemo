@@ -52,8 +52,6 @@ public class Metro_Layer {
         mLayer.setTranslate(0, 0, 0);
         mLayer.setFocusable(false);
 
-        // luoyouren: 初始化背景球
-//        InitSphere();
 
         // luoyouren: 增加背景墙
         InitBackgroundWall();
@@ -71,67 +69,27 @@ public class Metro_Layer {
         InitBottom();
     }
 
-    // 纹理ID
-    int sphereBG[] = {
-            R.drawable.redsunset_ft,
-            R.drawable.redsunset_bk,
-            R.drawable.redsunset_lf,
-            R.drawable.redsunset_rt,
-            R.drawable.redsunset_up,
-            R.drawable.redsunset_dn,
 
-//                R.drawable.bluenebula1024_front,
-//                R.drawable.bluenebula1024_back,
-//                R.drawable.bluenebula1024_left,
-//                R.drawable.bluenebula1024_right,
-//                R.drawable.bluenebula1024_top,
-//                R.drawable.bluenebula1024_bottom,
-
-
-//                R.drawable.ic_launcher,
-//                R.drawable.ic_launcher,
-//                R.drawable.ic_launcher,
-//                R.drawable.ic_launcher,
-//                R.drawable.ic_launcher,
-//                R.drawable.ic_launcher,
-    };
-
-    public void InitSphere()
-    {
-        if (false)
-        {
-            //Front: 背景与画布
-            MyRotateViewGroup viewGroup2 = new MyRotateViewGroup();
-            viewGroup2.SetDebugName("SphereBackgroundViewGroup");
-            viewGroup2.setWidth(EngineConstanst.REFERENCE_SCREEN_WIDTH);
-            viewGroup2.setHeight(EngineConstanst.REFERENCE_SCREEN_HEIGHT);
-//			viewGroup2.setBackgroundColor(Color.parseColor("#2200ffff"));
-            viewGroup2.setVisibility(true);
-            viewGroup2.setTranslate(0, 0 ,0);
-            viewGroup2.setFocusable(false);
-
-
-            mSphere = (MyObjeView) makeSphereView(R.drawable.gray_shadow);
-            mSphere.setFocusable(false);
-            mSphere.setTouchAble(false);
-            mSphere.setClickable(false);
-            viewGroup2.addChild(mSphere);
-
-            mLayer.addChild(viewGroup2);
-        }
-    }
 
     int touchCounts = 0;
     public void InitBackgroundWall()
     {
         // 纹理ID
         int sourceIds1[] = {
-                R.drawable.redsunset_ft,
-                R.drawable.redsunset_bk,
-                R.drawable.redsunset_lf,
-                R.drawable.redsunset_rt,
-                R.drawable.redsunset_up,
-                R.drawable.redsunset_dn,
+
+                R.raw.desert_front,
+                R.raw.desert_back,
+                R.raw.desert_left,
+                R.raw.desert_right,
+                R.raw.desert_top,
+                R.raw.redsunset_dn,
+
+//                R.drawable.redsunset_ft,
+//                R.drawable.redsunset_bk,
+//                R.drawable.redsunset_lf,
+//                R.drawable.redsunset_rt,
+//                R.drawable.redsunset_up,
+//                R.drawable.redsunset_dn,
 
 //                R.raw.palace_01,
 //                R.raw.palace_02,
@@ -242,22 +200,15 @@ public class Metro_Layer {
             viewGroup2.setHeight(EngineConstanst.REFERENCE_SCREEN_HEIGHT);
 //			viewGroup2.setBackgroundColor(Color.parseColor("#0000ffff"));
             viewGroup2.setVisibility(true);
-            viewGroup2.setTranslate(0, 0 ,0);
             viewGroup2.setFocusable(false);
             viewGroup2.setClickable(false);
             viewGroup2.setTouchAble(false);
 
-
-//            View canvasView = makeImageView(R.drawable.gray_shadow, 1773, 913, 0, 0, 4);
-//            canvasView.setFocusable(false);
-//            canvasView.setTouchAble(false);
-//            canvasView.setClickable(false);
-//            viewGroup2.addChild(canvasView);
-
-            View leftArrow = makeImageView(R.drawable.arrow_left, 36, 59, -(1773 / 2 - 100), 0, 8);
-            View rightArrow = makeImageView(R.drawable.arrow_right, 36, 59, (1773 / 2 - 100), 0, 8);
-            viewGroup2.addChild(leftArrow);
-            viewGroup2.addChild(rightArrow);
+            View canvasView = makeImageView(R.raw.front_top, 1431, 469, 0, 120, 4);
+            canvasView.setFocusable(false);
+            canvasView.setTouchAble(false);
+            canvasView.setClickable(false);
+            viewGroup2.addChild(canvasView);
 
             mLayer.addChild(viewGroup2);
         }
@@ -271,23 +222,22 @@ public class Metro_Layer {
             metroViewGroup.setHeight(200 + 25 + 200);
 //            metroViewGroup.setBackgroundColor(Color.parseColor("#0000ffff"));
             metroViewGroup.setVisibility(true);
-            metroViewGroup.setTranslate(0, 0, 0);
             metroViewGroup.setFocusable(false);
             metroViewGroup.setClickable(false);
             metroViewGroup.setTouchAble(false);
 
-            int sourceIds[] = {
-                    R.drawable.metro0101the_evil, R.drawable.metro0102the_surge, R.drawable.metro0103warface, R.drawable.metro0104simcity,
-                    R.drawable.metro0201jungle, R.drawable.metro0202nineparchment, R.drawable.metro0203fate_hand, R.drawable.metro0204fishing};
 
-            final int ImageWidth = 326;
-            final int ImageHeight = 199;
-            final int ImageStride = 60;
+            int sourceIds[] = {
+                    R.raw.front_applications, R.raw.front_tencent, R.raw.front_iqiyi, R.raw.front_youku};
+
+            final int ImageWidth = 291;
+            final int ImageHeight = 291;
+            final int ImageStride = 50;
             final int COLUMNS = 4;
 
             for (int i = 0; i  < sourceIds.length; i++)
             {
-                final View view = makeImageView(sourceIds[i], ImageWidth, ImageHeight, (2 * (i % COLUMNS) - 3) * (ImageWidth + ImageStride / 2) * 0.5f, (2 * (i / COLUMNS) - 1) * (ImageHeight + ImageStride / 2) * 0.5f,  12);
+                final View view = makeImageView(sourceIds[i], ImageWidth, ImageHeight, (2 * (i % COLUMNS) - 3) * (ImageWidth + ImageStride / 2) * 0.5f, (2 * (i / COLUMNS) - 1) * (ImageHeight + ImageStride / 2) * 0.5f - 150,  12);
 
                 view.setOnFocusListener(new View.OnFocusListener() {
                     @Override
@@ -325,7 +275,7 @@ public class Metro_Layer {
             // luoyouren:
             // 注意：某个View的mBGDrawable 没有任何贴图时，焦点扫描不到它，也就不会产生凝视点事件
 //            mVideoWall.setBackgroundColor(Color.parseColor("#ffff0000"));
-            mVideoWall.setBackgroundResource(R.raw.preview);
+            mVideoWall.setBackgroundResource(R.raw.video_preview);
 
             mVideoWall.setTranslate(0, 0, EngineConstanst.REFERENCE_SCREEN_HEIGHT * 2.3f);
             mVideoWall.setRotate(0, 180, 0);
@@ -337,11 +287,143 @@ public class Metro_Layer {
     private void InitLeft()
     {
 
+        if (true)
+        {
+            //Left: ICON
+            MyRotateViewGroup metroViewGroup = new MyRotateViewGroup();
+            metroViewGroup.SetDebugName("InitLeft");
+            metroViewGroup.setWidth(330 * 4 + 20 * 3);
+            metroViewGroup.setHeight(200 + 25 + 200);
+//            metroViewGroup.setBackgroundColor(Color.parseColor("#0000ffff"));
+            metroViewGroup.setVisibility(true);
+            metroViewGroup.setFocusable(false);
+            metroViewGroup.setClickable(false);
+            metroViewGroup.setTouchAble(false);
+
+            metroViewGroup.setTranslate(-EngineConstanst.REFERENCE_SCREEN_HEIGHT, 0, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+            metroViewGroup.setRotate(0, 90, 0);
+
+            int sourceIds[] = {
+                    R.raw.left_files, R.raw.left_compass, R.raw.left_calculator,
+                    R.raw.left_setting, R.raw.left_camera, R.raw.left_voiceassist,};
+
+            final int ImageWidth = 190;
+            final int ImageHeight = 262;
+            final int ImageStride = 200;
+            final int COLUMNS = 3;
+
+            for (int i = 0; i  < sourceIds.length; i++)
+            {
+                final View view = makeImageView(sourceIds[i], ImageWidth, ImageHeight, (2 * (i % COLUMNS) - 3) * (ImageWidth + ImageStride / 2) * 0.5f, (2 * (i / COLUMNS) - 1) * (ImageHeight + ImageStride / 2) * 0.5f,  12);
+
+                view.setOnFocusListener(new View.OnFocusListener() {
+                    @Override
+                    public boolean onFocus(View v) {
+                        view.translateZTo(ImageHeight);
+
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onRemoveFocus(View v) {
+
+                        view.translateZTo(12);
+
+                        return false;
+                    }
+                });
+
+                metroViewGroup.addChild(view);
+            }
+
+            mLayer.addChild(metroViewGroup);
+        }
     }
 
     private void InitRight()
     {
+        if (true)
+        {
+            //Right: 背景与画布
+            MyRotateViewGroup viewGroup2 = new MyRotateViewGroup();
+            viewGroup2.SetDebugName("InitFront1");
+            viewGroup2.setWidth(EngineConstanst.REFERENCE_SCREEN_WIDTH);
+            viewGroup2.setHeight(EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+//			viewGroup2.setBackgroundColor(Color.parseColor("#0000ffff"));
+            viewGroup2.setVisibility(true);
+            viewGroup2.setFocusable(false);
+            viewGroup2.setClickable(false);
+            viewGroup2.setTouchAble(false);
 
+            viewGroup2.setTranslate(EngineConstanst.REFERENCE_SCREEN_HEIGHT, 0, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+            viewGroup2.setRotate(0, 90, 0);
+
+//            View canvasView = makeImageView(R.drawable.gray_shadow, 1773, 913, 0, 0, 4);
+//            canvasView.setFocusable(false);
+//            canvasView.setTouchAble(false);
+//            canvasView.setClickable(false);
+//            viewGroup2.addChild(canvasView);
+
+            View leftArrow = makeImageView(R.raw.right_arrow_left, 36, 59, -(1773 / 2 - 100), 0, 8);
+            View rightArrow = makeImageView(R.raw.right_arrow_right, 36, 59, (1773 / 2 - 100), 0, 8);
+
+            viewGroup2.addChild(leftArrow);
+            viewGroup2.addChild(rightArrow);
+
+            mLayer.addChild(viewGroup2);
+        }
+
+        if (true)
+        {
+            //Right: 图标
+            MyRotateViewGroup metroViewGroup = new MyRotateViewGroup();
+            metroViewGroup.SetDebugName("InitFront2");
+            metroViewGroup.setWidth(330 * 4 + 20 * 3);
+            metroViewGroup.setHeight(200 + 25 + 200);
+//            metroViewGroup.setBackgroundColor(Color.parseColor("#0000ffff"));
+            metroViewGroup.setVisibility(true);
+            metroViewGroup.setFocusable(false);
+            metroViewGroup.setClickable(false);
+            metroViewGroup.setTouchAble(false);
+
+            metroViewGroup.setTranslate(EngineConstanst.REFERENCE_SCREEN_HEIGHT, 0, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+            metroViewGroup.setRotate(0, -90, 0);
+
+            int sourceIds[] = {
+                    R.raw.right_metro0101the_evil, R.raw.right_metro0102the_surge, R.raw.right_metro0103warface, R.raw.right_metro0104simcity,
+                    R.raw.right_metro0201jungle, R.raw.right_metro0202nineparchment, R.raw.right_metro0203fate_hand, R.raw.right_metro0204fishing};
+
+            final int ImageWidth = 326;
+            final int ImageHeight = 199;
+            final int ImageStride = 60;
+            final int COLUMNS = 4;
+
+            for (int i = 0; i  < sourceIds.length; i++)
+            {
+                final View view = makeImageView(sourceIds[i], ImageWidth, ImageHeight, (2 * (i % COLUMNS) - 3) * (ImageWidth + ImageStride / 2) * 0.5f, (2 * (i / COLUMNS) - 1) * (ImageHeight + ImageStride / 2) * 0.5f,  12);
+
+                view.setOnFocusListener(new View.OnFocusListener() {
+                    @Override
+                    public boolean onFocus(View v) {
+                        view.translateZTo(ImageHeight);
+
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onRemoveFocus(View v) {
+
+                        view.translateZTo(12);
+
+                        return false;
+                    }
+                });
+
+                metroViewGroup.addChild(view);
+            }
+
+            mLayer.addChild(metroViewGroup);
+        }
     }
 
     final float WEATHER_PIC_WIDTH = 1343;
@@ -369,7 +451,7 @@ public class Metro_Layer {
 
             float angle = 45;
 
-            View canvasView = makeImageView(R.drawable.weather_board, EngineConstanst.REFERENCE_SCREEN_WIDTH, EngineConstanst.REFERENCE_SCREEN_HEIGHT, 0, 0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+            View canvasView = makeImageView(R.raw.weather_board, EngineConstanst.REFERENCE_SCREEN_WIDTH, EngineConstanst.REFERENCE_SCREEN_HEIGHT, 0, 0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT);
             canvasView.setRotate(angle, 0, 0);
             canvasView.setFocusable(false);
             canvasView.setTouchAble(false);
@@ -410,14 +492,14 @@ public class Metro_Layer {
             circleView.setClickable(false);
 //            viewGroup2.addChild(circleView);
 
-            View canvasView = makeImageView(R.drawable.pacific_logo, 1147, 306, 0, 0, 0);
+            View canvasView = makeImageView(R.raw.bottom_pacific_logo, 1147, 306, 0, 0, 0);
             canvasView.setRotate(-90, 0, 0);
             canvasView.setFocusable(false);
             canvasView.setTouchAble(false);
             canvasView.setClickable(false);
             viewGroup2.addChild(canvasView);
 
-            View change = makeImageView(R.drawable.pacific_site, 812, 79, 0, 0, WEATHER_PIC_HEIGHT/2 + 50);
+            View change = makeImageView(R.raw.bottom_pacific_site, 812, 79, 0, 0, WEATHER_PIC_HEIGHT/2 + 50);
             change.setRotate(-90, 0, 0);
             change.setFocusable(false);
             change.setTouchAble(false);
@@ -437,12 +519,12 @@ public class Metro_Layer {
         // 纹理ID
         int sourceIds2[][] = {
 
-                {R.drawable.redsunset_ft,
-                R.drawable.redsunset_bk,
-                R.drawable.redsunset_lf,
-                R.drawable.redsunset_rt,
-                R.drawable.redsunset_up,
-                R.drawable.redsunset_dn},
+                {R.raw.redsunset_ft,
+                R.raw.redsunset_bk,
+                R.raw.redsunset_lf,
+                R.raw.redsunset_rt,
+                R.raw.redsunset_up,
+                R.raw.redsunset_dn},
 
                 {R.raw.palace_01,
                 R.raw.palace_02,
@@ -453,19 +535,19 @@ public class Metro_Layer {
 
 
 
-                {R.drawable.desert_front,
-                R.drawable.desert_back,
-                R.drawable.desert_left,
-                R.drawable.desert_right,
-                R.drawable.desert_top,
-                R.drawable.redsunset_dn},
+                {R.raw.desert_front,
+                R.raw.desert_back,
+                R.raw.desert_left,
+                R.raw.desert_right,
+                R.raw.desert_top,
+                R.raw.redsunset_dn},
 
-                {R.drawable.bluenebula1024_front,
-                R.drawable.bluenebula1024_back,
-                R.drawable.bluenebula1024_left,
-                R.drawable.bluenebula1024_right,
-                R.drawable.bluenebula1024_top,
-                R.drawable.bluenebula1024_bottom},
+                {R.raw.bluenebula1024_front,
+                R.raw.bluenebula1024_back,
+                R.raw.bluenebula1024_left,
+                R.raw.bluenebula1024_right,
+                R.raw.bluenebula1024_top,
+                R.raw.bluenebula1024_bottom},
 
 
 

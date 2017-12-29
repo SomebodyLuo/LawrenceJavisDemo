@@ -30,7 +30,7 @@ public class MyDirector extends Director
 	{
 		super(context, tarotView);
 		this.mMyTarotView = (VRGLView) tarotView;
-		mMediaPlayerManager = new MediaPlayerManager(context, R.raw.pacific_ar_building);
+		mMediaPlayerManager = new MediaPlayerManager(context, R.raw.video_pacific_ar_building);
 		setVREnable(true);
 		setDoubleEyeEnable(false);
 	}

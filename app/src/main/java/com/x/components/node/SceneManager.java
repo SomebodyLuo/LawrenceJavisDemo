@@ -77,7 +77,7 @@ public class SceneManager {
 		// 粒子系统管理场景
 		mParticleSystemScene = new ParticleSystemScene();
 		mParticleSystemScene.initScene();
-		mParticleSystemScene.setRenderable(true);
+		mParticleSystemScene.setRenderable(false);
 
 		// 灯光系统管理场景
 		// luoyouren: 光照物体
