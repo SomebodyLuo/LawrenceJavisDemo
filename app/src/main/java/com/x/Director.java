@@ -256,22 +256,15 @@ public class Director implements Renderer {
 		}
 
 		// luoyouren: 传感器数据
-		mAbsSensorStrategy.register(mContext,
-				new EngineSensorListenr() {
-					@Override
-					public void onSensorEvent(float[] mTmpMatrixForCamera) {
-						// luoyouren: 这里把Sensor数据传给场景
-						mSceneManager.setEyeMatrix(mTmpMatrixForCamera);
-					}
-				},
-				new EngineSensorListenr() {
-					@Override
-					public void onSensorEvent(float[] mTmpMatrixForObj) {
-						// luoyouren: 这里把Sensor数据传给场景
-						mSceneManager.updateEyeMatrixToScene(mTmpMatrixForObj);
-					}
-				}
-		);
+		mAbsSensorStrategy.register(mContext,new EngineSensorListenr() {
+			@Override
+			public void onSensorEvent(float[] tmpMatrix) {
+				// luoyouren: 这里把Sensor数据传给场景
+				mSceneManager.setEyeMatrix(tmpMatrix);
+
+				mSceneManager.updateEyeMatrixToScene(tmpMatrix);
+			}
+		});		
 	}
 	public void testSensorEvent(float[] tmpMatrix) {
 		mSceneManager.setEyeMatrix(tmpMatrix);

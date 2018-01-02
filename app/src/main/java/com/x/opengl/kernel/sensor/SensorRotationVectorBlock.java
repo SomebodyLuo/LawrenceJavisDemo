@@ -22,7 +22,7 @@ public class SensorRotationVectorBlock extends AbsSensorStrategy {
 	
 	public SensorRotationVectorBlock( ) {
 	}
-	public void register(Context context,EngineSensorListenr sensorListenr, EngineSensorListenr sensorListenr2){
+	public void register(Context context,EngineSensorListenr sensorListenr){
 
         if (mRegistered) return;
         this.mContext = context;

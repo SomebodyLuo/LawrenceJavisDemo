@@ -69,7 +69,7 @@ public class MatrixState
 
 		float[] mFrontward_four = new float[ ]{0, 0, 0, 0};
 
-		// 1. -Z是正前方，用陀螺仪复合矩阵作用于-Z的单位向量
+		// 1. +X是正前方，用陀螺仪复合矩阵作用于+X的单位向量
 		Matrix.multiplyMV(mFrontward_four, 0, gyroscopeMatrix, 0, mSourceFrontward_four, 0);
 //		mFrontward_four[0]  =(int)(mFrontward_four[0]*10);
 //		mFrontward_four[0] /=10f;
@@ -79,7 +79,7 @@ public class MatrixState
 //		mFrontward_four[2] /=10f;
 		Log.i("luoyouren", "mFrontward_four: " + Arrays.toString(mFrontward_four));
 
-		// 2. XOZ平面--投影向量; 直接Y轴赋值0
+		// 2. XOY平面--投影向量; 直接Z轴赋值0
 		mFrontward_four[2] = 0.0f;
 
 		// 3. 向量点积求角度
@@ -89,6 +89,7 @@ public class MatrixState
 		angle = (float) Math.toDegrees(angle);
 
 		/*
+		----------------- 经验证，好像没用？！-------------------
 		若要直接算出0～2pi的逆时针角度，由：
 		sin<a,b>=cross(a,b)/norm(a)/norm(b)
 		cos<a,b>=(a.*b)/norm(a)/norm(b)
@@ -101,7 +102,8 @@ public class MatrixState
 //		float angle = (float) Math.toDegrees(Math.atan(crossVal / dotVal));
 //		angle += 180;
 
-
+		// 4. 通过向量叉积，来判断旋转方向，也就是旋转角度的正负；
+		// 还有一个问题是：陀螺仪的旋转作用于View时，在Camera视野内，View旋转法线方向--isTowardsPositiveY
 		angle = angle * (crossVal > 0 ? 1 : -1) * (isTowardsPositiveY ? 1 : -1);
 		angle += 360;
 		angle %= 360;
@@ -109,30 +111,12 @@ public class MatrixState
 		Log.i("luoyouren", "angle = " + angle);
 
 		// 4. 重新构造旋转矩阵
-//		Matrix4 objMatrix = new Matrix4();
-//		objMatrix.setToRotation(com.x.opengl.math.vector.Vector3.Axis.Y, angle);
 		float[] m = new float[16];
 		android.opengl.Matrix.setRotateM(m, 0, -angle, 0, 1, 0);
-
-//		float[] tmpMatrix2 = new float[16];
-//		Matrix.setIdentityM(tmpMatrix2, 0);
-//
-//		Matrix.multiplyMM(tmpMatrix2, 0, tmpMatrix, 0, gyroscopeMatrix, 0);
-//		Log.i("luoyouren", "tmpMatrix2" + Arrays.toString(tmpMatrix2));
-
-		//==========================================================================
-//		float[] invModelMatrix = new float[16];
-//		android.opengl.Matrix.invertM(invModelMatrix, 0, mModelMatrix, 0);
-//		Matrix.multiplyMM(invModelMatrix, 0, objMatrix.getFloatValues(), 0, invModelMatrix , 0);
-		//==========================================================================
-
-
 		android.opengl.Matrix.multiplyMM(mModelMatrix, 0, mModelMatrix, 0,  m, 0);
 
 	}
-    public static float getAngel(){
-		return angle;
-	}
+
     public static void translate(float x,float y,float z)
     {
     	Matrix.translateM(mModelMatrix, 0, x, y, z);

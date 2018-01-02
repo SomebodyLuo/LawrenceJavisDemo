@@ -77,19 +77,19 @@ public class Metro_Layer {
         // 纹理ID
         int sourceIds1[] = {
 
-                R.raw.desert_front,
-                R.raw.desert_back,
-                R.raw.desert_left,
-                R.raw.desert_right,
-                R.raw.desert_top,
-                R.raw.redsunset_dn,
+//                R.raw.desert_front,
+//                R.raw.desert_back,
+//                R.raw.desert_left,
+//                R.raw.desert_right,
+//                R.raw.desert_top,
+//                R.raw.redsunset_dn,
 
-//                R.drawable.redsunset_ft,
-//                R.drawable.redsunset_bk,
-//                R.drawable.redsunset_lf,
-//                R.drawable.redsunset_rt,
-//                R.drawable.redsunset_up,
-//                R.drawable.redsunset_dn,
+                R.raw.redsunset_ft,
+                R.raw.redsunset_bk,
+                R.raw.redsunset_lf,
+                R.raw.redsunset_rt,
+                R.raw.redsunset_up,
+                R.raw.redsunset_dn,
 
 //                R.raw.palace_01,
 //                R.raw.palace_02,
@@ -242,7 +242,7 @@ public class Metro_Layer {
                 view.setOnFocusListener(new View.OnFocusListener() {
                     @Override
                     public boolean onFocus(View v) {
-                        view.translateZTo(ImageHeight);
+                        view.translateZTo(150);
 
                         return false;
                     }
@@ -250,7 +250,7 @@ public class Metro_Layer {
                     @Override
                     public boolean onRemoveFocus(View v) {
 
-                        view.translateZTo(12);
+                        view.translateZTo(4);
 
                         return false;
                     }
@@ -310,7 +310,8 @@ public class Metro_Layer {
 //            viewGroup2.addChild(canvasView);
 
 
-            mLayer.addChild(viewGroup2);
+            // 灰色幕布
+//            mLayer.addChild(viewGroup2);
         }
 
         if (true)
@@ -345,7 +346,7 @@ public class Metro_Layer {
                 view.setOnFocusListener(new View.OnFocusListener() {
                     @Override
                     public boolean onFocus(View v) {
-                        view.translateZTo(ImageHeight);
+                        view.translateZTo(150);
 
                         return false;
                     }
@@ -353,7 +354,7 @@ public class Metro_Layer {
                     @Override
                     public boolean onRemoveFocus(View v) {
 
-                        view.translateZTo(12);
+                        view.translateZTo(4);
 
                         return false;
                     }
@@ -426,12 +427,12 @@ public class Metro_Layer {
 
             for (int i = 0; i  < sourceIds.length; i++)
             {
-                final View view = makeImageView(sourceIds[i], ImageWidth, ImageHeight, (2 * (i % COLUMNS) - 3) * (ImageWidth + ImageStride / 2) * 0.5f, (2 * (i / COLUMNS) - 1) * (ImageHeight + ImageStride / 2) * 0.5f,  12);
+                final View view = makeImageView(sourceIds[i], ImageWidth, ImageHeight, (2 * (i % COLUMNS) - 3) * (ImageWidth + ImageStride / 2) * 0.5f, (2 * (i / COLUMNS) - 1) * (ImageHeight + ImageStride / 2) * 0.5f,  4);
 
                 view.setOnFocusListener(new View.OnFocusListener() {
                     @Override
                     public boolean onFocus(View v) {
-                        view.translateZTo(ImageHeight);
+                        view.translateZTo(150);
 
                         return false;
                     }
@@ -439,7 +440,7 @@ public class Metro_Layer {
                     @Override
                     public boolean onRemoveFocus(View v) {
 
-                        view.translateZTo(12);
+                        view.translateZTo(4);
 
                         return false;
                     }
@@ -472,8 +473,6 @@ public class Metro_Layer {
 
             // 调整到45°
             viewGroup2.setTranslate(0, EngineConstanst.REFERENCE_SCREEN_HEIGHT - 100, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
-//            viewGroup2.setTranslate(0, EngineConstanst.REFERENCE_SCREEN_HEIGHT * 0.5f, +EngineConstanst.REFERENCE_SCREEN_HEIGHT * 0.2f);
-//            viewGroup2.setRotate(40, 0, 0);
 
             float angle = 45;
 
@@ -508,6 +507,7 @@ public class Metro_Layer {
             viewGroup2.setVisibility(true);
             viewGroup2.setFocusable(false);
             viewGroup2.setTowardsPositiveY(true);
+
             viewGroup2.setTranslate(0, -EngineConstanst.REFERENCE_SCREEN_HEIGHT + 100, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
 
             final int side_length = 256 * 6;
@@ -525,12 +525,12 @@ public class Metro_Layer {
             canvasView.setClickable(false);
             viewGroup2.addChild(canvasView);
 
-            View change = makeImageView(R.raw.bottom_pacific_site, 812, 79, 0, 0, WEATHER_PIC_HEIGHT/2 + 50);
-            change.setRotate(-90, 0, 0);
-            change.setFocusable(false);
-            change.setTouchAble(false);
-            change.setClickable(false);
-            viewGroup2.addChild(change);
+            View site = makeImageView(R.raw.bottom_pacific_site, 812, 79, 0, 0, WEATHER_PIC_HEIGHT/2 + 50);
+            site.setRotate(-90, 0, 0);
+            site.setFocusable(false);
+            site.setTouchAble(false);
+            site.setClickable(false);
+            viewGroup2.addChild(site);
 
             // luoyouren: 让某些场景跟随视线移动
             viewGroup2.setEyeMatrixUpdate(true);

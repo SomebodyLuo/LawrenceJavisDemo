@@ -16,63 +16,39 @@ public class SensorCardboardBlock extends AbsSensorStrategy  {
 
 	private SensorManager mSensorManager;
 	private Object mMatrixLock = new Object();
-
+	private float[] mTmpMatrix = new float[16];
+	private float[] mSensorMatrix = new float[16];
 	private Context mContext;
-
+	private EngineSensorListenr mSensorListener;
 	private Sensor sensor1;
 	private Sensor sensor2;
 
-    //-----------------------------------------------------------------------
     //luoyouren: 扩展卡尔曼滤波
-    // 给OpenGL中的Camera用
-    private final OrientationEKF mTrackerForCamera = new OrientationEKF();
-    private Vector3d mLatestAccForCamera = new Vector3d();
-    private final Vector3d mLatestGyroForCamera = new Vector3d();
-    private final Vector3d mGyroBiasForCamera = new Vector3d();
-    private long mLatestGyroEventClockTimeNsForCamera;
-
-    private float[] mTmpMatrixForCamera = new float[16];
-
-    private EngineSensorListenr mSensorListenerForCamera;
-
-    private float[] mResultMatrixForCamera = new float[16];
-
-    // 给OpenGL中的Obj用
-    private final OrientationEKF mTrackerForObj = new OrientationEKF();
-    private Vector3d mLatestAccForObj = new Vector3d();
-    private final Vector3d mLatestGyroForObj = new Vector3d();
-    private final Vector3d mGyroBiasForObj = new Vector3d();
-    private long mLatestGyroEventClockTimeNsForObj;
-
-    private float[] mTmpMatrixForObj = new float[16];
-
-    private EngineSensorListenr mSensorListenerForObj;
-
-    private float[] mResultMatrixForObj = new float[16];
-    //-----------------------------------------------------------------------
-
+    private final OrientationEKF mTracker = new OrientationEKF();
+    private Vector3d mLatestAcc = new Vector3d();
+    private final Vector3d mLatestGyro = new Vector3d();
+    private final Vector3d mGyroBias = new Vector3d();
+    private long mLatestGyroEventClockTimeNs;
 	private boolean mRegistered;
+    
 
     private float[] mEkfToHeadTracker = new float[16];
 
+    private float[] mResultMatrix = new float[16];
+
+
     private float[] mRotateMatrix = new float[16];
-
-
-
-
-
+    
 	public SensorCardboardBlock() {
-		mTrackerForCamera.reset();
-        mTrackerForObj.reset();
+		mTracker.reset();
 	}
-	public void register(Context context,EngineSensorListenr sensorListenrForCamera, EngineSensorListenr sensorListenrForObj){
+	public void register(Context context,EngineSensorListenr sensorListenr){
 
 		Log.d("ming", "register "+mRegistered);
 		Log.d("ming", "register this "+this + ",,director = "+Director.getInstance());
         if (mRegistered) return;
 		this.mContext = context;
-		this.mSensorListenerForCamera = sensorListenrForCamera;
-        this.mSensorListenerForObj = sensorListenrForObj;
+		this.mSensorListener = sensorListenr;
 		
 		mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
 		mSensorManager.unregisterListener(this);
@@ -103,8 +79,7 @@ public class SensorCardboardBlock extends AbsSensorStrategy  {
 		Log.d("ming", "reset "+mRegistered);
         if (!mRegistered) return;
 		mSensorManager.unregisterListener(this);
-		this.mTrackerForCamera.reset();
-        this.mTrackerForObj.reset();
+		this.mTracker.reset();
 		mSensorManager.registerListener(this, sensor1,	SensorManager.SENSOR_DELAY_GAME);
 		mSensorManager.registerListener(this, sensor2,	SensorManager.SENSOR_DELAY_GAME);
 	}
@@ -115,110 +90,70 @@ public class SensorCardboardBlock extends AbsSensorStrategy  {
 	}
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-		if((mSensorListenerForCamera == null) || (mSensorListenerForObj == null)){
+		if(mSensorListener == null){
 			return;
 		}
 //		Log.d("ming", "onSensorChanged "+SensorCardboardBlock.this);
-        if (event.accuracy != 0){
-
-            int type = event.sensor.getType();
-
-            if (type == Sensor.TYPE_ACCELEROMETER){
-                synchronized (mTrackerForCamera){
-                    this.mLatestAccForCamera.set(event.values[0], event.values[1], event.values[2]);
-                    this.mTrackerForCamera.processAcc(this.mLatestAccForCamera, event.timestamp);
-                }
-
-                synchronized (mTrackerForObj){
-                    this.mLatestAccForObj.set(event.values[0], event.values[1], event.values[2]);
-                    this.mTrackerForObj.processAcc(this.mLatestAccForObj, event.timestamp);
-                }
-
-            } else if(type == Sensor.TYPE_GYROSCOPE){
-                synchronized (mTrackerForCamera){
-                    this.mLatestGyroEventClockTimeNsForCamera = System.nanoTime();
-                    this.mLatestGyroForCamera.set(event.values[0], event.values[1], event.values[2]);
-                    Vector3d.sub(this.mLatestGyroForCamera, this.mGyroBiasForCamera, this.mLatestGyroForCamera);
-                    this.mTrackerForCamera.processGyro(this.mLatestGyroForCamera, event.timestamp);
-                }
-
-                synchronized (mTrackerForObj){
-                    this.mLatestGyroEventClockTimeNsForObj = System.nanoTime();
-                    this.mLatestGyroForObj.set(event.values[0], event.values[1], event.values[2]);
-                    Vector3d.sub(this.mLatestGyroForObj, this.mGyroBiasForObj, this.mLatestGyroForObj);
-                    this.mTrackerForObj.processGyro(this.mLatestGyroForObj, event.timestamp);
-                }
-            }
-        }
-
-        // 预测角度
-        checkRotation();
-        runForCamera();
-        runForObj();
-
+		  if (event.accuracy != 0){
+	
+	            int type = event.sensor.getType();
+	
+	            if (type == Sensor.TYPE_ACCELEROMETER){
+	                synchronized (mTracker){
+	                    this.mLatestAcc.set(event.values[0], event.values[1], event.values[2]);
+	                    this.mTracker.processAcc(this.mLatestAcc, event.timestamp);
+	                }
+	
+	            } else if(type == Sensor.TYPE_GYROSCOPE){
+	                synchronized (mTracker){
+	                    this.mLatestGyroEventClockTimeNs = System.nanoTime();
+	                    this.mLatestGyro.set(event.values[0], event.values[1], event.values[2]);
+	                    Vector3d.sub(this.mLatestGyro, this.mGyroBias, this.mLatestGyro);
+	                    this.mTracker.processGyro(this.mLatestGyro, event.timestamp);
+	                }
+	            }
+	
+	        }
+	      run();
 	}
-	 public void runForCamera() {
+	 public void run() {
          if (!mRegistered) return;
 
-         // mTrackerForCamera will be used in multi thread.
-         synchronized (mTrackerForCamera){
-             final double secondsSinceLastGyroEvent = TimeUnit.NANOSECONDS.toSeconds(System.nanoTime() - mLatestGyroEventClockTimeNsForCamera);
+         // mTracker will be used in multi thread.
+         synchronized (mTracker){
+             final double secondsSinceLastGyroEvent = TimeUnit.NANOSECONDS.toSeconds(System.nanoTime() - mLatestGyroEventClockTimeNs);
              final double secondsToPredictForward = secondsSinceLastGyroEvent + 1.0/60;
-             final double[] mat = mTrackerForCamera.getPredictedGLMatrix(secondsToPredictForward);
+             final double[] mat = mTracker.getPredictedGLMatrix(secondsToPredictForward);
              for (int i = 0; i < mat.length; i++){
-                 mTmpMatrixForCamera[i] = (float) mat[i];
+                 mTmpMatrix[i] = (float) mat[i];
              }
          }
 
-         Matrix.multiplyMM(mResultMatrixForCamera, 0, mRotateMatrix, 0, mTmpMatrixForCamera, 0);
-         Matrix.multiplyMM(mTmpMatrixForCamera, 0, mResultMatrixForCamera, 0, mEkfToHeadTracker, 0);
+         float rotation = 0;
+         switch (Surface.ROTATION_90){
+             case Surface.ROTATION_0:
+                 rotation = 0;
+                 break;
+             case Surface.ROTATION_90:
+                 rotation = 90.0f;
+                 break;
+             case Surface.ROTATION_180:
+                 rotation = 180.0f;
+                 break;
+             case Surface.ROTATION_270:
+                 rotation = 270.0f;
+                 break;
+         }
+
+         Matrix.setRotateEulerM(mRotateMatrix, 0, 0.0f, 0.0f, -rotation);
+         Matrix.setRotateEulerM(mEkfToHeadTracker, 0, -90.0f, 0.0f, rotation);
+
+         Matrix.multiplyMM(mResultMatrix, 0, mRotateMatrix, 0, mTmpMatrix , 0);
+         Matrix.multiplyMM(mTmpMatrix, 0, mResultMatrix, 0, mEkfToHeadTracker, 0);
 
          // luoyouren: 这里把Sensor数据传给场景
-         mSensorListenerForCamera.onSensorEvent(mTmpMatrixForCamera);
+         mSensorListener.onSensorEvent(mTmpMatrix) ;
      }
-
-    public void runForObj() {
-        if (!mRegistered) return;
-
-        // mTrackerForCamera will be used in multi thread.
-        synchronized (mTrackerForObj){
-            final double secondsSinceLastGyroEvent = TimeUnit.NANOSECONDS.toSeconds(System.nanoTime() - mLatestGyroEventClockTimeNsForObj);
-            final double secondsToPredictForward = secondsSinceLastGyroEvent + 1.0/60;
-            final double[] mat = mTrackerForObj.getPredictedGLMatrix(secondsToPredictForward);
-            for (int i = 0; i < mat.length; i++){
-                mTmpMatrixForObj[i] = (float) mat[i];
-            }
-        }
-
-        Matrix.multiplyMM(mResultMatrixForObj, 0, mRotateMatrix, 0, mTmpMatrixForObj, 0);
-        Matrix.multiplyMM(mTmpMatrixForObj, 0, mResultMatrixForObj, 0, mEkfToHeadTracker, 0);
-
-        // luoyouren: 这里把Sensor数据传给场景
-        mSensorListenerForObj.onSensorEvent(mTmpMatrixForObj) ;
-    }
-
-    private void checkRotation()
-    {
-        float rotation = 0;
-        switch (Surface.ROTATION_90){
-            case Surface.ROTATION_0:
-                rotation = 0;
-                break;
-            case Surface.ROTATION_90:
-                rotation = 90.0f;
-                break;
-            case Surface.ROTATION_180:
-                rotation = 180.0f;
-                break;
-            case Surface.ROTATION_270:
-                rotation = 270.0f;
-                break;
-        }
-
-        Matrix.setRotateEulerM(mRotateMatrix, 0, 0.0f, 0.0f, -rotation);
-        Matrix.setRotateEulerM(mEkfToHeadTracker, 0, -90.0f, 0.0f, rotation);
-    }
-
     private static float[] mTmp = new float[16];
     public static final float sNotHit = Float.MAX_VALUE;
 

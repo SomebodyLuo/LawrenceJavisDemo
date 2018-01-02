@@ -21,7 +21,7 @@ public abstract class AbsSensorStrategy implements SensorEventListener {
 		
 	}
 
-	public abstract void register(Context context, EngineSensorListenr sensorListenrForCamera, EngineSensorListenr sensorListenrForObj) ;
+	public abstract void register(Context context,EngineSensorListenr engineSensorListenr) ;
 	public abstract void unRegister() ;
 	public abstract void reset();
 }
