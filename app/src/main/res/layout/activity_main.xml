@@ -6,21 +6,23 @@
 
 
 
-	<FrameLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent">
-		<!--用于渲染相机预览-->
-		<SurfaceView
-			android:id="@+id/camera_surface"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent" />
-	</FrameLayout>
+
 
 	<RelativeLayout
 		android:id="@+id/MainRelative"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent" >
 	</RelativeLayout>
+
+	<!--<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+		&lt;!&ndash;用于渲染相机预览&ndash;&gt;
+		<SurfaceView
+			android:id="@+id/camera_surface"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent" />
+	</FrameLayout>-->
 
 	<com.hello.scene_for_vr.collisionbox.CollisionBoxView
 	    android:id="@+id/CollisionView"

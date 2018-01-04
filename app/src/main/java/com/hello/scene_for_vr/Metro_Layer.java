@@ -54,7 +54,7 @@ public class Metro_Layer {
 
 
         // luoyouren: 增加背景墙
-        InitBackgroundWall();
+//        InitBackgroundWall();
 
         InitFront();
 
