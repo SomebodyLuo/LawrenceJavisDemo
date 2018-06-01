@@ -299,9 +299,9 @@ public class HomeActivity extends Activity implements ActivityCompat.OnRequestPe
 				ViewGroup.LayoutParams.MATCH_PARENT);
 
 		//luoyouren: Camera SurfaceView
-		viewGroup.addView(mSurfaceView, layoutParams);
+//		viewGroup.addView(mSurfaceView, layoutParams);
 
-//		viewGroup.addView(mVrView, layoutParams);
+		viewGroup.addView(mVrView, layoutParams);
 
 		CollisionBoxView cv = (CollisionBoxView) findViewById(R.id.CollisionView);
 		((EngineGLView)mVrView).setCollisionBoxView(cv);
