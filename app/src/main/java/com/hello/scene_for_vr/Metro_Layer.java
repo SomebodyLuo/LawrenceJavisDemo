@@ -47,7 +47,7 @@ public class Metro_Layer {
         mLayer.SetDebugName("Metro_Layer");
         mLayer.setWidth(EngineConstanst.REFERENCE_SCREEN_WIDTH);
         mLayer.setHeight(EngineConstanst.REFERENCE_SCREEN_HEIGHT);
-        mLayer.setBackgroundColor(Color.parseColor("#55000000"));
+//        mLayer.setBackgroundColor(Color.parseColor("#55000000"));
         mLayer.setVisibility(true);
         mLayer.setTranslate(0, 0, 0);
         mLayer.setFocusable(false);
@@ -56,17 +56,17 @@ public class Metro_Layer {
         // luoyouren: 增加背景墙
 //        InitBackgroundWall();
 
-        InitFront();
+//        InitFront();
 
-        InitBack();
+//        InitBack();
 
         InitLeft();
 
-        InitRight();
+//        InitRight();
 
-        InitTop();
+//        InitTop();
 
-        InitBottom();
+//        InitBottom();
     }
 
 
@@ -287,7 +287,7 @@ public class Metro_Layer {
     private void InitLeft()
     {
 
-        if (true)
+        if (false)
         {
             //Right: 背景与画布
             MyRotateViewGroup viewGroup2 = new MyRotateViewGroup();
@@ -321,28 +321,60 @@ public class Metro_Layer {
             metroViewGroup.SetDebugName("InitLeft");
             metroViewGroup.setWidth(330 * 4 + 20 * 3);
             metroViewGroup.setHeight(200 + 25 + 200);
-//            metroViewGroup.setBackgroundColor(Color.parseColor("#0000ffff"));
+            metroViewGroup.setBackgroundColor(Color.parseColor("#00000000"));
             metroViewGroup.setVisibility(true);
             metroViewGroup.setFocusable(false);
             metroViewGroup.setClickable(false);
             metroViewGroup.setTouchAble(false);
 
-            metroViewGroup.setTranslate(-EngineConstanst.REFERENCE_SCREEN_HEIGHT, 0, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
-            metroViewGroup.setRotate(0, 90, 0);
+//            metroViewGroup.setTranslate(-EngineConstanst.REFERENCE_SCREEN_HEIGHT, 0, EngineConstanst.REFERENCE_SCREEN_HEIGHT);
+//            metroViewGroup.setRotate(0, 90, 0);
 
             int sourceIds[] = {
                     R.raw.left_files, R.raw.left_compass, R.raw.left_calculator,
                     R.raw.left_setting, R.raw.left_camera, R.raw.left_voiceassist,};
 
-            final int ImageWidth = 190;
-            final int ImageHeight = 262;
+            final int ImageWidth = 285;
+            final int ImageHeight = 393;
             final int ImageStride = 200;
             final int COLUMNS = 3;
+            final float angleStride = 30;
+            final float popupStride = 150;
 
-            for (int i = 0; i  < sourceIds.length; i++)
+            // 左
             {
-                final View view = makeImageView(sourceIds[i], ImageWidth, ImageHeight, (2 * (i % COLUMNS) - 3) * (ImageWidth + ImageStride / 2) * 0.5f + 150, (2 * (i / COLUMNS) - 1) * (ImageHeight + ImageStride / 2) * 0.5f,  4);
+                // OpenGL Camera 的位置 == +EngineConstanst.REFERENCE_SCREEN_HEIGHT
+                // 也就是图标的排列半径
+                final float X = 0 - EngineConstanst.REFERENCE_SCREEN_HEIGHT * (float) Math.sin(angleStride * Math.PI / 180.0);
+                final float Z = 0 + EngineConstanst.REFERENCE_SCREEN_HEIGHT * (1 - (float) Math.cos(angleStride * Math.PI / 180.0));
 
+                final float x = 0 - (EngineConstanst.REFERENCE_SCREEN_HEIGHT - popupStride) * (float) Math.sin(angleStride * Math.PI / 180.0);
+                final float z = 0 + EngineConstanst.REFERENCE_SCREEN_HEIGHT  -  (EngineConstanst.REFERENCE_SCREEN_HEIGHT - popupStride) * (float) Math.cos(angleStride * Math.PI / 180.0);
+
+                final View view = makeImageView(sourceIds[1], ImageWidth, ImageHeight, X, 0, Z);
+                view.setRotate(0, angleStride, 0);
+                view.setOnFocusListener(new View.OnFocusListener() {
+                    @Override
+                    public boolean onFocus(View v) {
+                        view.translateTo(x, 0, z);
+
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onRemoveFocus(View v) {
+
+                        view.translateTo(X, 0, Z);
+
+                        return false;
+                    }
+                });
+                metroViewGroup.addChild(view);
+            }
+
+            // 中
+            {
+                final View view = makeImageView(sourceIds[4], ImageWidth, ImageHeight, 0, 0, 0);
                 view.setOnFocusListener(new View.OnFocusListener() {
                     @Override
                     public boolean onFocus(View v) {
@@ -354,14 +386,45 @@ public class Metro_Layer {
                     @Override
                     public boolean onRemoveFocus(View v) {
 
-                        view.translateZTo(4);
+                        view.translateZTo(0);
 
                         return false;
                     }
                 });
-
                 metroViewGroup.addChild(view);
             }
+
+            // 右
+            {
+                // OpenGL Camera 的位置 == +EngineConstanst.REFERENCE_SCREEN_HEIGHT
+                // 也就是图标的排列半径
+                final float X = 0 + EngineConstanst.REFERENCE_SCREEN_HEIGHT * (float) Math.sin(angleStride * Math.PI / 180.0);
+                final float Z = 0 + EngineConstanst.REFERENCE_SCREEN_HEIGHT * (1 - (float) Math.cos(angleStride * Math.PI / 180.0));
+
+                final float x = 0 + (EngineConstanst.REFERENCE_SCREEN_HEIGHT - popupStride) * (float) Math.sin(angleStride * Math.PI / 180.0);
+                final float z = 0 + EngineConstanst.REFERENCE_SCREEN_HEIGHT  -  (EngineConstanst.REFERENCE_SCREEN_HEIGHT - popupStride) * (float) Math.cos(angleStride * Math.PI / 180.0);
+
+                final View view = makeImageView(sourceIds[5], ImageWidth, ImageHeight, X, 0, Z);
+                view.setRotate(0, -angleStride, 0);
+                view.setOnFocusListener(new View.OnFocusListener() {
+                    @Override
+                    public boolean onFocus(View v) {
+                        view.translateTo(x, 0, z);
+
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onRemoveFocus(View v) {
+
+                        view.translateTo(X, 0, Z);
+
+                        return false;
+                    }
+                });
+                metroViewGroup.addChild(view);
+            }
+
 
             mLayer.addChild(metroViewGroup);
         }

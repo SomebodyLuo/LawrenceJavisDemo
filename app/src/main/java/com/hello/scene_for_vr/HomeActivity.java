@@ -299,7 +299,7 @@ public class HomeActivity extends Activity implements ActivityCompat.OnRequestPe
 				ViewGroup.LayoutParams.MATCH_PARENT);
 
 		//luoyouren: Camera SurfaceView
-//		viewGroup.addView(mSurfaceView, layoutParams);
+		viewGroup.addView(mSurfaceView, layoutParams);
 
 		viewGroup.addView(mVrView, layoutParams);
 

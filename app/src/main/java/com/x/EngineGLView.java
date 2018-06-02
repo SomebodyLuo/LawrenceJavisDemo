@@ -103,8 +103,17 @@ public abstract class EngineGLView extends GLSurfaceView {
 		// 选择一个最优的EGL配置，若支持8倍抗锯齿，则使用8倍抗锯齿，或者选择一个相对比较好的EGL配置,这里采用8倍抗锯齿很卡，所以暂不使用
 		
 		// 选择合适的egl的配置，同时检查异步纹理贴图的可行性
-		eglConfig(mGLEnvirnment, mEGLContextClientVersion);
-		eglContextFactory(mGLEnvirnment);// 初始化egl环境，用于后期的是否支持egl共享作判定
+//		eglConfig(mGLEnvirnment, mEGLContextClientVersion);
+//		eglContextFactory(mGLEnvirnment);// 初始化egl环境，用于后期的是否支持egl共享作判定
+
+
+		// important: view置顶并且设置透明
+		this.getHolder().setFormat(PixelFormat.TRANSPARENT);
+		this.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
+		this.setZOrderMediaOverlay(true);
+		this.setZOrderOnTop(true);
+
+
 		mHandler = new Handler() {
 
 			@Override
