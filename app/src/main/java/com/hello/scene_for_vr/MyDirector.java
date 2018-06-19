@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 
 import com.hello.R;
+import com.hello.scene_for_vr.mymediapackage.CameraVideoTexture;
 import com.hello.scene_for_vr.mymediapackage.MediaPlayerManager;
 import com.x.Director;
 import com.x.EngineGLView;
@@ -24,6 +25,7 @@ public class MyDirector extends Director
 	//private BlurControl mBlurControl ;
 
 	MediaPlayerManager mMediaPlayerManager;
+	CameraVideoTexture mCameraVideoTexture;
 
 
 	public MyDirector(Context context, EngineGLView tarotView)
@@ -31,6 +33,7 @@ public class MyDirector extends Director
 		super(context, tarotView);
 		this.mMyTarotView = (VRGLView) tarotView;
 		mMediaPlayerManager = new MediaPlayerManager(context, R.raw.video_sintel_trailer_480p);
+		mCameraVideoTexture = new CameraVideoTexture(context);
 		setVREnable(true);
 		setDoubleEyeEnable(false);
 	}
@@ -88,7 +91,16 @@ public class MyDirector extends Director
 	public void onDrawFrame(GL10 gl) {
 		// TODO Auto-generated method stub
 		super.onDrawFrame(gl);
-		mMediaPlayerManager.updateTexImage(null);
+
+		if (true)
+		{
+			mCameraVideoTexture.updateTexImage(null);
+		}
+		else
+		{
+			mMediaPlayerManager.updateTexImage(null);
+		}
+
 		postInvalidate();
 	}
 
@@ -113,8 +125,15 @@ public class MyDirector extends Director
 		mAllAppDialogScene.initScene(); 
 		Director.getInstance().addDialogScene(mAllAppDialogScene);
 
-		mMediaPlayerManager.initVideo(mAllAppDialogScene.getOesTextureId(mMediaPlayerManager));
-		mMediaPlayerManager.onStart();
+		if (true)
+		{
+			mCameraVideoTexture.initCameraView(mAllAppDialogScene.getOesTextureId(mMediaPlayerManager));
+		}
+		else
+		{
+			mMediaPlayerManager.initVideo(mAllAppDialogScene.getOesTextureId(mMediaPlayerManager));
+			mMediaPlayerManager.onStart();
+		}
 	}
 
 

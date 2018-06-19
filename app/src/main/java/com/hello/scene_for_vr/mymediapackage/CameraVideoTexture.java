@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.ImageFormat;
+import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraCharacteristics;
@@ -14,11 +15,10 @@ import android.media.ImageReader;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.v4.app.ActivityCompat;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Toast;
-
-import com.x.components.widget.ImageView;
 
 import java.util.Arrays;
 
@@ -26,11 +26,9 @@ import java.util.Arrays;
  * Created by pc on 2018/6/19.
  */
 
-public class CameraViewManager {
+public class CameraVideoTexture  implements SurfaceTexture.OnFrameAvailableListener{
 
     // 用于渲染相机预览画面
-    private SurfaceView mSurfaceView;
-    private SurfaceHolder mSurfaceHolder;
     private CameraManager mCameraManager;//摄像头管理器
     private Handler childHandler, mainHandler;
     private String mCameraID;//摄像头Id 0 为后  1 为前
@@ -38,19 +36,17 @@ public class CameraViewManager {
     private CameraCaptureSession mCameraCaptureSession;
     private CameraDevice mCameraDevice;
 
+    private boolean frameAvailable = false;
+    private SurfaceTexture videoTexture;
+
     private Context mContext;
     private Activity mActivity;
 
-    public CameraViewManager(Context context, Activity activity)
+    public CameraVideoTexture(Context context)
     {
         mContext = context;
-        mActivity = activity;
     }
 
-    public SurfaceView getSurfaceView()
-    {
-        return  mSurfaceView;
-    }
 
     /**
      * 摄像头创建监听
@@ -79,33 +75,13 @@ public class CameraViewManager {
     /**
      * 初始化
      */
-    public void initCameraView() {
-        //mSurfaceView
-        mSurfaceView = new SurfaceView(mActivity);
-        mSurfaceHolder = mSurfaceView.getHolder();
-        mSurfaceHolder.setKeepScreenOn(true);
+    public void initCameraView(int texturesid) {
 
-        // mSurfaceView添加回调
-        mSurfaceHolder.addCallback(new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceCreated(SurfaceHolder holder) { //SurfaceView创建
-                // 初始化Camera
-                initCamera2();
-            }
+        videoTexture = new SurfaceTexture(texturesid);
+        videoTexture.setOnFrameAvailableListener(this);
 
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-            }
 
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) { //SurfaceView销毁
-                // 释放Camera资源
-                if (null != mCameraDevice) {
-                    mCameraDevice.close();
-                    mCameraDevice = null;
-                }
-            }
-        });
+        initCamera2();
     }
 
     /**
@@ -116,8 +92,13 @@ public class CameraViewManager {
         HandlerThread handlerThread = new HandlerThread("Camera2");
         handlerThread.start();
         childHandler = new Handler(handlerThread.getLooper());
-        mainHandler = new Handler(mActivity.getMainLooper());
+
+        HandlerThread handlerThread2 = new HandlerThread("Camera2-main");
+        handlerThread2.start();
+        mainHandler = new Handler(handlerThread2.getLooper());
+
         mCameraID = "" + CameraCharacteristics.LENS_FACING_FRONT;//后摄像头
+
         mImageReader = ImageReader.newInstance(1080, 1920, ImageFormat.JPEG, 1);
         mImageReader.setOnImageAvailableListener(new ImageReader.OnImageAvailableListener() { //可以在这里处理拍照得到的临时照片 例如，写入本地
             @Override
@@ -156,12 +137,14 @@ public class CameraViewManager {
      */
     private void takePreview() {
         try {
+            Surface surface = new Surface(videoTexture);
+
             // 创建预览需要的CaptureRequest.Builder
             final CaptureRequest.Builder previewRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             // 将SurfaceView的surface作为CaptureRequest.Builder的目标
-            previewRequestBuilder.addTarget(mSurfaceHolder.getSurface());
+            previewRequestBuilder.addTarget(surface);
             // 创建CameraCaptureSession，该对象负责管理处理预览请求和拍照请求
-            mCameraDevice.createCaptureSession(Arrays.asList(mSurfaceHolder.getSurface(), mImageReader.getSurface()), new CameraCaptureSession.StateCallback() // ③
+            mCameraDevice.createCaptureSession(Arrays.asList(surface, mImageReader.getSurface()), new CameraCaptureSession.StateCallback() // ③
             {
                 @Override
                 public void onConfigured(CameraCaptureSession cameraCaptureSession) {
@@ -183,11 +166,33 @@ public class CameraViewManager {
 
                 @Override
                 public void onConfigureFailed(CameraCaptureSession cameraCaptureSession) {
-//                    Toast.makeText(getApplicationContext(), "配置失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "配置失败", Toast.LENGTH_SHORT).show();
                 }
             }, childHandler);
+
+            surface.release();
+
         } catch (CameraAccessException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void updateTexImage(float[] videoTextureTransform) {
+        synchronized (this) {
+            if (frameAvailable) {
+
+                frameAvailable = false;
+                videoTexture.updateTexImage();
+//                videoTexture.getTransformMatrix(videoTextureTransform);
+            }
+        }
+    }
+
+    @Override
+    public void onFrameAvailable(SurfaceTexture surfaceTexture) {
+//    	Log.d("ming", "onFrameAvailable = ");
+        synchronized (this) {
+            frameAvailable = true;
         }
     }
 

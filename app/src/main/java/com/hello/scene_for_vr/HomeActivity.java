@@ -60,6 +60,7 @@ public class HomeActivity extends Activity implements ActivityCompat.OnRequestPe
 		mContext = getApplicationContext();
 
 		requestCameraPermissions();
+
 		mCameraViewManager = new CameraViewManager(mContext, this);
 		mCameraViewManager.initCameraView();
 
