@@ -58,7 +58,7 @@ public class Metro_Layer {
 
 //        InitFront();
 
-//        InitBack();
+        InitBack();
 
         InitLeft();
 

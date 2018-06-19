@@ -4,7 +4,7 @@ import android.graphics.PointF;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
-import com.hello.scene_for_vr.mymediaplayerpackage.MediaPlayerManager;
+import com.hello.scene_for_vr.mymediapackage.MediaPlayerManager;
 import com.x.Director;
 import com.x.components.node.DialogXScene;
 

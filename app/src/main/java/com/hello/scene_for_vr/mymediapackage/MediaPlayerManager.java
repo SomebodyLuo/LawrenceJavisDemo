@@ -1,15 +1,10 @@
-package com.hello.scene_for_vr.mymediaplayerpackage;
-
-import java.io.IOException;
-
-import com.x.Director;
+package com.hello.scene_for_vr.mymediapackage;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.SurfaceTexture;
 import android.media.MediaPlayer;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Surface;
 
 @SuppressLint("NewApi") 

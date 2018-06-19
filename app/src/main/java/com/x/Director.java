@@ -58,7 +58,7 @@ public class Director implements Renderer {
 	private boolean 						mIsVR = false;
 
     private GLHandler mGlHandler  ;
-	private boolean	mAABBBOXDisplayFlag = true;
+	private boolean	mAABBBOXDisplayFlag = false;
 	
 	
 	public void onDirectorSurfaceCreated(){

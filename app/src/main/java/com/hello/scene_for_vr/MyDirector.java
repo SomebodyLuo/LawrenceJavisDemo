@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 
 import com.hello.R;
-import com.hello.scene_for_vr.mymediaplayerpackage.MediaPlayerManager;
+import com.hello.scene_for_vr.mymediapackage.MediaPlayerManager;
 import com.x.Director;
 import com.x.EngineGLView;
 import com.x.opengl.kernel.EngineConstanst;
@@ -113,8 +113,8 @@ public class MyDirector extends Director
 		mAllAppDialogScene.initScene(); 
 		Director.getInstance().addDialogScene(mAllAppDialogScene);
 
-//		mMediaPlayerManager.initVideo(mAllAppDialogScene.getOesTextureId(mMediaPlayerManager));
-//		mMediaPlayerManager.onStart();
+		mMediaPlayerManager.initVideo(mAllAppDialogScene.getOesTextureId(mMediaPlayerManager));
+		mMediaPlayerManager.onStart();
 	}
 
 
