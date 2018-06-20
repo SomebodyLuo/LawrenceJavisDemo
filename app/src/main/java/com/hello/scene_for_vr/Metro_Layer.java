@@ -60,8 +60,8 @@ public class Metro_Layer {
 
         InitBack();
 
-        InitLeft();
 
+        InitLeft();
 //        InitRight();
 
 //        InitTop();
@@ -277,8 +277,8 @@ public class Metro_Layer {
 //            mVideoWall.setBackgroundColor(Color.parseColor("#ffff0000"));
             mVideoWall.setBackgroundResource(R.raw.video_preview);
 
-            mVideoWall.setTranslate(0, 0, EngineConstanst.REFERENCE_SCREEN_HEIGHT * 2.3f);
-            mVideoWall.setRotate(0, 180, 0);
+            mVideoWall.setTranslate(0, 0, -100);
+            mVideoWall.setRotate(0, 0, 0);
 
             mLayer.addChild(mVideoWall);
         }

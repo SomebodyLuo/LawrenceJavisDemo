@@ -61,8 +61,8 @@ public class HomeActivity extends Activity implements ActivityCompat.OnRequestPe
 
 		requestCameraPermissions();
 
-		mCameraViewManager = new CameraViewManager(mContext, this);
-		mCameraViewManager.initCameraView();
+//		mCameraViewManager = new CameraViewManager(mContext, this);
+//		mCameraViewManager.initCameraView();
 
 		initView();
 		time = System.currentTimeMillis();
@@ -135,7 +135,7 @@ public class HomeActivity extends Activity implements ActivityCompat.OnRequestPe
 				ViewGroup.LayoutParams.MATCH_PARENT);
 
 		//luoyouren: Camera SurfaceView
-		viewGroup.addView(mCameraViewManager.getSurfaceView(), layoutParams);
+//		viewGroup.addView(mCameraViewManager.getSurfaceView(), layoutParams);
 
 		viewGroup.addView(mVrView, layoutParams);
 

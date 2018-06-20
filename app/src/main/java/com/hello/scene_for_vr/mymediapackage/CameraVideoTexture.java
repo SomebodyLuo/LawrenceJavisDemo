@@ -79,7 +79,7 @@ public class CameraVideoTexture  implements SurfaceTexture.OnFrameAvailableListe
 
         videoTexture = new SurfaceTexture(texturesid);
         videoTexture.setOnFrameAvailableListener(this);
-
+        videoTexture.setDefaultBufferSize(1920, 1080);
 
         initCamera2();
     }
@@ -99,12 +99,13 @@ public class CameraVideoTexture  implements SurfaceTexture.OnFrameAvailableListe
 
         mCameraID = "" + CameraCharacteristics.LENS_FACING_FRONT;//后摄像头
 
-        mImageReader = ImageReader.newInstance(1080, 1920, ImageFormat.JPEG, 1);
-        mImageReader.setOnImageAvailableListener(new ImageReader.OnImageAvailableListener() { //可以在这里处理拍照得到的临时照片 例如，写入本地
-            @Override
-            public void onImageAvailable(ImageReader reader) {
-                //mCameraDevice.close();
-                // 拿到拍照照片数据
+        if (true) {
+            mImageReader = ImageReader.newInstance(1920, 1080, ImageFormat.JPEG, 1);
+            mImageReader.setOnImageAvailableListener(new ImageReader.OnImageAvailableListener() { //可以在这里处理拍照得到的临时照片 例如，写入本地
+                @Override
+                public void onImageAvailable(ImageReader reader) {
+                    //mCameraDevice.close();
+                    // 拿到拍照照片数据
 //				Image image = reader.acquireNextImage();
 //				ByteBuffer buffer = image.getPlanes()[0].getBuffer();
 //				byte[] bytes = new byte[buffer.remaining()];
@@ -113,8 +114,9 @@ public class CameraVideoTexture  implements SurfaceTexture.OnFrameAvailableListe
 //				if (bitmap != null) {
 //					iv_show.setImageBitmap(bitmap);
 //				}
-            }
-        }, mainHandler);
+                }
+            }, mainHandler);
+        }
 
         //获取摄像头管理
         mCameraManager = (CameraManager) mContext.getSystemService(mContext.CAMERA_SERVICE);
@@ -170,7 +172,6 @@ public class CameraVideoTexture  implements SurfaceTexture.OnFrameAvailableListe
                 }
             }, childHandler);
 
-            surface.release();
 
         } catch (CameraAccessException e) {
             e.printStackTrace();
